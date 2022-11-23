@@ -2,28 +2,27 @@
 #define USER
 #include "date.h"
 #include "status.h"
+class fanPage;
 
 class User
 {
 public:
-	User();
-	~User();
+	User(char* name, Date birthday);
+	~User();// need to delete memory at the end
 
 private:
 	char* name;
-	Date date;
-	Status* posts;
-	User* friends;
+	Date birthday;
+	Status** posts;
+	int postsLogicSize, postPhisSize;//all sizes needs to be initialized to some number we choose
+	User** friends;
+	int friendsLogicSize, friendPhisSize;
+	fanPage** pages;
+	int pagesLogicSize, pagePhisSize;
+
 
 };
 
-User::User()
-{
-}
-
-User::~User()
-{
-}
 
 
 

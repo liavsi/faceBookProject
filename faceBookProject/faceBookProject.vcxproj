@@ -139,7 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="date.cpp" />
+    <ClCompile Include="facebook.cpp" />
+    <ClCompile Include="fanPage.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="status.cpp" />
+    <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="date.h" />
