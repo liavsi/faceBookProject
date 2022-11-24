@@ -10,5 +10,5 @@ User::User(char* name, Date birthday)
 	posts = new Status * [postPhisSize];
 	friends = new User * [friendPhisSize];
 	pages = new fanPage * [pagePhisSize];
-
+	int i;
 }
