@@ -1,6 +1,9 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "date.h"
+#include <stdio.h>
 
-Date::Date(int year = 0, int month = 0, int day = 0):year(year), month(month), day(day)
-{}
+Date::Date(char* birthdayStr) 
+{
+	sscanf(birthdayStr, "%d.%d.%d", &day, &month, &year);
+}
 
