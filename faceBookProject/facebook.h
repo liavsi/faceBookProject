@@ -11,10 +11,10 @@ class Facebook
 {
 public:
 	Facebook();
-	void addFriend();
+	void addUser();
 	void addFanPage();
+	void startMenu();
 	~Facebook();
-
 private:
 	User** users;
 	int usersLogicSize=0, usersPhisSize=2;
@@ -22,6 +22,7 @@ private:
 	int fanPageLogicalSize=0, fanPagePhisSize = 2;
 	void addUserToUsers(User* newUser);
 	void addFanPageToFanPages(FanPage* newFanPage);
+	void printMenu();
 
 };
 
