@@ -6,24 +6,22 @@
 class FanPage
 {
 public:
-	FanPage();
+	FanPage(char* name);
 	~FanPage();
 
 private:
 	char* name;
-	User* fans;
-	Status* posts;
+	User** fans;
+	int fansLogicalSize = 0, fansphisSize = 2;
+	Status** posts;
+	int postsLogicalSize = 0, postsPhisSize = 2;
+
+
+
 
 
 };
 
-FanPage::FanPage()
-{
-}
-
-FanPage::~FanPage()
-{
-}
 
 
 

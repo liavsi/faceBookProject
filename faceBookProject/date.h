@@ -8,6 +8,7 @@ public:
 	{ 
 		this->day = day; this->month = month; this->year = year;
 	}
+	Date(char* birthdayStr);
 
 private:
 	int year;

@@ -1,5 +1,7 @@
 #ifndef USER
 #define USER
+#include <iostream>
+using namespace std;
 #include "date.h"
 #include "status.h"
 class fanPage;
@@ -14,11 +16,11 @@ private:
 	char* name;
 	Date birthday;
 	Status** posts;
-	int postsLogicSize, postPhisSize;//all sizes needs to be initialized to some number we choose
+	int postsLogicSize =0 , postPhisSize = 2;//all sizes needs to be initialized to some number we choose
 	User** friends;
-	int friendsLogicSize, friendPhisSize;
+	int friendsLogicSize = 0, friendPhisSize = 2;
 	fanPage** pages;
-	int pagesLogicSize, pagePhisSize;
+	int pagesLogicSize = 0, pagePhisSize = 2;
 
 
 };
