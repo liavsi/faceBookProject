@@ -12,3 +12,12 @@ User::User(char* name, Date birthday)
 	pages = new fanPage * [pagePhisSize];
 
 }
+
+void User::showUser()
+{
+
+	cout << "User name: " << name << endl;
+	cout << "birth date: ";	
+	birthday.showDate();
+	cout << endl;
+}

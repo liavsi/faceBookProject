@@ -31,6 +31,7 @@ void Facebook::addFanPage()
 	char pageName[MAX_NAME_LEN];
 
 	cout << "Enter fan page name:" << endl;
+	cin.ignore();
 	cin.getline(pageName, MAX_NAME_LEN);
 
 	FanPage* newFanPage= new FanPage(pageName);
@@ -54,6 +55,9 @@ void Facebook::startMenu()
 		case 2:
 			addFanPage();
 			break;
+		case 5:
+			showAllUsers();
+			showAllFanPages();
 		default:
 			break;
 		}
@@ -100,10 +104,28 @@ void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 
 void Facebook::printMenu()// to comlete
 {
-	cout << "1 - Add user to Facebook" << endl;
-	cout << "2 - Add fanpage to Facebook" << endl;
+	cout << "\n1 - Add user to Facebook" << endl;
+	cout << "2 - Add Fan Page to Facebook" << endl;
 	cout << "3 - Add status for a user/fanpage on Facebook" << endl;
 	cout << "4 - Show all status of a user/fanpage" << endl;
-	cout << "5 - Show";
+	cout << "5 - Show" << endl;
+}
+
+void Facebook::showAllUsers()
+{
+	for (int i = 1; i < usersLogicSize+1; i++)
+	{
+		cout << "User #" << i << endl;
+		users[i]->showUser();
+	}
+}
+
+void Facebook::showAllFanPages()
+{
+	for (int i = 1; i < fanPageLogicalSize+1; i++)
+	{
+		cout << "Fan Page #" << i << endl;
+		fanPage[i]->showFanPage();
+	}
 }
 

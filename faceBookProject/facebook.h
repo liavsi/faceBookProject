@@ -23,6 +23,8 @@ private:
 	void addUserToUsers(User* newUser);
 	void addFanPageToFanPages(FanPage* newFanPage);
 	void printMenu();
+	void showAllUsers();
+	void showAllFanPages();
 
 };
 

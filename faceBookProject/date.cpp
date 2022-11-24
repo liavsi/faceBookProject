@@ -7,3 +7,8 @@ Date::Date(char* birthdayStr)
 	sscanf(birthdayStr, "%d.%d.%d", &day, &month, &year);
 }
 
+void Date::showDate()
+{
+	printf("%d/%d/%d", day, month, year);
+}
+
