@@ -10,5 +10,13 @@ User::User(char* name, Date birthday)
 	posts = new Status * [postPhisSize];
 	friends = new User * [friendPhisSize];
 	pages = new fanPage * [pagePhisSize];
-	int i;
+}
+
+void User::showUser()
+{
+
+	cout << "User name: " << name << endl;
+	cout << "birth date: ";	
+	birthday.showDate();
+	cout << endl;
 }

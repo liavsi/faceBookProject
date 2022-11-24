@@ -6,6 +6,7 @@
 class FanPage
 {
 public:
+	void showFanPage();
 	FanPage(char* name);
 	~FanPage();
 

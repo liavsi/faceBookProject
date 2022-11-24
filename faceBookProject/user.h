@@ -10,6 +10,7 @@ class User
 {
 public:
 	User(char* name, Date birthday);
+	void showUser();
 	~User();// need to delete memory at the end
 
 private:

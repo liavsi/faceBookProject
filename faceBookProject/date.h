@@ -9,7 +9,7 @@ public:
 		this->day = day; this->month = month; this->year = year;
 	}
 	Date(char* birthdayStr);
-
+	void showDate();
 private:
 	int year;
 	int month;
