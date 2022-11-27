@@ -9,9 +9,14 @@ class fanPage;
 class User
 {
 public:
-	User(char* name, Date birthday);
+	User(const char* name, Date birthday);
+	User(const User& user);
 	void showUser();
-	~User();// need to delete memory at the end
+	const char* getName();
+	void addPost(Status* post);
+	void showPosts();
+	void showUserDebuging();
+	//~User(); need to delete memory at the end
 
 private:
 	char* name;

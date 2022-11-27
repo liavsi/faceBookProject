@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "date.h"
-#include <stdio.h>
 
 Date::Date(char* birthdayStr) 
 {
