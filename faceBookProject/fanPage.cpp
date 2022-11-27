@@ -24,7 +24,8 @@ void FanPage::addPost(Status* post)
 			delete[]posts;
 			posts = newPosts;
 		}
-		posts[++postsLogicalSize] = post;
+		posts[postsLogicalSize] = post;
+		postsLogicalSize++;
 	}
 }
 

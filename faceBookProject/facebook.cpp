@@ -214,7 +214,7 @@ FanPage* Facebook::findFanPageByName(char* name)
 {
 	for (int i = 0; i < fanPageLogicalSize; i++)
 	{
-		if (fanPage[i]->getName() == name)
+		if (strcmp(fanPage[i]->getName(),name) == 0)
 		{
 			return fanPage[i];
 		}
