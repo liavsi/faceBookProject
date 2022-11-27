@@ -13,7 +13,7 @@ User::User(const char* name, Date birthday)
 User::User(const User& user)
 {
 	name = user.name;
-	birthday = user.birthday;
+	birthday = Date(user.birthday);
 	posts = new Status * [postPhisSize];
 	friends = new User * [friendPhisSize];
 	pages = new fanPage * [pagePhisSize];

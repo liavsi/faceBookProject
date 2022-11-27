@@ -11,7 +11,7 @@ class Status
 
 public:
 	Status(char* text);
-	Status();
+	Status(char * message);
 	~Status();
 	void showPost();
 

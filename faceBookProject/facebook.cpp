@@ -2,11 +2,11 @@
 #define MAX_NAME_LEN 100
 #define MAX_DATE_LEN 13
 #define EXIT 12
-
+#define MAX_POST_LEN 151
 Facebook::Facebook()
 {
 	users = new User * [usersPhisSize];
-	fanPage = new FanPage * [fanPagePhisSize];
+	fanPages = new FanPage * [fanPagePhisSize];
 }
 
 
@@ -36,7 +36,7 @@ void Facebook::addFanPage()
 {
 	char pageName[MAX_NAME_LEN];
 
-	cout << "Enter fan page name:" << endl;
+	cout << "Enter fan page name: ";
 	cin.ignore();
 	cin.getline(pageName, MAX_NAME_LEN);
 
@@ -91,6 +91,8 @@ void Facebook::startMenu()
 		case 4:
 			ShowPosts();
 			break;
+		case 5:
+			ShowMostRecentPosts();
 		case 10:
 			showAllUsers();
 			showAllFanPages();
@@ -100,6 +102,20 @@ void Facebook::startMenu()
 	} while (choice!=EXIT);
 	
 
+
+}
+
+void Facebook::ShowMostRecentPosts()
+{
+	char name[MAX_NAME_LEN];
+	User* user;
+	do {
+		cout << "Which user would you like to see his 10's recent post of his friends ? ";
+		cin >> name;
+		user = findUserByName(name);
+		if (user == nullptr)
+			cout << "This username does not exist in our system..";
+	} while (user == nullptr);
 
 }
 
@@ -129,12 +145,12 @@ void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 		fanPagePhisSize *= 2;
 		FanPage** newFanPages = new FanPage * [fanPagePhisSize];
 		for (int i = 0; i < fanPageLogicalSize; i++) {
-			newFanPages[i] = fanPage[i];
+			newFanPages[i] = fanPages[i];
 		}
-		delete[]fanPage;
-		fanPage = newFanPages;
+		delete[]fanPages;
+		fanPages = newFanPages;
 	}
-	fanPage[fanPageLogicalSize] = newFanPage;
+	fanPages[fanPageLogicalSize] = newFanPage;
 	fanPageLogicalSize++;
 }
 
@@ -174,9 +190,15 @@ void Facebook::addStatusToUser()
 		cout << "Which User do you want to add a Post to: ";
 		cin >> name;
 		user = findUserByName(name);
+		if (user == nullptr)
+			cout << "This username does not exist in our system..";
 
 	} while (user == nullptr);
-	user->addPost(new Status()); //c'tor build status from input text
+	char text[MAX_POST_LEN];
+	cout << "Enter text for your post (max 150 letters):";
+	cin.ignore();
+	cin.getline(text, MAX_POST_LEN);
+	user->addPost(new Status(text)); //c'tor build status from input text
 	
 
 
@@ -191,9 +213,15 @@ void Facebook::addStatusToFanPage()
 		cout << "Which Fan Page do you want to add a Post to: ";
 		cin >> name;
 		fanPage = findFanPageByName(name);
+		if(fanPage == nullptr)
+			cout << "This user does not exist in our system..";
 
 	} while (fanPage == nullptr);
-	fanPage->addPost(new Status()); //c'tor build status from input text
+	char text[MAX_POST_LEN];
+	cout << "Enter text for your post (max 150 letters):";
+	cin.ignore();
+	cin.getline(text, MAX_POST_LEN);
+	fanPage->addPost(new Status(text)); //c'tor build status from input text
 
 
 
@@ -229,6 +257,8 @@ void Facebook::showPostsOfUser()
 		cout << "Which User's post would you like to show: ";
 		cin >> name;
 		user = findUserByName(name);
+		if (user == nullptr)
+			cout << "This user does not exist in our system.." << endl;
 
 	} while (user == nullptr);
 	user->showPosts(); //c'tor build status from input text
@@ -244,12 +274,12 @@ void Facebook::showPostOfFanPage()
 		cout << "Which fan Page's post would you like to show: ";
 		cin >> name;
 		fanPag = findFanPageByName(name);
+		if (fanPag == nullptr)
+			cout << "This fanpage does not exist in our system.." << endl;
 
 	} while (fanPag == nullptr);
-	//fanPag->showPosts(); 
-
+	//fanPag->showPosts();
 }
-
 //show
 
 void Facebook::showAllUsers()
@@ -267,7 +297,7 @@ void Facebook::showAllFanPages()
 	for (int i = 1; i < fanPageLogicalSize+1; i++)
 	{
 		cout << "Fan Page #" << i << endl;
-		fanPage[i]->showFanPage();
+		fanPages[i]->showFanPage();
 	}
 }
 
@@ -285,7 +315,6 @@ User* Facebook::findUserByName(char* name)
 			return users[i];
 		}
 	}
-	cout << "This name does not exist in our system..";
 	return nullptr;
 }
 
@@ -293,12 +322,12 @@ FanPage* Facebook::findFanPageByName(char* name)
 {
 	for (int i = 0; i < fanPageLogicalSize; i++)
 	{
-		if (strcmp(fanPage[i]->getName(),name) == 0)
+		if (strcmp(fanPages[i]->getName(),name) == 0)
 		{
-			return fanPage[i];
+			return fanPages[i];
 		}
 	}
-	cout << "This name does not exist in our system..";
+	
 	return nullptr;
 }
 
