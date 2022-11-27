@@ -1,16 +1,19 @@
 #ifndef TIME
 #define TIME
+#include <iostream>
+using namespace std;
 
 class Time				
 {
 public:
-	Time(int hours =0, int minutes=0, int seconds=0);
-
+	Time();
+	void showTime();
 
 private:
 	int seconds;
 	int minutes;
 	int hours;
+	
 };
 
 

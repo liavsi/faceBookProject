@@ -6,6 +6,10 @@
 class FanPage
 {
 public:
+	void showFanPage();
+	char* getName();
+	void addPost(Status* post);
+	void showPosts();
 	FanPage(char* name);
 	~FanPage();
 

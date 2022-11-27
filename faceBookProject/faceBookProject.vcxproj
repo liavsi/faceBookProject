@@ -144,6 +144,7 @@
     <ClCompile Include="fanPage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="status.cpp" />
+    <ClCompile Include="time.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
