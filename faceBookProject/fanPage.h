@@ -7,6 +7,8 @@ class FanPage
 {
 public:
 	void showFanPage();
+	char* getName();
+	void addPost(Status* post);
 	FanPage(char* name);
 	~FanPage();
 
