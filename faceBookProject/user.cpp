@@ -29,6 +29,7 @@ void User::showUser()
 	cout << endl;
 }
 
+
 const char* User::getName()
 {
 	return this->name;
@@ -41,10 +42,20 @@ void User::addPost(Status* post)
 		postPhisSize *= 2;
 		Status** newPosts = new Status * [postPhisSize];
 		for (int i = 0; i < postsLogicSize; i++) {
-			posts[i] = newPosts[i];
+			newPosts[i] = posts[i];
 		}
 		delete[]posts;
 		posts = newPosts;
 	}
-	posts[++postsLogicSize] = post;
+	posts[postsLogicSize] = post;
+	postsLogicSize++;
+}
+
+void User::showUserDebuging()
+{
+	cout << "User name: " << name << endl;
+	cout << "birth date: ";
+	birthday.showDate();
+	cout << endl;
+	cout << "Post logical size: " << postsLogicSize << "| post physic size: " << postPhisSize << "\n" << "friends logic size : " << friendsLogicSize << "| friends physic size: " << friendPhisSize;
 }

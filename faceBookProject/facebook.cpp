@@ -91,7 +91,8 @@ void Facebook::addUserToUsers(User* newUser)
 		delete[]users;
 		users = newUsers;
 	}
-	users[++usersLogicSize] = newUser;
+	users[usersLogicSize] = newUser;
+	usersLogicSize++;
 }
 
 
@@ -107,7 +108,8 @@ void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 		delete[]fanPage;
 		fanPage = newFanPages;
 	}
-	fanPage[++fanPageLogicalSize] = newFanPage;
+	fanPage[fanPageLogicalSize] = newFanPage;
+	fanPageLogicalSize++;
 }
 
 void Facebook::printMenu()// to comlete
@@ -178,10 +180,11 @@ void Facebook::addStatusToFanPage()
 
 void Facebook::showAllUsers()
 {
-	for (int i = 1; i < usersLogicSize+1; i++)
+	for (int i = 0; i < usersLogicSize; i++)
 	{
-		cout << "User #" << i << endl;
+		cout << "User #" << i+1 << endl;
 		users[i]->showUser();
+		users[i]->showUserDebuging();
 	}
 }
 
@@ -198,7 +201,7 @@ User* Facebook::findUserByName(char* name)
 {
 	for (int i = 0; i < usersLogicSize; i++)
 	{
-		if (users[i]->getName() == name)
+		if (strcmp(users[i]->getName(), name) == 0)
 		{
 			return users[i];
 		}

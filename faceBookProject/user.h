@@ -14,6 +14,7 @@ public:
 	void showUser();
 	const char* getName();
 	void addPost(Status* post);
+	void showUserDebuging();
 	//~User(); need to delete memory at the end
 
 private:

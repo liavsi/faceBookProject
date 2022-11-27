@@ -13,7 +13,8 @@ Status::Status(): time(),date()
 {
 	char text[MAX_POST_LEN];
 	cout << "Enter text for your post (max 150 letters):";
-	cin >> text;
+	cin.ignore();
+	cin.getline(text, MAX_POST_LEN);
 	textContent = new char[strlen(text) + 1];
 	strcpy(textContent, text);
 
