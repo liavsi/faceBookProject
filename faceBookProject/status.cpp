@@ -22,7 +22,17 @@ Status::Status(): time(),date()
 
 
 
+
+
 Status::~Status()
 {
 	delete textContent;
+}
+
+void Status::showPost()
+{
+	cout << textContent << "| posted at: ";
+	date.showDate();
+	time.showTime();
+	cout << endl;
 }

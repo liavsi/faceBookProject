@@ -45,6 +45,30 @@ void Facebook::addFanPage()
 }
 
 
+
+
+
+
+//menu part
+
+void Facebook::printMenu()
+{
+	cout << "\n1 - Add user to Facebook" << endl;
+	cout << "2 - Add Fan Page to Facebook" << endl;
+	cout << "3 - Add status for a user/fanpage on Facebook" << endl;
+	cout << "4 - Show all status of a user/fanpage" << endl;
+	cout << "5 - Show 10 updated post for a user" << endl;
+	cout << "6 - Make 2 users friends" << endl;
+	cout << "7 - Unfriend 2 users" << endl;
+	cout << "8 - Make user a fan of a Fan Page" << endl;
+	cout << "9 - Taking a user off of a Fan Page" << endl;
+	cout << "10 - Show all users and fan page registred on facebook" << endl;
+	cout << "11 - Show all friends of a user / Show all fans of a Fan Page" << endl;
+	cout << "12 - Exit facebook" << endl;
+
+
+}
+
 void Facebook::startMenu()
 {
 	int choice;
@@ -63,7 +87,11 @@ void Facebook::startMenu()
 			break;
 		case 3:
 			addStatus();
-		case 5:
+			break;
+		case 4:
+			ShowPosts();
+			break;
+		case 10:
 			showAllUsers();
 			showAllFanPages();
 		default:
@@ -75,9 +103,7 @@ void Facebook::startMenu()
 
 }
 
-Facebook::~Facebook()
-{
-}
+
 
 void Facebook::addUserToUsers(User* newUser)
 {
@@ -112,14 +138,9 @@ void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 	fanPageLogicalSize++;
 }
 
-void Facebook::printMenu()// to comlete
-{
-	cout << "\n1 - Add user to Facebook" << endl;
-	cout << "2 - Add Fan Page to Facebook" << endl;
-	cout << "3 - Add status for a user/fanpage on Facebook" << endl;
-	cout << "4 - Show all status of a user/fanpage" << endl;
-	cout << "5 - Show" << endl;
-}
+
+
+//add status
 
 void Facebook::addStatus()
 {
@@ -178,6 +199,59 @@ void Facebook::addStatusToFanPage()
 
 }
 
+//show posts of a user/fan page
+
+void Facebook::ShowPosts()
+{
+	int choice;
+	cout << "1. User. \n2.Fan Page\n(Choose number): ";
+	do
+	{
+		cin >> choice;
+		if (choice == 1)
+		{
+			showPostsOfUser();
+		}
+		else if (choice == 2)
+		{
+			showPostOfFanPage();
+		}
+	} while (choice != 1 && choice != 2);
+}
+
+
+void Facebook::showPostsOfUser()
+{
+	char name[MAX_NAME_LEN];
+	User* user;
+	do
+	{
+		cout << "Which User's post would you like to show: ";
+		cin >> name;
+		user = findUserByName(name);
+
+	} while (user == nullptr);
+	user->showPosts(); //c'tor build status from input text
+
+}
+
+void Facebook::showPostOfFanPage()
+{
+	char name[MAX_NAME_LEN];
+	FanPage* fanPag;
+	do
+	{
+		cout << "Which fan Page's post would you like to show: ";
+		cin >> name;
+		fanPag = findFanPageByName(name);
+
+	} while (fanPag == nullptr);
+	//fanPag->showPosts(); 
+
+}
+
+//show
+
 void Facebook::showAllUsers()
 {
 	for (int i = 0; i < usersLogicSize; i++)
@@ -196,6 +270,11 @@ void Facebook::showAllFanPages()
 		fanPage[i]->showFanPage();
 	}
 }
+
+
+
+
+//helpers
 
 User* Facebook::findUserByName(char* name)
 {
@@ -223,3 +302,6 @@ FanPage* Facebook::findFanPageByName(char* name)
 	return nullptr;
 }
 
+Facebook::~Facebook()
+{
+}

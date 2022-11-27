@@ -13,6 +13,7 @@ public:
 	Status(char* text);
 	Status();
 	~Status();
+	void showPost();
 
 private:
 	char* textContent;

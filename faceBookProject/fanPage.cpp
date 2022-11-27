@@ -29,6 +29,14 @@ void FanPage::addPost(Status* post)
 	}
 }
 
+void FanPage::showPosts()
+{
+	for (int i = 0; i < postsLogicalSize; i++)
+	{
+		posts[i]->showPost();
+	}
+}
+
 FanPage::FanPage(char* name)
 {
 	this->name = new char[strlen(name) + 1];

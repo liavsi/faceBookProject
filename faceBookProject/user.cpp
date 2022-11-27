@@ -51,6 +51,14 @@ void User::addPost(Status* post)
 	postsLogicSize++;
 }
 
+void User::showPosts()
+{
+	for (int i = 0; i < postsLogicSize; i++)
+	{
+		posts[i]->showPost();
+	}
+}
+
 void User::showUserDebuging()
 {
 	cout << "User name: " << name << endl;

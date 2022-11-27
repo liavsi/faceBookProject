@@ -15,6 +15,9 @@ public:
 	void addUser();
 	void addUser(User user);//manually add user
 	void addFanPage();
+	void ShowPosts();
+	void showPostOfFanPage();
+	void showPostsOfUser();
 	void startMenu();
 	~Facebook();
 private:

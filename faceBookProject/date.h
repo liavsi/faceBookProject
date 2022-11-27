@@ -1,5 +1,6 @@
 #ifndef DATE
 #define DATE
+#include <stdio.h>
 
 class Date
 {

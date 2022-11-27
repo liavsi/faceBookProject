@@ -6,3 +6,8 @@ Time::Time()
 	minutes = 0;
 	seconds = 0;
 }
+
+void Time::showTime()
+{
+	cout << hours << ":" << minutes << ":" << seconds;
+}
