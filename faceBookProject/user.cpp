@@ -9,7 +9,6 @@ User::User(const char* name, Date birthday)
 	posts = new Status * [postPhisSize];
 	friends = new User * [friendPhisSize];
 	pages = new fanPage * [pagePhisSize];
-
 }
 User::User(const User& user)
 {
