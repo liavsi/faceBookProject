@@ -19,11 +19,12 @@ public:
 	void showPostOfFanPage();
 	void showPostsOfUser();
 	void startMenu();
+	void ShowMostRecentPosts();
 	~Facebook();
 private:
 	User** users;
 	int usersLogicSize=0, usersPhisSize=2;
-	FanPage** fanPage;
+	FanPage** fanPages;
 	int fanPageLogicalSize=0, fanPagePhisSize = 2;
 	void addUserToUsers(User* newUser);
 	void addFanPageToFanPages(FanPage* newFanPage);

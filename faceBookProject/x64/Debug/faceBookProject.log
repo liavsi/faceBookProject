@@ -1,5 +1,9 @@
-﻿  facebook.cpp
+﻿  date.cpp
+  facebook.cpp
   fanPage.cpp
+  main.cpp
+  status.cpp
+  time.cpp
   user.cpp
   Generating Code...
-  faceBookProject.vcxproj -> C:\Users\elish\source\repos\faceBookProject\x64\Debug\faceBookProject.exe
+  faceBookProject.vcxproj -> C:\Users\sharonpais\Source\Repos\faceBookProject4\x64\Debug\faceBookProject.exe

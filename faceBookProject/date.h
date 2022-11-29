@@ -9,7 +9,9 @@ public:
 	{ 
 		this->day = day; this->month = month; this->year = year;
 	}
+	Date(const Date& date);
 	Date(char* birthdayStr);
+	int compare(const Date& date);
 	void showDate();
 private:
 	int year;
