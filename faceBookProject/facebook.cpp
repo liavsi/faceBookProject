@@ -198,6 +198,12 @@ void Facebook::addStatusToUser()
 	cout << "Enter text for your post (max 150 letters):";
 	cin.ignore();
 	cin.getline(text, MAX_POST_LEN);
+	/*
+	time_t curr_time;
+	curr_time = time(NULL);
+	char* timeText = ctime(&curr_time);
+	//time Text format "Www Mmm dd hh:mm:ss yyyy"
+	*/
 	user->addPost(new Status(text)); //c'tor build status from input text
 	
 
