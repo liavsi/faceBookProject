@@ -22,6 +22,7 @@ public:
 	void ShowMostRecentPosts();
 	void makeConnection();
 	void disConnect();
+	void addFriendToFanPage();
 	~Facebook();
 private:
 	User** users;
@@ -38,6 +39,7 @@ private:
 	void showAllFanPages();
 	User* findUserByName(char* name);
 	User* getUserNameFromUser(const char* text);
+	FanPage* getFanpageFromUser(const char* text);
 	FanPage* findFanPageByName(char* name);
 
 };

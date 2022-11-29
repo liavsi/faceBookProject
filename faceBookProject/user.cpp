@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "user.h"
+#include "fanPage.h"
 #define UNFOUND -1
 
 User::User(const char* name, Date birthday) : birthday(birthday)
@@ -9,7 +10,7 @@ User::User(const char* name, Date birthday) : birthday(birthday)
 	this->birthday = birthday;
 	posts = new Status * [postPhisSize];
 	friends = new User * [friendPhisSize];
-	pages = new fanPage * [pagePhisSize];
+	pages = new FanPage * [pagePhisSize];
 }
 User::User(const User& user)
 {
@@ -17,7 +18,7 @@ User::User(const User& user)
 	birthday = Date(user.birthday);
 	posts = new Status * [postPhisSize];
 	friends = new User * [friendPhisSize];
-	pages = new fanPage * [pagePhisSize];
+	pages = new FanPage * [pagePhisSize];
 
 }
 
@@ -105,6 +106,13 @@ void User::unFriend(User* other)
 }
 
 
+
+void User::addFanpage(FanPage* fanpage)
+{
+	
+}
+
+
 int User::indexOfFriend(User* other)
 {
 	for (int i = 0; i < friendsLogicSize; i++)
@@ -113,6 +121,11 @@ int User::indexOfFriend(User* other)
 			return i;
 	}
 	return UNFOUND;
+}
+
+int User::indexOfFanpage(FanPage* fanpage)
+{
+	return 0; 
 }
 
 void User::deleteFromFriends(User* other)
@@ -124,4 +137,21 @@ void User::deleteFromFriends(User* other)
 	{
 		friends[i] = friends[i + 1];
 	}
+}
+
+void User::addFanPageToUser1(FanPage* fanpage)
+{
+	if (pagesLogicSize == pagePhisSize)
+	{
+		pagePhisSize *= 2;
+		FanPage** newPages = new FanPage * [pagePhisSize];
+		for (int i = 0; i < pagesLogicSize; i++) 
+		{
+			newPages[i] = pages[i];
+		}
+		delete[]pages;
+		pages = newPages;
+	}
+	pages[pagesLogicSize] = fanpage;
+	pagesLogicSize++;
 }
