@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "user.h"
 
-User::User(const char* name, Date birthday)
+User::User(const char* name, Date birthday) : birthday(birthday)
 {
 	this->name = new char[strlen(name) + 1];
 	strcpy(this->name, name);
@@ -37,7 +37,7 @@ const char* User::getName()
 
 void User::addPost(Status* post)
 {
-	if (postsLogicSize == postsLogicSize)
+	if (postsLogicSize == postPhisSize)
 	{
 		postPhisSize *= 2;
 		Status** newPosts = new Status * [postPhisSize];
@@ -61,9 +61,46 @@ void User::showPosts()
 
 void User::showUserDebuging()
 {
+	cout << "****************DEBUGGING****************" << endl;
 	cout << "User name: " << name << endl;
 	cout << "birth date: ";
 	birthday.showDate();
+	for (int i = 0; i < friendsLogicSize; i++) {
+		cout << "	Friend name : " << friends[i]->getName() << endl;
+	}
 	cout << endl;
-	cout << "Post logical size: " << postsLogicSize << "| post physic size: " << postPhisSize << "\n" << "friends logic size : " << friendsLogicSize << "| friends physic size: " << friendPhisSize;
+	cout << "Post logical size: " << postsLogicSize << "| post physic size: " << postPhisSize << "\n" << "friends logic size : " << friendsLogicSize << "| friends physic size: " << friendPhisSize << endl;
+	cout << "*****************************************" << endl;
+}
+
+void User::addFriend(User* other)
+{
+	if (!isFriend(other))
+	{
+		if (friendsLogicSize == friendPhisSize)
+		{
+			friendPhisSize *= 2;
+			User** newUsers = new User * [friendPhisSize];
+			for (int i = 0; i < friendsLogicSize; i++)
+			{
+				newUsers[i] = friends[i];
+			}
+			delete[]friends;
+			friends = newUsers;
+		}
+		friends[friendsLogicSize] = other;
+		friendsLogicSize++;
+		other->addFriend(this);
+	}
+}
+
+
+bool User::isFriend(User* other)
+{
+	for (int i = 0; i < friendsLogicSize; i++)
+	{
+		if (friends[i] == other)
+			return true;
+	}
+	return false;
 }

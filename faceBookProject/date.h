@@ -1,14 +1,12 @@
 #ifndef DATE
 #define DATE
 #include <stdio.h>
+#include <ctime>
 
 class Date
 {
 public:
-	Date(int day = 0, int month = 0, int year = 0)
-	{ 
-		this->day = day; this->month = month; this->year = year;
-	}
+	Date();
 	Date(const Date& date);
 	Date(char* birthdayStr);
 	int compare(const Date& date);

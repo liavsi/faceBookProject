@@ -16,6 +16,7 @@ public:
 	void addPost(Status* post);
 	void showPosts();
 	void showUserDebuging();
+	void addFriend(User* other);
 	//~User(); need to delete memory at the end
 
 private:
@@ -27,6 +28,7 @@ private:
 	int friendsLogicSize = 0, friendPhisSize = 2;
 	fanPage** pages;
 	int pagesLogicSize = 0, pagePhisSize = 2;
+	bool isFriend(User* other);
 
 
 };

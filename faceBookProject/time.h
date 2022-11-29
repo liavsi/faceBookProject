@@ -1,7 +1,9 @@
 #ifndef TIME
 #define TIME
 #include <iostream>
+#include <ctime>
 using namespace std;
+
 
 class Time				
 {
