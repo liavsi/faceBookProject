@@ -99,6 +99,9 @@ void Facebook::startMenu()
 		case 6:
 			makeConnection();
 			break;
+		case 7:
+			disConnect();
+			break;
 		case 10:
 			showAllUsers();
 			showAllFanPages();
@@ -132,6 +135,14 @@ void Facebook::makeConnection()//todo user interface function
 	user2 = getUserNameFromUser("please enter first user's name: ");
 	user1->addFriend(user2);
 
+}
+
+void Facebook::disConnect()
+{
+	User* user1, * user2;
+	user1 = getUserNameFromUser("please enter first user's name: ");
+	user2 = getUserNameFromUser("please enter first user's name: ");
+	user1->unFriend(user2);
 }
 
 

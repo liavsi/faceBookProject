@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "user.h"
+#define UNFOUND -1
 
 User::User(const char* name, Date birthday) : birthday(birthday)
 {
@@ -20,7 +21,7 @@ User::User(const User& user)
 
 }
 
-void User::showUser()
+void User::showUser() const
 {
 
 	cout << "User name: " << name << endl;
@@ -30,7 +31,7 @@ void User::showUser()
 }
 
 
-const char* User::getName()
+const char* User::getName() const
 {
 	return this->name;
 }
@@ -51,7 +52,7 @@ void User::addPost(Status* post)
 	postsLogicSize++;
 }
 
-void User::showPosts()
+void User::showPosts() const
 {
 	for (int i = 0; i < postsLogicSize; i++)
 	{
@@ -75,7 +76,7 @@ void User::showUserDebuging()
 
 void User::addFriend(User* other)
 {
-	if (!isFriend(other))
+	if (indexOfFriend(other) == UNFOUND)
 	{
 		if (friendsLogicSize == friendPhisSize)
 		{
@@ -94,13 +95,33 @@ void User::addFriend(User* other)
 	}
 }
 
+void User::unFriend(User* other)
+{
+	if (indexOfFriend(other) !=UNFOUND)
+	{
+		deleteFromFriends(other);
+		other->unFriend(this);
+	}
+}
 
-bool User::isFriend(User* other)
+
+int User::indexOfFriend(User* other)
 {
 	for (int i = 0; i < friendsLogicSize; i++)
 	{
 		if (friends[i] == other)
-			return true;
+			return i;
 	}
-	return false;
+	return UNFOUND;
+}
+
+void User::deleteFromFriends(User* other)
+{
+	int index = indexOfFriend(other);
+	friends[index] = NULL;
+	--friendsLogicSize;
+	for (int i = index; i < friendsLogicSize; i++)
+	{
+		friends[i] = friends[i + 1];
+	}
 }

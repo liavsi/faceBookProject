@@ -11,12 +11,13 @@ class User
 public:
 	User(const char* name, Date birthday);
 	User(const User& user);
-	void showUser();
-	const char* getName();
+	void showUser() const;
+	const char* getName() const;
 	void addPost(Status* post);
-	void showPosts();
+	void showPosts() const;
 	void showUserDebuging();
 	void addFriend(User* other);
+	void unFriend(User* other);
 	//~User(); need to delete memory at the end
 
 private:
@@ -28,7 +29,8 @@ private:
 	int friendsLogicSize = 0, friendPhisSize = 2;
 	fanPage** pages;
 	int pagesLogicSize = 0, pagePhisSize = 2;
-	bool isFriend(User* other);
+	int indexOfFriend(User* other);
+	void deleteFromFriends(User* other);
 
 
 };

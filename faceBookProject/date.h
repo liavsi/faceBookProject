@@ -10,7 +10,7 @@ public:
 	Date(const Date& date);
 	Date(char* birthdayStr);
 	int compare(const Date& date);
-	void showDate();
+	void showDate() const;
 private:
 	int year;
 	int month;

@@ -21,6 +21,7 @@ public:
 	void startMenu();
 	void ShowMostRecentPosts();
 	void makeConnection();
+	void disConnect();
 	~Facebook();
 private:
 	User** users;

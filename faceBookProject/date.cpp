@@ -41,7 +41,7 @@ int Date::compare(const Date& date)
 	return 0;
 }
 
-void Date::showDate()
+void Date::showDate() const
 {
 	printf("%d/%d/%d", day, month, year);
 }
