@@ -20,6 +20,7 @@ public:
 	void showPostsOfUser();
 	void startMenu();
 	void ShowMostRecentPosts();
+	void makeConnection();
 	~Facebook();
 private:
 	User** users;
@@ -35,7 +36,9 @@ private:
 	void showAllUsers();
 	void showAllFanPages();
 	User* findUserByName(char* name);
+	User* getUserNameFromUser(const char* text);
 	FanPage* findFanPageByName(char* name);
+
 };
 
 

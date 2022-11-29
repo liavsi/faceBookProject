@@ -53,6 +53,7 @@ void Facebook::addFanPage()
 
 void Facebook::printMenu()
 {
+	cout << "--------------Menu-----------------" << endl;
 	cout << "\n1 - Add user to Facebook" << endl;
 	cout << "2 - Add Fan Page to Facebook" << endl;
 	cout << "3 - Add status for a user/fanpage on Facebook" << endl;
@@ -65,6 +66,7 @@ void Facebook::printMenu()
 	cout << "10 - Show all users and fan page registred on facebook" << endl;
 	cout << "11 - Show all friends of a user / Show all fans of a Fan Page" << endl;
 	cout << "12 - Exit facebook" << endl;
+	cout << "-----------------------------------" << endl;
 
 
 }
@@ -93,6 +95,10 @@ void Facebook::startMenu()
 			break;
 		case 5:
 			ShowMostRecentPosts();
+			break;
+		case 6:
+			makeConnection();
+			break;
 		case 10:
 			showAllUsers();
 			showAllFanPages();
@@ -116,6 +122,15 @@ void Facebook::ShowMostRecentPosts()
 		if (user == nullptr)
 			cout << "This username does not exist in our system..";
 	} while (user == nullptr);
+
+}
+
+void Facebook::makeConnection()//todo user interface function
+{
+	User* user1, *user2;
+	user1 = getUserNameFromUser("please enter first user's name: ");
+	user2 = getUserNameFromUser("please enter first user's name: ");
+	user1->addFriend(user2);
 
 }
 
@@ -198,12 +213,9 @@ void Facebook::addStatusToUser()
 	cout << "Enter text for your post (max 150 letters):";
 	cin.ignore();
 	cin.getline(text, MAX_POST_LEN);
-	/*
-	time_t curr_time;
-	curr_time = time(NULL);
-	char* timeText = ctime(&curr_time);
-	//time Text format "Www Mmm dd hh:mm:ss yyyy"
-	*/
+	
+	
+	
 	user->addPost(new Status(text)); //c'tor build status from input text
 	
 
@@ -322,6 +334,22 @@ User* Facebook::findUserByName(char* name)
 		}
 	}
 	return nullptr;
+}
+
+User* Facebook::getUserNameFromUser(const char* text)
+{
+	char name[MAX_NAME_LEN];
+	User* user;
+	do
+	{
+		cout << text;
+		cin >> name;
+		user = findUserByName(name);
+		if (user == nullptr)
+			cout << "This user does not exist in our system.." << endl;
+
+	} while (user == nullptr);
+	return user;
 }
 
 FanPage* Facebook::findFanPageByName(char* name)

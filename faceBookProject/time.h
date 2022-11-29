@@ -9,7 +9,6 @@ class Time
 {
 public:
 	Time();
-	Time(const char* timeText);
 	void showTime();
 
 private:
