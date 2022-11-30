@@ -184,15 +184,6 @@ void Facebook::initializeFacebook()
 	makeConnection(users[1], users[0]);
 	makeConnection(users[0], users[2]);
 
-	
-
-
-
-
-
-
-
-
 
 }
 

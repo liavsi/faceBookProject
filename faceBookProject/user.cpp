@@ -78,6 +78,7 @@ void User::showUserDebuging()
 	}
 	cout << endl;
 	cout << "Post logical size: " << postsLogicSize << "| post physic size: " << postPhisSize << "\n" << "friends logic size : " << friendsLogicSize << "| friends physic size: " << friendPhisSize << endl;
+	cout << "pages logical size: " << pagesLogicSize << "| pages physic size: " << pagePhisSize << endl;
 	cout << "*****************************************" << endl;
 }
 
@@ -115,8 +116,13 @@ void User::unFriend(User* other)
 
 void User::addFanpage(FanPage* fanpage)
 {
-	
+	if (indexOfFanpage(fanpage) == UNFOUND)
+	{
+		this->addFanPageToUser1(fanpage);
+		fanpage->addUserToFanPage(this);
+	}
 }
+
 
 
 int User::indexOfFriend(User* other)
@@ -131,13 +137,18 @@ int User::indexOfFriend(User* other)
 
 int User::indexOfFanpage(FanPage* fanpage)
 {
-	return 0; 
+	for (int i = 0; i < pagesLogicSize; i++) {
+		if (strcmp(pages[i]->getName(), fanpage->getName()) == 0) {
+			return i;
+		}
+	}
+	return UNFOUND;
 }
 
 void User::deleteFromFriends(User* other)
 {
 	int index = indexOfFriend(other);
-	friends[index] = NULL;
+	friends[index] = nullptr;
 	--friendsLogicSize;
 	for (int i = index; i < friendsLogicSize; i++)
 	{
