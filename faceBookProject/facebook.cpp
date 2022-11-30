@@ -99,6 +99,11 @@ void Facebook::startMenu()
 		case 6:
 			makeConnection();
 			break;
+		case 7:
+			disConnect();
+			break;
+		case 8:
+			addFriendToFanPage(); // TODO : complete function
 		case 10:
 			showAllUsers();
 			showAllFanPages();
@@ -132,6 +137,21 @@ void Facebook::makeConnection()//todo user interface function
 	user2 = getUserNameFromUser("please enter first user's name: ");
 	user1->addFriend(user2);
 
+}
+
+void Facebook::disConnect()
+{
+	User* user1, * user2;
+	user1 = getUserNameFromUser("please enter first user's name: ");
+	user2 = getUserNameFromUser("please enter second user's name: ");
+	user1->unFriend(user2);
+}
+
+void Facebook::addFriendToFanPage()
+{
+	User* user = getUserNameFromUser("please enter user's name: ");
+	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	user->addFanpage(fanpage);
 }
 
 
@@ -224,17 +244,8 @@ void Facebook::addStatusToUser()
 
 void Facebook::addStatusToFanPage()
 {
-	char name[MAX_NAME_LEN];
-	FanPage* fanPage;
-	do
-	{
-		cout << "Which Fan Page do you want to add a Post to: ";
-		cin >> name;
-		fanPage = findFanPageByName(name);
-		if(fanPage == nullptr)
-			cout << "This user does not exist in our system..";
-
-	} while (fanPage == nullptr);
+	FanPage* fanPage = getFanpageFromUser(
+		"Which Fan Page do you want to add a Post to : ");
 	char text[MAX_POST_LEN];
 	cout << "Enter text for your post (max 150 letters):";
 	cin.ignore();
@@ -350,6 +361,22 @@ User* Facebook::getUserNameFromUser(const char* text)
 
 	} while (user == nullptr);
 	return user;
+}
+
+FanPage* Facebook::getFanpageFromUser(const char* text)
+{
+	char name[MAX_NAME_LEN];
+	FanPage* fanPage;
+	do
+	{
+		cout << text;
+		cin >> name;
+		fanPage = findFanPageByName(name);
+		if (fanPage == nullptr)
+			cout << "This user does not exist in our system..";
+
+	} while (fanPage == nullptr);
+	return fanPage;
 }
 
 FanPage* Facebook::findFanPageByName(char* name)
