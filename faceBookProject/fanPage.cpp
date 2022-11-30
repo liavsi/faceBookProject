@@ -37,10 +37,25 @@ void FanPage::showPosts()
 	}
 }
 
-FanPage::FanPage(char* name)
+FanPage::FanPage(const char* name)
 {
 	this->name = new char[strlen(name) + 1];
 	strcpy(this->name, name);
 	posts = new Status * [postsPhisSize];
 	fans = new User * [fansphisSize];
+}
+
+FanPage::FanPage(const FanPage& fanpage)
+{
+	name = fanpage.name;
+	fans = fanpage.fans;
+	fansLogicalSize = fanpage.fansLogicalSize;
+	fansphisSize = fanpage.fansphisSize;
+	posts = fanpage.posts;
+	postsLogicalSize = fanpage.postsLogicalSize;
+	postsPhisSize = fanpage.postsPhisSize;
+}
+
+FanPage::~FanPage()
+{
 }

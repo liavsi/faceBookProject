@@ -3,6 +3,7 @@
 #define MAX_DATE_LEN 13
 #define EXIT 12
 #define MAX_POST_LEN 151
+
 Facebook::Facebook()
 {
 	users = new User * [usersPhisSize];
@@ -44,6 +45,12 @@ void Facebook::addFanPage()
 	addFanPageToFanPages(newFanPage);
 }
 
+void Facebook::addFanPage(FanPage fanpage)
+{
+	FanPage* newFanPage = new FanPage(fanpage);
+	addFanPageToFanPages(newFanPage);
+}
+
 
 
 
@@ -58,7 +65,7 @@ void Facebook::printMenu()
 	cout << "2 - Add Fan Page to Facebook" << endl;
 	cout << "3 - Add status for a user/fanpage on Facebook" << endl;
 	cout << "4 - Show all status of a user/fanpage" << endl;
-	cout << "5 - Show 10 updated post for a user" << endl;
+	cout << "5 - Show 10 recent posts for each friend of a user" << endl;
 	cout << "6 - Make 2 users friends" << endl;
 	cout << "7 - Unfriend 2 users" << endl;
 	cout << "8 - Make user a fan of a Fan Page" << endl;
@@ -120,23 +127,23 @@ void Facebook::ShowMostRecentPosts()
 {
 	char name[MAX_NAME_LEN];
 	User* user;
-	do {
-		cout << "Which user would you like to see his 10's recent post of his friends ? ";
-		cin >> name;
-		user = findUserByName(name);
-		if (user == nullptr)
-			cout << "This username does not exist in our system..";
-	} while (user == nullptr);
+	user = getUserNameFromUser("for which user do you want to see friend's recent posts: ");
+	user->showFriendPosts();
+	
 
 }
 
-void Facebook::makeConnection()//todo user interface function
+void Facebook::makeConnection()
 {
 	User* user1, *user2;
 	user1 = getUserNameFromUser("please enter first user's name: ");
 	user2 = getUserNameFromUser("please enter first user's name: ");
 	user1->addFriend(user2);
+}
 
+void Facebook::makeConnection(User* user1, User* user2)//manually added
+{
+	user1->addFriend(user2);
 }
 
 void Facebook::disConnect()
@@ -154,6 +161,41 @@ void Facebook::addFriendToFanPage()
 	user->addFanpage(fanpage);
 }
 
+void Facebook::initializeFacebook()
+{
+	this->addUser(User("liav", Date()));
+	this->addUser(User("sharon", Date()));
+	this->addUser(User("keren", Date()));
+	this->addFanPage(FanPage("hapoeel beer sheva fans"));
+	this->addFanPage(FanPage("one direction fan page"));
+	this->addFanPage(FanPage("sharon pais fans club"));
+	this->fanPages[0]->addPost(new Status("we are the best"));
+	this->fanPages[0]->addPost(new Status("we won the game"));
+	this->fanPages[1]->addPost(new Status("thats what makes you beutiful"));
+	this->fanPages[1]->addPost(new Status("la la la"));
+	this->fanPages[2]->addPost(new Status("he lives in Tel aviv "));
+	this->fanPages[2]->addPost(new Status("he is developer.."));
+	this->users[0]->addPost(new Status("hi guys im liav"));
+	this->users[0]->addPost(new Status("C++ is nice and I'm a nerd"));
+	this->users[1]->addPost(new Status("hi guys im sharon"));
+	this->users[1]->addPost(new Status("sharon is my name "));
+	this->users[2]->addPost(new Status("dont trust _s functions"));
+	this->users[2]->addPost(new Status("give me cake please!"));
+	makeConnection(users[1], users[0]);
+	makeConnection(users[0], users[2]);
+
+	
+
+
+
+
+
+
+
+
+
+}
+
 
 
 void Facebook::addUserToUsers(User* newUser)
@@ -162,7 +204,8 @@ void Facebook::addUserToUsers(User* newUser)
 	{
 		usersPhisSize *= 2;
 		User** newUsers = new User * [usersPhisSize];
-		for (int i = 0; i < usersLogicSize; i++) {
+		for (int i = 0; i < usersLogicSize; i++)
+		{
 			newUsers[i] = users[i];
 		}
 		delete[]users;
@@ -179,7 +222,8 @@ void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 	{
 		fanPagePhisSize *= 2;
 		FanPage** newFanPages = new FanPage * [fanPagePhisSize];
-		for (int i = 0; i < fanPageLogicalSize; i++) {
+		for (int i = 0; i < fanPageLogicalSize; i++) 
+		{
 			newFanPages[i] = fanPages[i];
 		}
 		delete[]fanPages;
@@ -317,15 +361,15 @@ void Facebook::showAllUsers()
 	{
 		cout << "User #" << i+1 << endl;
 		users[i]->showUser();
-		users[i]->showUserDebuging();
+		//users[i]->showUserDebuging();
 	}
 }
 
 void Facebook::showAllFanPages()
 {
-	for (int i = 1; i < fanPageLogicalSize+1; i++)
+	for (int i = 0; i < fanPageLogicalSize; i++)
 	{
-		cout << "Fan Page #" << i << endl;
+		cout << "Fan Page #" << i+1 << endl;
 		fanPages[i]->showFanPage();
 	}
 }

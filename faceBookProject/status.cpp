@@ -5,7 +5,7 @@ using namespace std;
 
 #define MAX_POST_LEN 151
 
-Status::Status(char * text): time(),date()
+Status::Status(const char * text): time(),date()
 {
 	textContent = new char[strlen(text) + 1];
 	strcpy(textContent, text);

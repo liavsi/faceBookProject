@@ -14,11 +14,12 @@ public:
 	void showUser() const;
 	const char* getName() const;
 	void addPost(Status* post);
-	void showPosts() const;
+	void showPosts(int iterations = -1) const;
 	void showUserDebuging();
 	void addFriend(User* other);
 	void unFriend(User* other);
 	void addFanpage(FanPage* fanpage);
+	void showFriendPosts() const;
 	//~User(); need to delete memory at the end
 
 private:
@@ -31,7 +32,7 @@ private:
 	FanPage** pages;
 	int pagesLogicSize = 0, pagePhisSize = 2;
 	int indexOfFriend(User* other);
-	int indexOfFanpage(FanPage* fanpage); 
+	int indexOfFanpage(FanPage*	fanpage); 
 	void deleteFromFriends(User* other);
 	void addFanPageToUser1(FanPage* fanpage);
 

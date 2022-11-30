@@ -9,7 +9,7 @@ class Status
 {
 
 public:
-	Status(char* text);
+	Status(const char* text);
 	~Status();
 	void showPost();
 
