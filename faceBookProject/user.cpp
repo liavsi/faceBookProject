@@ -109,8 +109,13 @@ void User::unFriend(User* other)
 
 void User::addFanpage(FanPage* fanpage)
 {
-	
+	if (indexOfFanpage(fanpage) == UNFOUND)
+	{
+		this->addFanPageToUser1(fanpage);
+		fanpage->addUserToFanPage(this);
+	}
 }
+
 
 
 int User::indexOfFriend(User* other)
@@ -125,13 +130,18 @@ int User::indexOfFriend(User* other)
 
 int User::indexOfFanpage(FanPage* fanpage)
 {
-	return 0; 
+	for (int i = 0; i < pagesLogicSize; i++) {
+		if (strcmp(pages[i]->getName(), fanpage->getName()) == 0) {
+			return i;
+		}
+	}
+	return UNFOUND;
 }
 
 void User::deleteFromFriends(User* other)
 {
 	int index = indexOfFriend(other);
-	friends[index] = NULL;
+	friends[index] = nullptr;
 	--friendsLogicSize;
 	for (int i = index; i < friendsLogicSize; i++)
 	{
