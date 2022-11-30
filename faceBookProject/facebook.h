@@ -15,14 +15,17 @@ public:
 	void addUser();
 	void addUser(User user);//manually add user
 	void addFanPage();
+	void addFanPage(FanPage fanpage);//manually add fanpage
 	void ShowPosts();
 	void showPostOfFanPage();
 	void showPostsOfUser();
 	void startMenu();
 	void ShowMostRecentPosts();
 	void makeConnection();
+	void makeConnection(User* user1, User* user2);
 	void disConnect();
 	void addFriendToFanPage();
+	void initializeFacebook();//making 3 users, 3 fanpages 2 status for each of them and three connections
 	void addFriendToFanPage(User* user, FanPage* fanpage);
 	~Facebook();
 private:

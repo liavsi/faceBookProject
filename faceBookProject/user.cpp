@@ -53,9 +53,15 @@ void User::addPost(Status* post)
 	postsLogicSize++;
 }
 
-void User::showPosts() const
+void User::showPosts(int iterations) const
 {
-	for (int i = 0; i < postsLogicSize; i++)
+	int sizeToShow;
+	if (iterations > postsLogicSize || iterations == -1)//default is -1 for all posts
+		sizeToShow = postsLogicSize;
+	else
+		sizeToShow = iterations;
+
+	for(int i = sizeToShow-1; i >= 0; i--)//from the most recent to the last
 	{
 		posts[i]->showPost();
 	}
@@ -165,4 +171,13 @@ void User::addFanPageToUser1(FanPage* fanpage)
 	}
 	pages[pagesLogicSize] = fanpage;
 	pagesLogicSize++;
+}
+
+void User::showFriendPosts() const
+{
+	for (int i = 0; i < friendsLogicSize; i++)
+	{
+		cout << this->friends[i]->getName() << "post's: " << endl;;
+		this->friends[i]->showPosts(10);
+	}
 }

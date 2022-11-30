@@ -48,7 +48,7 @@ void FanPage::addUserToFanPage(User* user)
 	}
 }
 
-FanPage::FanPage(char* name)
+FanPage::FanPage(const char* name)
 {
 	this->name = new char[strlen(name) + 1];
 	strcpy(this->name, name);
@@ -80,4 +80,19 @@ void FanPage::addUserToFans(User* user)
 		fans = newUsers;
 	}
 	fans[fansLogicalSize++] = user;
+}
+
+FanPage::FanPage(const FanPage& fanpage)
+{
+	name = fanpage.name;
+	fans = fanpage.fans;
+	fansLogicalSize = fanpage.fansLogicalSize;
+	fansphisSize = fanpage.fansphisSize;
+	posts = fanpage.posts;
+	postsLogicalSize = fanpage.postsLogicalSize;
+	postsPhisSize = fanpage.postsPhisSize;
+}
+
+FanPage::~FanPage()
+{
 }

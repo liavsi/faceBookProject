@@ -10,8 +10,9 @@ public:
 	char* getName();
 	void addPost(Status* post);
 	void showPosts();
+	FanPage(const FanPage& fanpage);
 	void addUserToFanPage(User* user);
-	FanPage(char* name);
+	FanPage(const char* name);
 	~FanPage();
 
 private:
