@@ -181,3 +181,12 @@ void User::showFriendPosts() const
 		this->friends[i]->showPosts(10);
 	}
 }
+
+void User::showFanPagePosts() const
+{
+	for (int i = 0; i < pagesLogicSize ; i++)
+	{
+		cout << this->pages[i]->getName() << "post's: " << endl;;
+		this->pages[i]->showPosts(10);
+	}
+}

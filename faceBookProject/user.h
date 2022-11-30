@@ -20,6 +20,7 @@ public:
 	void unFriend(User* other);
 	void addFanpage(FanPage* fanpage);
 	void showFriendPosts() const;
+	void showFanPagePosts() const;
 	//~User(); need to delete memory at the end
 
 private:

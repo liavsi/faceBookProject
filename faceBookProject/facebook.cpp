@@ -110,10 +110,14 @@ void Facebook::startMenu()
 			disConnect();
 			break;
 		case 8:
-			addFriendToFanPage(); // TODO : complete function
+			addFriendToFanPage(); 
+			break;// TODO : complete function
 		case 10:
 			showAllUsers();
 			showAllFanPages();
+			break;
+		case 11:
+			showAllFriendFansOFUser();
 		default:
 			break;
 		}
@@ -129,8 +133,8 @@ void Facebook::ShowMostRecentPosts()
 	User* user;
 	user = getUserNameFromUser("for which user do you want to see friend's recent posts: ");
 	user->showFriendPosts();
+	user->showFanPagePosts();
 	
-
 }
 
 void Facebook::makeConnection()
@@ -161,6 +165,12 @@ void Facebook::addFriendToFanPage()
 	user->addFanpage(fanpage);
 }
 
+void Facebook::addFriendToFanPage(User* user, FanPage* fanpage)
+{
+	user->addFanpage(fanpage);
+}
+
+
 void Facebook::initializeFacebook()
 {
 	this->addUser(User("liav", Date()));
@@ -183,6 +193,11 @@ void Facebook::initializeFacebook()
 	this->users[2]->addPost(new Status("give me cake please!"));
 	makeConnection(users[1], users[0]);
 	makeConnection(users[0], users[2]);
+	addFriendToFanPage(users[2], fanPages[1]);
+	addFriendToFanPage(users[1], fanPages[1]);
+	addFriendToFanPage(users[0], fanPages[1]);
+
+
 
 
 }
@@ -319,7 +334,7 @@ void Facebook::showPostsOfUser()
 	do
 	{
 		cout << "Which User's post would you like to show: ";
-		cin >> name;
+		cin.getline(name, MAX_NAME_LEN);
 		user = findUserByName(name);
 		if (user == nullptr)
 			cout << "This user does not exist in our system.." << endl;
@@ -336,15 +351,15 @@ void Facebook::showPostOfFanPage()
 	do
 	{
 		cout << "Which fan Page's post would you like to show: ";
-		cin >> name;
+		cin.ignore();
+		cin.getline(name, MAX_NAME_LEN);
 		fanPag = findFanPageByName(name);
 		if (fanPag == nullptr)
 			cout << "This fanpage does not exist in our system.." << endl;
 
 	} while (fanPag == nullptr);
-	//fanPag->showPosts();
+	fanPag->showPosts();
 }
-//show
 
 void Facebook::showAllUsers()
 {
@@ -380,6 +395,24 @@ User* Facebook::findUserByName(char* name)
 		}
 	}
 	return nullptr;
+}
+
+void Facebook::showAllFriendFansOFUser()
+{
+	int choice;
+	cout << "1. User. \n2.Fan Page\n(Choose number): ";
+	do
+	{
+		cin >> choice;
+		if (choice == 1)
+		{
+			//showFriendssOfUser();
+		}
+		else if (choice == 2)
+		{
+		//	showFansOfFanPage();
+		}
+	} while (choice != 1 && choice != 2);
 }
 
 User* Facebook::getUserNameFromUser(const char* text)

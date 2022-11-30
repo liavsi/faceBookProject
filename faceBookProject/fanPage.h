@@ -9,7 +9,7 @@ public:
 	void showFanPage();
 	char* getName();
 	void addPost(Status* post);
-	void showPosts();
+	void showPosts(int iterations = -1) const;
 	FanPage(const FanPage& fanpage);
 	void addUserToFanPage(User* user);
 	FanPage(const char* name);

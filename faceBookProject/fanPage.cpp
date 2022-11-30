@@ -31,9 +31,16 @@ void FanPage::addPost(Status* post)
 	}
 }
 
-void FanPage::showPosts()
+
+void FanPage::showPosts(int iterations) const
 {
-	for (int i = 0; i < postsLogicalSize; i++)
+	int sizeToShow;
+	if (iterations > postsLogicalSize || iterations == -1)//default is -1 for all posts
+		sizeToShow = postsLogicalSize;
+	else
+		sizeToShow = iterations;
+
+	for (int i = sizeToShow - 1; i >= 0; i--)//from the most recent to the last
 	{
 		posts[i]->showPost();
 	}

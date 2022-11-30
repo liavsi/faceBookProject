@@ -42,6 +42,7 @@ private:
 	void showAllUsers();
 	void showAllFanPages();
 	User* findUserByName(char* name);
+	void showAllFriendFansOFUser();
 	User* getUserNameFromUser(const char* text);
 	FanPage* getFanpageFromUser(const char* text);
 	FanPage* findFanPageByName(char* name);
