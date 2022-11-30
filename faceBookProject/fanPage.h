@@ -10,6 +10,7 @@ public:
 	char* getName();
 	void addPost(Status* post);
 	void showPosts();
+	void addUserToFanPage(User* user);
 	FanPage(char* name);
 	~FanPage();
 
@@ -19,8 +20,8 @@ private:
 	int fansLogicalSize = 0, fansphisSize = 2;
 	Status** posts;
 	int postsLogicalSize = 0, postsPhisSize = 2;
-
-
+	int indexOfUser(User* user) const;
+	void addUserToFans(User* user);
 
 
 

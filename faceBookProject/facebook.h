@@ -23,6 +23,7 @@ public:
 	void makeConnection();
 	void disConnect();
 	void addFriendToFanPage();
+	void addFriendToFanPage(User* user, FanPage* fanpage);
 	~Facebook();
 private:
 	User** users;

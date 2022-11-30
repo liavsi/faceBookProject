@@ -154,6 +154,11 @@ void Facebook::addFriendToFanPage()
 	user->addFanpage(fanpage);
 }
 
+void Facebook::addFriendToFanPage(User* user, FanPage* fanpage)
+{
+	user->addFanpage(fanpage);
+}
+
 
 
 void Facebook::addUserToUsers(User* newUser)
@@ -323,7 +328,7 @@ void Facebook::showAllUsers()
 
 void Facebook::showAllFanPages()
 {
-	for (int i = 1; i < fanPageLogicalSize+1; i++)
+	for (int i = 0; i < fanPageLogicalSize; i++)
 	{
 		cout << "Fan Page #" << i << endl;
 		fanPages[i]->showFanPage();
