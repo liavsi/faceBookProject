@@ -72,6 +72,7 @@ void User::showUserDebuging()
 	}
 	cout << endl;
 	cout << "Post logical size: " << postsLogicSize << "| post physic size: " << postPhisSize << "\n" << "friends logic size : " << friendsLogicSize << "| friends physic size: " << friendPhisSize << endl;
+	cout << "pages logical size: " << pagesLogicSize << "| pages physic size: " << pagePhisSize << endl;
 	cout << "*****************************************" << endl;
 }
 

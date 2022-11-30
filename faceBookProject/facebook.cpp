@@ -154,6 +154,11 @@ void Facebook::addFriendToFanPage()
 	user->addFanpage(fanpage);
 }
 
+void Facebook::addFriendToFanPage(User* user, FanPage* fanpage)
+{
+	user->addFanpage(fanpage);
+}
+
 
 
 void Facebook::addUserToUsers(User* newUser)
