@@ -14,11 +14,29 @@ User::User(const char* name, Date birthday) : birthday(birthday)
 }
 User::User(const User& user)
 {
-	name = user.name;
+	name = new char[strlen(user.name) + 1];
+	strcpy(name, user.name);
 	birthday = Date(user.birthday);
+	pagesLogicSize = user.pagesLogicSize;
+	pagePhisSize = user.pagePhisSize;
+	postPhisSize = user.postPhisSize;
+	postsLogicSize = user.postsLogicSize;
+	friendsLogicSize = user.friendsLogicSize;
+	friendPhisSize = user.friendPhisSize;
+
+
 	posts = new Status * [postPhisSize];
+	for (int i = 0; i < postsLogicSize; i++) {
+		posts[i] = new Status(*user.posts[i]);
+	}
 	friends = new User * [friendPhisSize];
+	for (int i = 0; i < friendsLogicSize; i++) {
+		friends[i] = user.friends[i];
+	}
 	pages = new FanPage * [pagePhisSize];
+	for (int i = 0; i < pagesLogicSize; i++) {
+		pages[i] = user.pages[i];
+	}
 
 }
 
@@ -210,4 +228,15 @@ void User::showFanPagePosts() const
 		cout << this->pages[i]->getName() << " post's: " << endl;;
 		this->pages[i]->showPosts(10);
 	}
+}
+
+User::~User()
+{
+	delete[]name;
+	for (int i = 0; i < postsLogicSize; i++) {
+		delete posts[i];
+	}
+	delete[]posts;
+	delete[]friends;
+	delete[]pages;
 }

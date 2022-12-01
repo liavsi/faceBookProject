@@ -115,23 +115,30 @@ void FanPage::addUserToFans(User* user)
 
 FanPage::FanPage(const FanPage& fanpage)
 {
-	name = fanpage.name;
-	fans = fanpage.fans;
+	name = new char[strlen(fanpage.name) + 1];
+	strcpy(name, fanpage.name);
 	fansLogicalSize = fanpage.fansLogicalSize;
 	fansphisSize = fanpage.fansphisSize;
-	posts = fanpage.posts;
 	postsLogicalSize = fanpage.postsLogicalSize;
 	postsPhisSize = fanpage.postsPhisSize;
+	fans = new User * [fansphisSize];
+	for (int i = 0; i < fansLogicalSize; i++) {
+		fans[i] = fanpage.fans[i];
+	}
+	posts = new Status * [postsPhisSize];
+	for (int i = 0; i < postsLogicalSize; i++) {
+		posts[i] = new Status(*fanpage.posts[i]);
+	}
+	
 }
 
 FanPage::~FanPage()
 {
 	cout << "deleting fanpage : " << name << endl;
 	delete[]name;
-	delete[]fans;
 	for (int i = 0; i < postsLogicalSize; i++) {
 		delete posts[i];
 	}
 	delete[]posts;
-
+	delete[]fans;
 }
