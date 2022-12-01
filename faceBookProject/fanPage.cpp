@@ -46,6 +46,23 @@ void FanPage::showPosts(int iterations) const
 	}
 }
 
+void FanPage::showFans() const
+{
+	if (fansLogicalSize == 0)
+	{
+		cout << name << " has no fans for now.."<<endl;
+	}
+	else
+	{
+		cout << name << " fans are: " << endl;
+		for (int i = 0; i < fansLogicalSize; i++)
+		{
+			cout << "fan #" << i + 1 << " name is " << fans[i]->getName() << endl;
+		}
+	}
+	
+}
+
 void FanPage::addUserToFanPage(User* user)
 {
 	if (indexOfUser(user) == UNFOUND) 

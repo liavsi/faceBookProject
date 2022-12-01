@@ -28,6 +28,8 @@ public:
 	void addFriendToFanPage();
 	void initializeFacebook();
 	void removeUserFromFanPage();
+	void showFriendsOfUser();
+	void showFansOfFanPage();
 	//making 3 users, 3 fanpages 2 status for each of them and three connections
 	void addFriendToFanPage(User* user, FanPage* fanpage);
 	~Facebook();
