@@ -111,7 +111,9 @@ void Facebook::startMenu()
 			break;
 		case 8:
 			addFriendToFanPage(); 
-			break;// TODO : complete function
+			break;
+		case 9:
+			disConnectFriendAndFanPage();
 		case 10:
 			showAllUsers();
 			showAllFanPages();
@@ -156,6 +158,13 @@ void Facebook::disConnect()
 	user1 = getUserNameFromUser("please enter first user's name: ");
 	user2 = getUserNameFromUser("please enter second user's name: ");
 	user1->unFriend(user2);
+}
+
+void Facebook::disConnectFriendAndFanPage()
+{
+	User* user = getUserNameFromUser("please enter user's name: ");
+	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	user->removeFanPage(fanpage);
 }
 
 void Facebook::addFriendToFanPage()
@@ -446,7 +455,7 @@ FanPage* Facebook::getFanpageFromUser(const char* text)
 	do
 	{
 		cout << text;
-		cin >> name;
+		cin.getline(name, MAX_NAME_LEN);
 		fanPage = findFanPageByName(name);
 		if (fanPage == nullptr)
 			cout << "This fan page does not exist in our system..";

@@ -24,6 +24,7 @@ public:
 	void makeConnection();
 	void makeConnection(User* user1, User* user2);
 	void disConnect();
+	void disConnectFriendAndFanPage();
 	void addFriendToFanPage();
 	void initializeFacebook();
 	void removeUserFromFanPage();
