@@ -240,3 +240,20 @@ User::~User()
 	delete[]friends;
 	delete[]pages;
 }
+
+void User::showFriends() const
+{
+	if (friendsLogicSize == 0)
+	{
+		cout << name << " has no friends for now.." << endl;
+	}
+	else
+	{
+		cout << name << " friends are: " << endl;
+		for (int i = 0; i < friendsLogicSize; i++)
+		{
+			cout << "friend #" << i + 1 << " name is " << friends[i]->getName() << endl;
+		}
+	}
+
+}

@@ -22,6 +22,7 @@ public:
 	void removeFanPage(FanPage* fanpage);
 	void showFriendPosts() const;
 	void showFanPagePosts() const;
+	void showFriends() const;
 	~User(); //need to delete memory at the end
 
 private:

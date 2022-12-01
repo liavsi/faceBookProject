@@ -10,6 +10,7 @@ public:
 	char* getName();
 	void addPost(Status* post);
 	void showPosts(int iterations = -1) const;
+	void showFans() const;
 	FanPage(const FanPage& fanpage);
 	void addUserToFanPage(User* user);
 	void removeFromFans(User* user);
