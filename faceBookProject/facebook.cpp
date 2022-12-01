@@ -114,12 +114,14 @@ void Facebook::startMenu()
 			break;
 		case 9:
 			disConnectFriendAndFanPage();
+			break;
 		case 10:
 			showAllUsers();
 			showAllFanPages();
 			break;
 		case 11:
 			showAllFriendFansOFUser();
+			break;
 		default:
 			break;
 		}
@@ -402,6 +404,19 @@ void Facebook::showAllFanPages()
 
 //helpers
 
+FanPage* Facebook::findFanPageByName(char* name)
+{
+	for (int i = 0; i < fanPageLogicalSize; i++)
+	{
+		if (strcmp(fanPages[i]->getName(),name) == 0)
+		{
+			return fanPages[i];
+		}
+	}
+	
+	return nullptr;
+}
+
 User* Facebook::findUserByName(char* name)
 {
 	for (int i = 0; i < usersLogicSize; i++)
@@ -439,7 +454,8 @@ User* Facebook::getUserNameFromUser(const char* text)
 	do
 	{
 		cout << text;
-		cin >> name;
+		cin.ignore();
+		cin.getline(name, MAX_NAME_LEN);
 		user = findUserByName(name);
 		if (user == nullptr)
 			cout << "This user does not exist in our system.." << endl;
@@ -464,18 +480,7 @@ FanPage* Facebook::getFanpageFromUser(const char* text)
 	return fanPage;
 }
 
-FanPage* Facebook::findFanPageByName(char* name)
-{
-	for (int i = 0; i < fanPageLogicalSize; i++)
-	{
-		if (strcmp(fanPages[i]->getName(),name) == 0)
-		{
-			return fanPages[i];
-		}
-	}
-	
-	return nullptr;
-}
+
 
 Facebook::~Facebook()
 {
