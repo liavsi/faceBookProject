@@ -12,6 +12,7 @@ public:
 	void showPosts(int iterations = -1) const;
 	FanPage(const FanPage& fanpage);
 	void addUserToFanPage(User* user);
+	void removeFromFans(User* user);
 	FanPage(const char* name);
 	~FanPage();
 
@@ -23,6 +24,7 @@ private:
 	int postsLogicalSize = 0, postsPhisSize = 2;
 	int indexOfUser(User* user) const;
 	void addUserToFans(User* user);
+	void deleteFromFans(User* user);
 
 
 

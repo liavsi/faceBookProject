@@ -19,6 +19,7 @@ public:
 	void addFriend(User* other);
 	void unFriend(User* other);
 	void addFanpage(FanPage* fanpage);
+	void removeFanPage(FanPage* fanpage);
 	void showFriendPosts() const;
 	void showFanPagePosts() const;
 	//~User(); need to delete memory at the end
@@ -35,6 +36,7 @@ private:
 	int indexOfFriend(User* other);
 	int indexOfFanpage(FanPage*	fanpage); 
 	void deleteFromFriends(User* other);
+	void deleteFromPages(FanPage* fanpage);
 	void addFanPageToUser1(FanPage* fanpage);
 
 };

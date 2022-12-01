@@ -55,6 +55,28 @@ void FanPage::addUserToFanPage(User* user)
 	}
 }
 
+
+void FanPage::removeFromFans(User* user)
+{
+	if (indexOfUser(user) != UNFOUND)
+	{
+		this->deleteFromFans(user);
+		user->removeFanPage(this);
+	}
+}
+
+void FanPage::deleteFromFans(User* user)
+{
+	int index = indexOfUser(user);
+	fans[index] = nullptr;
+	--fansLogicalSize;
+	for (int i = index; i < fansLogicalSize; i++)
+	{
+		fans[i] = fans[i + 1];
+	}
+}
+
+
 FanPage::FanPage(const char* name)
 {
 	this->name = new char[strlen(name) + 1];
@@ -88,6 +110,8 @@ void FanPage::addUserToFans(User* user)
 	}
 	fans[fansLogicalSize++] = user;
 }
+
+
 
 FanPage::FanPage(const FanPage& fanpage)
 {

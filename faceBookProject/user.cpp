@@ -103,6 +103,7 @@ void User::addFriend(User* other)
 	}
 }
 
+
 void User::unFriend(User* other)
 {
 	if (indexOfFriend(other) !=UNFOUND)
@@ -120,6 +121,15 @@ void User::addFanpage(FanPage* fanpage)
 	{
 		this->addFanPageToUser1(fanpage);
 		fanpage->addUserToFanPage(this);
+	}
+}
+
+void User::removeFanPage(FanPage* fanpage)
+{
+	if (indexOfFanpage(fanpage) != UNFOUND)
+	{
+		deleteFromPages(fanpage);
+		fanpage->removeFromFans(this);
 	}
 }
 
@@ -153,6 +163,17 @@ void User::deleteFromFriends(User* other)
 	for (int i = index; i < friendsLogicSize; i++)
 	{
 		friends[i] = friends[i + 1];
+	}
+}
+
+void User::deleteFromPages(FanPage* fanpage)
+{
+	int index = indexOfFanpage(fanpage);
+	pages[index] = nullptr;
+	--pagesLogicSize;
+	for (int i = index; i < pagesLogicSize; i++)
+	{
+		pages[i] = pages[i + 1];
 	}
 }
 

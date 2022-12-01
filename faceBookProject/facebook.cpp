@@ -141,7 +141,7 @@ void Facebook::makeConnection()
 {
 	User* user1, *user2;
 	user1 = getUserNameFromUser("please enter first user's name: ");
-	user2 = getUserNameFromUser("please enter first user's name: ");
+	user2 = getUserNameFromUser("please enter second user's name: ");
 	user1->addFriend(user2);
 }
 
@@ -163,6 +163,14 @@ void Facebook::addFriendToFanPage()
 	User* user = getUserNameFromUser("please enter user's name: ");
 	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
 	user->addFanpage(fanpage);
+}
+
+
+void Facebook::removeUserFromFanPage()
+{
+	User* user = getUserNameFromUser("please enter user's name: ");
+	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	user->removeFanPage(fanpage);
 }
 
 void Facebook::addFriendToFanPage(User* user, FanPage* fanpage)
@@ -441,7 +449,7 @@ FanPage* Facebook::getFanpageFromUser(const char* text)
 		cin >> name;
 		fanPage = findFanPageByName(name);
 		if (fanPage == nullptr)
-			cout << "This user does not exist in our system..";
+			cout << "This fan page does not exist in our system..";
 
 	} while (fanPage == nullptr);
 	return fanPage;
