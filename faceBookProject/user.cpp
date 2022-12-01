@@ -103,6 +103,7 @@ void User::addFriend(User* other)
 	}
 }
 
+
 void User::unFriend(User* other)
 {
 	if (indexOfFriend(other) !=UNFOUND)
@@ -120,6 +121,15 @@ void User::addFanpage(FanPage* fanpage)
 	{
 		this->addFanPageToUser1(fanpage);
 		fanpage->addUserToFanPage(this);
+	}
+}
+
+void User::removeFanPage(FanPage* fanpage)
+{
+	if (indexOfFanpage(fanpage) != UNFOUND)
+	{
+		deleteFromPages(fanpage);
+		fanpage->removeFromFans(this);
 	}
 }
 
@@ -156,6 +166,17 @@ void User::deleteFromFriends(User* other)
 	}
 }
 
+void User::deleteFromPages(FanPage* fanpage)
+{
+	int index = indexOfFanpage(fanpage);
+	pages[index] = nullptr;
+	--pagesLogicSize;
+	for (int i = index; i < pagesLogicSize; i++)
+	{
+		pages[i] = pages[i + 1];
+	}
+}
+
 void User::addFanPageToUser1(FanPage* fanpage)
 {
 	if (pagesLogicSize == pagePhisSize)
@@ -177,7 +198,16 @@ void User::showFriendPosts() const
 {
 	for (int i = 0; i < friendsLogicSize; i++)
 	{
-		cout << this->friends[i]->getName() << "post's: " << endl;;
+		cout << this->friends[i]->getName() << " post's: " << endl;;
 		this->friends[i]->showPosts(10);
+	}
+}
+
+void User::showFanPagePosts() const
+{
+	for (int i = 0; i < pagesLogicSize ; i++)
+	{
+		cout << this->pages[i]->getName() << " post's: " << endl;;
+		this->pages[i]->showPosts(10);
 	}
 }

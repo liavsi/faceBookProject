@@ -31,9 +31,16 @@ void FanPage::addPost(Status* post)
 	}
 }
 
-void FanPage::showPosts()
+
+void FanPage::showPosts(int iterations) const
 {
-	for (int i = 0; i < postsLogicalSize; i++)
+	int sizeToShow;
+	if (iterations > postsLogicalSize || iterations == -1)//default is -1 for all posts
+		sizeToShow = postsLogicalSize;
+	else
+		sizeToShow = iterations;
+
+	for (int i = sizeToShow - 1; i >= 0; i--)//from the most recent to the last
 	{
 		posts[i]->showPost();
 	}
@@ -47,6 +54,28 @@ void FanPage::addUserToFanPage(User* user)
 		user->addFanpage(this);
 	}
 }
+
+
+void FanPage::removeFromFans(User* user)
+{
+	if (indexOfUser(user) != UNFOUND)
+	{
+		this->deleteFromFans(user);
+		user->removeFanPage(this);
+	}
+}
+
+void FanPage::deleteFromFans(User* user)
+{
+	int index = indexOfUser(user);
+	fans[index] = nullptr;
+	--fansLogicalSize;
+	for (int i = index; i < fansLogicalSize; i++)
+	{
+		fans[i] = fans[i + 1];
+	}
+}
+
 
 FanPage::FanPage(const char* name)
 {
@@ -81,6 +110,8 @@ void FanPage::addUserToFans(User* user)
 	}
 	fans[fansLogicalSize++] = user;
 }
+
+
 
 FanPage::FanPage(const FanPage& fanpage)
 {
