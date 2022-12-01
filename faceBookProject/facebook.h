@@ -24,8 +24,11 @@ public:
 	void makeConnection();
 	void makeConnection(User* user1, User* user2);
 	void disConnect();
+	void disConnectFriendAndFanPage();
 	void addFriendToFanPage();
-	void initializeFacebook();//making 3 users, 3 fanpages 2 status for each of them and three connections
+	void initializeFacebook();
+	void removeUserFromFanPage();
+	//making 3 users, 3 fanpages 2 status for each of them and three connections
 	void addFriendToFanPage(User* user, FanPage* fanpage);
 	~Facebook();
 private:
@@ -42,6 +45,7 @@ private:
 	void showAllUsers();
 	void showAllFanPages();
 	User* findUserByName(char* name);
+	void showAllFriendFansOFUser();
 	User* getUserNameFromUser(const char* text);
 	FanPage* getFanpageFromUser(const char* text);
 	FanPage* findFanPageByName(char* name);
