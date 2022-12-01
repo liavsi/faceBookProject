@@ -24,8 +24,6 @@ private:
 	int indexOfUser(User* user) const;
 	void addUserToFans(User* user);
 
-
-
 };
 
 
