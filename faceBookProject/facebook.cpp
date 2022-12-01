@@ -17,9 +17,10 @@ void Facebook::addUser()
 	char birthday[MAX_DATE_LEN];
 	
 	cout << "Enter username:" << endl;
-	cin.ignore('\n');
-	cin.getline(username,MAX_NAME_LEN);
-
+	do
+	{
+		cin.getline(username, MAX_NAME_LEN);
+	} while (username[0] == 0);
 	cout << "Enter birthday: (format DD.MM.YYYY)" << endl;
 
 	cin.getline(birthday, MAX_DATE_LEN);
