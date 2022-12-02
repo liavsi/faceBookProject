@@ -466,4 +466,13 @@ FanPage* Facebook::getFanpageFromUser(const char* text)
 
 Facebook::~Facebook()
 {
+	cout << "Deleting facebook..." << endl;
+	for (int i = 0; i < usersLogicSize; i++) {
+		delete users[i];
+	}
+	delete[]users;
+	for (int i = 0; i < fanPageLogicalSize; i++) {
+		delete fanPages[i];
+	}
+	delete[]fanPages;
 }

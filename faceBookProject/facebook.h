@@ -12,6 +12,8 @@ class Facebook
 {
 public:
 	Facebook();
+	~Facebook();
+
 	void addUser();
 	void addUser(User user);//manually add user
 	void addFanPage();
@@ -32,12 +34,14 @@ public:
 	void showFansOfFanPage();
 	//making 3 users, 3 fanpages 2 status for each of them and three connections
 	void addFriendToFanPage(User* user, FanPage* fanpage);
-	~Facebook();
+	
 private:
 	User** users;
 	int usersLogicSize=0, usersPhisSize=2;
 	FanPage** fanPages;
 	int fanPageLogicalSize=0, fanPagePhisSize = 2;
+
+
 	void addUserToUsers(User* newUser);
 	void addFanPageToFanPages(FanPage* newFanPage);
 	void printMenu();

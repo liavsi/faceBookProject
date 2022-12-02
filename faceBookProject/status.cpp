@@ -14,6 +14,14 @@ Status::Status(const char * text): time(),date()
 	
 }
 
+Status::Status(const Status& other)
+{
+	textContent = new char[strlen(other.textContent) + 1];
+	strcpy(textContent, other.textContent);
+	date = other.date;
+	time = other.time;
+}
+
 
 Status::~Status()
 {
