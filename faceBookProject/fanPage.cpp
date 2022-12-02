@@ -149,7 +149,6 @@ FanPage::FanPage(const FanPage& fanpage)
 
 FanPage::~FanPage()
 {
-	cout << "deleting fanpage : " << name << endl;
 	delete[]name;
 	for (int i = 0; i < postsLogicalSize; i++) {
 		delete posts[i];
