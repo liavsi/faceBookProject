@@ -10,6 +10,7 @@ class Status
 
 public:
 	Status(const char* text);
+	Status(const Status& other);
 	~Status();
 	void showPost() const;
 

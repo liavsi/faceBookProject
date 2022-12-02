@@ -27,8 +27,6 @@ private:
 	void addUserToFans(User* user);
 	void deleteFromFans(User* user);
 
-
-
 };
 
 

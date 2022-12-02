@@ -22,7 +22,7 @@ public:
 	void showFriendPosts() const;
 	void showFanPagePosts() const;
 	void showFriends() const;
-	//~User(); need to delete memory at the end
+	~User(); //need to delete memory at the end
 
 private:
 	char* name;
@@ -33,6 +33,7 @@ private:
 	int friendsLogicSize = 0, friendPhisSize = 2;
 	FanPage** pages;
 	int pagesLogicSize = 0, pagePhisSize = 2;
+
 	int indexOfFriend(User* other);
 	int indexOfFanpage(FanPage*	fanpage); 
 	void deleteFromFriends(User* other);
