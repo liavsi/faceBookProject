@@ -18,11 +18,11 @@ public:
 	void addUser(User user);//manually add user
 	void addFanPage();
 	void addFanPage(FanPage fanpage);//manually add fanpage
-	void ShowPosts();
-	void showPostOfFanPage();
-	void showPostsOfUser();
+	void ShowPosts() const;
+	void showPostOfFanPage() const;
+	void showPostsOfUser() const;
 	void startMenu();
-	void ShowMostRecentPosts();
+	void ShowMostRecentPosts() const;
 	void makeConnection();
 	void makeConnection(User* user1, User* user2);
 	void disConnect();
@@ -30,8 +30,8 @@ public:
 	void addFriendToFanPage();
 	void initializeFacebook();
 	void removeUserFromFanPage();
-	void showFriendsOfUser();
-	void showFansOfFanPage();
+	void showFriendsOfUser() const;
+	void showFansOfFanPage()const;
 	//making 3 users, 3 fanpages 2 status for each of them and three connections
 	void addFriendToFanPage(User* user, FanPage* fanpage);
 	
@@ -44,17 +44,21 @@ private:
 
 	void addUserToUsers(User* newUser);
 	void addFanPageToFanPages(FanPage* newFanPage);
-	void printMenu();
+	void printMenu() const;
 	void addStatus();
 	void addStatusToUser();
 	void addStatusToFanPage();
-	void showAllUsers();
-	void showAllFanPages();
-	User* findUserByName(char* name);
-	void showAllFriendFansOFUser();
-	User* getUserNameFromUser(const char* text);
-	FanPage* getFanpageFromUser(const char* text);
+	void showAllUsers() const;
+	void showAllFanPages() const;
 	FanPage* findFanPageByName(char* name);
+	const FanPage* findFanPageByName(char* name) const;
+	User* findUserByName(char* name);
+	const User* findUserByName(char* name) const;
+	void showAllFriendFansOFUser() const;
+	User* getUserNameFromUser(const char* text);
+	const User* getUserNameFromUser(const char* text) const;
+	FanPage* getFanpageFromUser(const char* text) ;
+	const FanPage* getFanpageFromUser(const char* text) const;
 
 };
 

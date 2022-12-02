@@ -9,9 +9,7 @@ Status::Status(const char * text): time(),date()
 {
 	textContent = new char[strlen(text) + 1];
 	strcpy(textContent, text);
-	
 
-	
 }
 
 Status::Status(const Status& other)
@@ -28,7 +26,7 @@ Status::~Status()
 	delete textContent;
 }
 
-void Status::showPost()
+void Status::showPost() const
 {
 	cout << textContent << "| posted at: ";
 	date.showDate();

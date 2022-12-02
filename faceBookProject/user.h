@@ -15,7 +15,6 @@ public:
 	const char* getName() const;
 	void addPost(Status* post);
 	void showPosts(int iterations = -1) const;
-	void showUserDebuging();
 	void addFriend(User* other);
 	void unFriend(User* other);
 	void addFanpage(FanPage* fanpage);

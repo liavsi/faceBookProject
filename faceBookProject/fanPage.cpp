@@ -3,32 +3,30 @@
 #define UNFOUND -1
 
 
-void FanPage::showFanPage()
+void FanPage::showFanPage() const
 {
 	cout << "Fan Page name: " << name << endl;
 }
 
-char* FanPage::getName()
+const char* FanPage::getName() const
 {
 	return name;
 }
 
 void FanPage::addPost(Status* post)
 {
+	if (postsPhisSize == postsLogicalSize)
 	{
-		if (postsPhisSize == postsLogicalSize)
-		{
-			postsPhisSize *= 2;
-			Status** newPosts = new Status * [postsPhisSize];
-			for (int i = 0; i < postsLogicalSize; i++) {
-				posts[i] = newPosts[i];
-			}
-			delete[]posts;
-			posts = newPosts;
+		postsPhisSize *= 2;
+		Status** newPosts = new Status * [postsPhisSize];
+		for (int i = 0; i < postsLogicalSize; i++) {
+			posts[i] = newPosts[i];
 		}
-		posts[postsLogicalSize] = post;
-		postsLogicalSize++;
+		delete[]posts;
+		posts = newPosts;
 	}
+	posts[postsLogicalSize] = post;
+	postsLogicalSize++;
 }
 
 
@@ -63,7 +61,7 @@ void FanPage::showFans() const
 	
 }
 
-void FanPage::addUserToFanPage(User* user)
+void FanPage::addUserToFanPage(User* user)//same as with User..
 {
 	if (indexOfUser(user) == UNFOUND) 
 	{
@@ -82,7 +80,7 @@ void FanPage::removeFromFans(User* user)
 	}
 }
 
-void FanPage::deleteFromFans(User* user)
+void FanPage::deleteFromFans(User* user)//deleting from fans array and taking all the others to fill the void
 {
 	int index = indexOfUser(user);
 	fans[index] = nullptr;
@@ -151,7 +149,6 @@ FanPage::FanPage(const FanPage& fanpage)
 
 FanPage::~FanPage()
 {
-	cout << "deleting fanpage : " << name << endl;
 	delete[]name;
 	for (int i = 0; i < postsLogicalSize; i++) {
 		delete posts[i];

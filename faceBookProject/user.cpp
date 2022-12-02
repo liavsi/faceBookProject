@@ -5,6 +5,7 @@
 
 User::User(const char* name, Date birthday) : birthday(birthday)
 {
+	//builds User with name and birthday date (other attributes set to zero but memory allocated)
 	this->name = new char[strlen(name) + 1];
 	strcpy(this->name, name);
 	this->birthday = birthday;
@@ -14,6 +15,7 @@ User::User(const char* name, Date birthday) : birthday(birthday)
 }
 User::User(const User& user)
 {
+	//copy the name and birth day and sets memory, we assume no cpy on user with more data than that
 	name = new char[strlen(user.name) + 1];
 	strcpy(name, user.name);
 	birthday = Date(user.birthday);
@@ -42,7 +44,7 @@ User::User(const User& user)
 
 void User::showUser() const
 {
-
+	
 	cout << "User name: " << name << endl;
 	cout << "birth date: ";	
 	birthday.showDate();
@@ -57,6 +59,7 @@ const char* User::getName() const
 
 void User::addPost(Status* post)
 {
+	
 	if (postsLogicSize == postPhisSize)
 	{
 		postPhisSize *= 2;
@@ -73,36 +76,99 @@ void User::addPost(Status* post)
 
 void User::showPosts(int iterations) const
 {
-	int sizeToShow;
+	int sizeToShow;//how many post needs to be shown
 	if (iterations > postsLogicSize || iterations == -1)//default is -1 for all posts
 		sizeToShow = postsLogicSize;
 	else
 		sizeToShow = iterations;
-
 	for(int i = sizeToShow-1; i >= 0; i--)//from the most recent to the last
 	{
 		posts[i]->showPost();
 	}
 }
 
-void User::showUserDebuging()
+
+
+
+
+
+void User::unFriend(User* other)
 {
-	cout << "****************DEBUGGING****************" << endl;
-	cout << "User name: " << name << endl;
-	cout << "birth date: ";
-	birthday.showDate();
-	for (int i = 0; i < friendsLogicSize; i++) {
-		cout << "	Friend name : " << friends[i]->getName() << endl;
+	if (indexOfFriend(other) !=UNFOUND)//if "other" is found he needs to be deleted
+	{
+		deleteFromFriends(other);
+		other->unFriend(this);
 	}
-	cout << endl;
-	cout << "Post logical size: " << postsLogicSize << "| post physic size: " << postPhisSize << "\n" << "friends logic size : " << friendsLogicSize << "| friends physic size: " << friendPhisSize << endl;
-	cout << "pages logical size: " << pagesLogicSize << "| pages physic size: " << pagePhisSize << endl;
-	cout << "*****************************************" << endl;
+}
+
+
+
+void User::addFanpage(FanPage* fanpage)//similar to add friend
+{
+	
+	if (indexOfFanpage(fanpage) == UNFOUND)
+	{
+		this->addFanPageToUser1(fanpage);
+		fanpage->addUserToFanPage(this);
+	}
+}
+
+void User::removeFanPage(FanPage* fanpage)//similar to unFriend
+{
+	if (indexOfFanpage(fanpage) != UNFOUND)
+	{
+		deleteFromPages(fanpage);
+		fanpage->removeFromFans(this);
+	}
+}
+
+
+
+int User::indexOfFriend(User* other)//checks if "other" is friend and signals UNFOUND for no or index in array otherwise
+{
+	for (int i = 0; i < friendsLogicSize; i++)
+	{
+		if (friends[i] == other)
+			return i;
+	}
+	return UNFOUND;
+}
+
+int User::indexOfFanpage(FanPage* fanpage)//same as indexOfFriend just with FanPage
+{
+	for (int i = 0; i < pagesLogicSize; i++) {
+		if (strcmp(pages[i]->getName(), fanpage->getName()) == 0) {
+			return i;
+		}
+	}
+	return UNFOUND;
+}
+
+void User::deleteFromFriends(User* other)//remove "other" from array and takes all the others back to fill the void 
+{
+	int index = indexOfFriend(other);
+	friends[index] = nullptr;
+	--friendsLogicSize;
+	for (int i = index; i < friendsLogicSize; i++)
+	{
+		friends[i] = friends[i + 1];
+	}
+}
+
+void User::deleteFromPages(FanPage* fanpage)//similar to above
+{
+	int index = indexOfFanpage(fanpage);
+	pages[index] = nullptr;
+	--pagesLogicSize;
+	for (int i = index; i < pagesLogicSize; i++)
+	{
+		pages[i] = pages[i + 1];
+	}
 }
 
 void User::addFriend(User* other)
 {
-	if (indexOfFriend(other) == UNFOUND)
+	if (indexOfFriend(other) == UNFOUND)//didnt find "other" in User.friends so need to be added
 	{
 		if (friendsLogicSize == friendPhisSize)
 		{
@@ -117,81 +183,7 @@ void User::addFriend(User* other)
 		}
 		friends[friendsLogicSize] = other;
 		friendsLogicSize++;
-		other->addFriend(this);
-	}
-}
-
-
-void User::unFriend(User* other)
-{
-	if (indexOfFriend(other) !=UNFOUND)
-	{
-		deleteFromFriends(other);
-		other->unFriend(this);
-	}
-}
-
-
-
-void User::addFanpage(FanPage* fanpage)
-{
-	if (indexOfFanpage(fanpage) == UNFOUND)
-	{
-		this->addFanPageToUser1(fanpage);
-		fanpage->addUserToFanPage(this);
-	}
-}
-
-void User::removeFanPage(FanPage* fanpage)
-{
-	if (indexOfFanpage(fanpage) != UNFOUND)
-	{
-		deleteFromPages(fanpage);
-		fanpage->removeFromFans(this);
-	}
-}
-
-
-
-int User::indexOfFriend(User* other)
-{
-	for (int i = 0; i < friendsLogicSize; i++)
-	{
-		if (friends[i] == other)
-			return i;
-	}
-	return UNFOUND;
-}
-
-int User::indexOfFanpage(FanPage* fanpage)
-{
-	for (int i = 0; i < pagesLogicSize; i++) {
-		if (strcmp(pages[i]->getName(), fanpage->getName()) == 0) {
-			return i;
-		}
-	}
-	return UNFOUND;
-}
-
-void User::deleteFromFriends(User* other)
-{
-	int index = indexOfFriend(other);
-	friends[index] = nullptr;
-	--friendsLogicSize;
-	for (int i = index; i < friendsLogicSize; i++)
-	{
-		friends[i] = friends[i + 1];
-	}
-}
-
-void User::deleteFromPages(FanPage* fanpage)
-{
-	int index = indexOfFanpage(fanpage);
-	pages[index] = nullptr;
-	--pagesLogicSize;
-	for (int i = index; i < pagesLogicSize; i++)
-	{
-		pages[i] = pages[i + 1];
+		other->addFriend(this);//add "this" to other with the same method
 	}
 }
 
@@ -212,8 +204,14 @@ void User::addFanPageToUser1(FanPage* fanpage)
 	pagesLogicSize++;
 }
 
+
+
 void User::showFriendPosts() const
 {
+	if (friendsLogicSize == 0)
+	{
+		cout << name << " has no friends yet.." << endl;
+	}
 	for (int i = 0; i < friendsLogicSize; i++)
 	{
 		cout << this->friends[i]->getName() << " post's: " << endl;;
