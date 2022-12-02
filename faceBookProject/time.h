@@ -9,7 +9,7 @@ class Time
 {
 public:
 	Time();
-	void showTime();
+	void showTime() const;
 
 private:
 	int seconds;

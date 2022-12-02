@@ -7,7 +7,7 @@ class Date
 {
 public:
 	Date();
-	Date(const Date& date);
+	Date(const Date& date); 
 	Date(char* birthdayStr);
 	int compare(const Date& date);
 	void showDate() const;

@@ -5,6 +5,7 @@ using namespace std;
 
 Time::Time()
 {
+	//using ctime function to set time as current time of the machine
 	time_t curr_time;
 	curr_time = time(NULL);
 	char* timeText = ctime(&curr_time);
@@ -13,7 +14,7 @@ Time::Time()
 }
 
 
-void Time::showTime()
+void Time::showTime() const
 {
-	cout << hours << ":" << minutes << ":" << seconds;
+	printf("%02d:%02d:%02d", hours, minutes, seconds);
 }

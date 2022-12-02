@@ -11,55 +11,8 @@ Facebook::Facebook()
 }
 
 
-void Facebook::addUser()
-{
-	char username[MAX_NAME_LEN];
-	char birthday[MAX_DATE_LEN];
-	
-	cout << "Enter username:" << endl;
-	do
-	{
-		cin.getline(username, MAX_NAME_LEN);
-	} while (username[0] == 0);
-	cout << "Enter birthday: (format DD.MM.YYYY)" << endl;
 
-	cin.getline(birthday, MAX_DATE_LEN);
-	User* newUser = new User(username, Date(birthday));
-	addUserToUsers(newUser);
-}
-
-void Facebook::addUser(User user)
-{
-	User* newUser = new User(user);
-	addUserToUsers(newUser);
-}
-
-void Facebook::addFanPage()
-{
-	char pageName[MAX_NAME_LEN];
-
-	cout << "Enter fan page name: ";
-	cin.ignore();
-	cin.getline(pageName, MAX_NAME_LEN);
-
-	FanPage* newFanPage= new FanPage(pageName);
-	addFanPageToFanPages(newFanPage);
-}
-
-void Facebook::addFanPage(FanPage fanpage)
-{
-	FanPage* newFanPage = new FanPage(fanpage);
-	addFanPageToFanPages(newFanPage);
-}
-
-
-
-
-
-
-//menu part
-
-void Facebook::printMenu()
+void Facebook::printMenu() const
 {
 	cout << "--------------Menu-----------------" << endl;
 	cout << "\n1 - Add user to Facebook" << endl;
@@ -78,6 +31,52 @@ void Facebook::printMenu()
 
 
 }
+
+
+void Facebook::addUser()
+{
+	char username[MAX_NAME_LEN];
+	char birthday[MAX_DATE_LEN];
+	
+	cout << "Enter username:" << endl;
+	do
+	{
+		cin.getline(username, MAX_NAME_LEN);
+	} while (username[0] == 0);
+	cout << "Enter birthday: (format DD.MM.YYYY)" << endl;
+	do
+	{
+		cin.getline(birthday, MAX_NAME_LEN);
+	} while (birthday[0] == 0);
+	User* newUser = new User(username, Date(birthday));
+	addUserToUsers(newUser);
+}
+
+void Facebook::addUser(User user)
+{
+	User* newUser = new User(user);
+	addUserToUsers(newUser);
+}
+
+void Facebook::addFanPage()
+{
+	char pageName[MAX_NAME_LEN];
+
+	cout << "Enter fan page name: ";
+	do//to avoid empty words becuase of getline
+		cin.getline(pageName, MAX_NAME_LEN);
+	while (pageName[0] == 0);
+	FanPage* newFanPage= new FanPage(pageName);
+	addFanPageToFanPages(newFanPage);
+}
+
+void Facebook::addFanPage(FanPage fanpage)
+{
+	FanPage* newFanPage = new FanPage(fanpage);
+	addFanPageToFanPages(newFanPage);
+}
+
+
 
 void Facebook::startMenu()
 {
@@ -128,19 +127,17 @@ void Facebook::startMenu()
 			break;
 		}
 	} while (choice!=EXIT);
-	
-
 
 }
 
-void Facebook::ShowMostRecentPosts()
+void Facebook::ShowMostRecentPosts() const
 {
 	char name[MAX_NAME_LEN];
-	User* user;
+	const User* user;
 	user = getUserNameFromUser("for which user do you want to see friend's recent posts: ");
 	user->showFriendPosts();
 	user->showFanPagePosts();
-	
+
 }
 
 void Facebook::makeConnection()
@@ -164,6 +161,7 @@ void Facebook::disConnect()
 	user1->unFriend(user2);
 }
 
+
 void Facebook::disConnectFriendAndFanPage()
 {
 	User* user = getUserNameFromUser("please enter user's name: ");
@@ -186,15 +184,15 @@ void Facebook::removeUserFromFanPage()
 	user->removeFanPage(fanpage);
 }
 
-void Facebook::showFriendsOfUser()
+void Facebook::showFriendsOfUser() const
 {
-	User* user = getUserNameFromUser("please enter user's name: ");
+	const User* user = getUserNameFromUser("please enter user's name: ");
 	user->showFriends();
 }
 
-void Facebook::showFansOfFanPage()
+void Facebook::showFansOfFanPage() const
 {
-	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	const FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
 	fanpage->showFans();
 }
 
@@ -293,10 +291,6 @@ void Facebook::addStatus()
 		}
 	} while (choice != 1 && choice!=2);
 	
-	
-	
-	
-
 }
 
 void Facebook::addStatusToUser()
@@ -304,11 +298,10 @@ void Facebook::addStatusToUser()
 	User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
 	char text[MAX_POST_LEN];
 	cout << "Enter text for your post (max 150 letters):";
-	cin.ignore();
-	cin.getline(text, MAX_POST_LEN);	
+	do//to avoid empty words becuase of getline
+		cin.getline(text, MAX_NAME_LEN);
+	while (text[0] == 0);
 	user->addPost(new Status(text)); //c'tor build status from input text
-	
-
 
 }
 
@@ -318,8 +311,9 @@ void Facebook::addStatusToFanPage()
 		"Which Fan Page do you want to add a Post to : ");
 	char text[MAX_POST_LEN];
 	cout << "Enter text for your post (max 150 letters):";
-	cin.ignore();
-	cin.getline(text, MAX_POST_LEN);
+	do//to avoid empty words becuase of getline
+		cin.getline(text, MAX_NAME_LEN);
+	while (text[0] == 0);
 	fanPage->addPost(new Status(text)); //c'tor build status from input text
 
 
@@ -328,7 +322,7 @@ void Facebook::addStatusToFanPage()
 
 //show posts of a user/fan page
 
-void Facebook::ShowPosts()
+void Facebook::ShowPosts() const
 {
 	int choice;
 	cout << "1. User. \n2.Fan Page\n(Choose number): ";
@@ -347,30 +341,28 @@ void Facebook::ShowPosts()
 }
 
 
-void Facebook::showPostsOfUser()
+void Facebook::showPostsOfUser() const
 {
-	User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
-	user->showPosts(); //c'tor build status from input text
-
+	const User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
+	user->showPosts();
 }
 
-void Facebook::showPostOfFanPage()
+void Facebook::showPostOfFanPage()  const
 {
-	FanPage* fanpage = getFanpageFromUser("Which fan Page's post would you like to show: ");
+	const FanPage* fanpage = getFanpageFromUser("Which fan Page's post would you like to show: ");
 	fanpage->showPosts();
 }
 
-void Facebook::showAllUsers()
+void Facebook::showAllUsers()  const
 {
 	for (int i = 0; i < usersLogicSize; i++)
 	{
 		cout << "User #" << i+1 << endl;
 		users[i]->showUser();
-		//users[i]->showUserDebuging();
 	}
 }
 
-void Facebook::showAllFanPages()
+void Facebook::showAllFanPages()  const
 {
 	for (int i = 0; i < fanPageLogicalSize; i++)
 	{
@@ -384,7 +376,7 @@ void Facebook::showAllFanPages()
 
 //helpers
 
-FanPage* Facebook::findFanPageByName(char* name)
+FanPage* Facebook::findFanPageByName(char* name) 
 {
 	for (int i = 0; i < fanPageLogicalSize; i++)
 	{
@@ -397,7 +389,20 @@ FanPage* Facebook::findFanPageByName(char* name)
 	return nullptr;
 }
 
-User* Facebook::findUserByName(char* name)
+const FanPage* Facebook::findFanPageByName(char* name) const
+{
+	for (int i = 0; i < fanPageLogicalSize; i++)
+	{
+		if (strcmp(fanPages[i]->getName(), name) == 0)
+		{
+			return fanPages[i];
+		}
+	}
+
+	return nullptr;
+}
+
+User* Facebook::findUserByName(char* name) 
 {
 	for (int i = 0; i < usersLogicSize; i++)
 	{
@@ -409,7 +414,19 @@ User* Facebook::findUserByName(char* name)
 	return nullptr;
 }
 
-void Facebook::showAllFriendFansOFUser()
+const User* Facebook::findUserByName(char* name) const
+{
+	for (int i = 0; i < usersLogicSize; i++)
+	{
+		if (strcmp(users[i]->getName(), name) == 0)
+		{
+			return users[i];
+		}
+	}
+	return nullptr;
+}
+
+void Facebook::showAllFriendFansOFUser()  const
 {
 	int choice;
 	cout << "1. User. \n2.Fan Page\n(Choose number): ";
@@ -427,7 +444,7 @@ void Facebook::showAllFriendFansOFUser()
 	} while (choice != 1 && choice != 2);
 }
 
-User* Facebook::getUserNameFromUser(const char* text)
+User* Facebook::getUserNameFromUser(const char* text) 
 {
 	char name[MAX_NAME_LEN];
 	User* user;
@@ -445,7 +462,25 @@ User* Facebook::getUserNameFromUser(const char* text)
 	return user;
 }
 
-FanPage* Facebook::getFanpageFromUser(const char* text)
+const User* Facebook::getUserNameFromUser(const char* text) const
+{
+	char name[MAX_NAME_LEN];
+	const User* user;
+	do
+	{
+		cout << text;
+		do//to avoid empty words becuase of getline
+			cin.getline(name, MAX_NAME_LEN);
+		while (name[0] == 0);
+		user = findUserByName(name);
+		if (user == nullptr)
+			cout << "This user does not exist in our system.." << endl;
+
+	} while (user == nullptr);
+	return user;
+}
+
+FanPage* Facebook::getFanpageFromUser(const char* text) 
 {
 	char name[MAX_NAME_LEN];
 	FanPage* fanPage;
@@ -455,6 +490,24 @@ FanPage* Facebook::getFanpageFromUser(const char* text)
 		do//to avoid empty words becuase of getline
 			cin.getline(name, MAX_NAME_LEN);
 		while (name[0] == 0);	
+		fanPage = findFanPageByName(name);
+		if (fanPage == nullptr)
+			cout << "This fan page does not exist in our system..";
+
+	} while (fanPage == nullptr);
+	return fanPage;
+}
+
+const FanPage* Facebook::getFanpageFromUser(const char* text) const
+{
+	char name[MAX_NAME_LEN];
+	const FanPage* fanPage;
+	do
+	{
+		cout << text;
+		do//to avoid empty words becuase of getline
+			cin.getline(name, MAX_NAME_LEN);
+		while (name[0] == 0);
 		fanPage = findFanPageByName(name);
 		if (fanPage == nullptr)
 			cout << "This fan page does not exist in our system..";

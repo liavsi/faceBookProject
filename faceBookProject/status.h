@@ -11,7 +11,7 @@ class Status
 public:
 	Status(const char* text);
 	~Status();
-	void showPost();
+	void showPost() const;
 
 private:
 	char* textContent;

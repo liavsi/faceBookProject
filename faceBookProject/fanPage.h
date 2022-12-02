@@ -6,8 +6,8 @@
 class FanPage
 {
 public:
-	void showFanPage();
-	char* getName();
+	void showFanPage() const;
+	const char* getName() const;
 	void addPost(Status* post);
 	void showPosts(int iterations = -1) const;
 	void showFans() const;

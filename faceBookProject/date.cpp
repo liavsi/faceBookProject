@@ -3,6 +3,7 @@
 
 Date::Date()
 {
+	//sets the current time of the creation
 	time_t curr_time;
 	curr_time = time(NULL);
 	tm* ltm = localtime(&curr_time);
@@ -13,6 +14,7 @@ Date::Date()
 
 Date::Date(const Date& date)
 {
+	//copy by value
 	this->day = date.day;
 	this->month = date.month;
 	this->year = date.year;
@@ -20,29 +22,16 @@ Date::Date(const Date& date)
 
 Date::Date(char* birthdayStr)
 {
+	//gets dd.mm.yyyy format date
 	sscanf(birthdayStr, "%d.%d.%d", &day, &month, &year);
 }
 
 
-int Date::compare(const Date& date)
-{
-	if (this->year > date.year)
-		return 1;
-	if (this->year < date.year)
-		return -1;
-	if (this->month > date.month)
-		return 1;
-	if (this->month < date.month)
-		return -1;
-	if (this->day > date.day)
-		return 1;
-	if (this->day < date.day)
-		return -1;
-	return 0;
-}
+
 
 void Date::showDate() const
 {
-	printf("%d/%d/%d", day, month, year);
+	//print dd/mm/yyyy format date
+	printf("%02d/%02d/%d", day, month, year);
 }
 
