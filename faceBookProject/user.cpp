@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "user.h"
 #include "fanPage.h"
-#define UNFOUND -1
 
 User::User(const char* name, Date birthday) : birthday(birthday)
 {
@@ -74,13 +73,13 @@ void User::addPost(Status* post)
 	postsLogicSize++;
 }
 
-void User::showPosts(int iterations) const
+void User::showPosts(int numOfPosts) const
 {
 	int sizeToShow;//how many post needs to be shown
-	if (iterations > postsLogicSize || iterations == -1)//default is -1 for all posts
+	if (numOfPosts > postsLogicSize || numOfPosts == -1)//default is -1 for all posts
 		sizeToShow = postsLogicSize;
 	else
-		sizeToShow = iterations;
+		sizeToShow = numOfPosts;
 	for(int i = sizeToShow-1; i >= 0; i--)//from the most recent to the last
 	{
 		posts[i]->showPost();
@@ -215,7 +214,7 @@ void User::showFriendPosts() const
 	for (int i = 0; i < friendsLogicSize; i++)
 	{
 		cout << this->friends[i]->getName() << " post's: " << endl;;
-		this->friends[i]->showPosts(10);
+		this->friends[i]->showPosts(NUM_OF_RECENTS_POST_FRIEND);
 	}
 }
 
@@ -224,7 +223,7 @@ void User::showFanPagePosts() const
 	for (int i = 0; i < pagesLogicSize ; i++)
 	{
 		cout << this->pages[i]->getName() << " post's: " << endl;;
-		this->pages[i]->showPosts(10);
+		this->pages[i]->showPosts(NUM_OF_RECENTS_POST_FRIEND);
 	}
 }
 

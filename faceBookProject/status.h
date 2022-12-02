@@ -9,10 +9,16 @@ class Status
 {
 
 public:
+	/*
+	* const Function that shows the post
+	*/
+	void showPost() const;
+
+	//Ctors and Dtor
 	Status(const char* text);
 	Status(const Status& other);
 	~Status();
-	void showPost() const;
+	
 
 private:
 	char* textContent;

@@ -3,7 +3,6 @@
 
 using namespace std;
 
-#define MAX_POST_LEN 151
 
 Status::Status(const char * text): time(),date()
 {

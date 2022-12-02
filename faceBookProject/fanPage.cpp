@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "fanPage.h"
-#define UNFOUND -1
 
 
 void FanPage::showFanPage() const
@@ -30,13 +29,13 @@ void FanPage::addPost(Status* post)
 }
 
 
-void FanPage::showPosts(int iterations) const
+void FanPage::showPosts(int numOfPosts) const
 {
 	int sizeToShow;
-	if (iterations > postsLogicalSize || iterations == -1)//default is -1 for all posts
+	if (numOfPosts > postsLogicalSize || numOfPosts == -1)//default is -1 for all posts
 		sizeToShow = postsLogicalSize;
 	else
-		sizeToShow = iterations;
+		sizeToShow = numOfPosts;
 
 	for (int i = sizeToShow - 1; i >= 0; i--)//from the most recent to the last
 	{

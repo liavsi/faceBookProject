@@ -9,20 +9,65 @@ class FanPage;
 class User
 {
 public:
+	/*
+	* const Function that shows the user info
+	*/
+	void showUser() const;
+
+	/*
+	* const Function that returns username
+	*/
+	const char* getName() const;
+
+	/*
+	* Function that adds a post the user
+	*/
+	void addPost(Status* post);
+
+	/*
+	* Function that shows posts of the user (default is showing all posts)
+	*/
+	void showPosts(int numOfPosts = -1) const;
+
+	/*
+	* Function that adds friend to user
+	*/
+	void addFriend(User* other);
+
+	/*
+	* Function that unfriend the user from our user
+	*/
+	void unFriend(User* other);
+
+	/*
+	* Function that adds a fanpage to the user
+	*/
+	void addFanpage(FanPage* fanpage);
+
+	/*
+	* Function that removes a fanpage from the user
+	*/
+	void removeFanPage(FanPage* fanpage);
+
+	/*
+	* const Function that shows all #NUM_OF_RECENTS recents posts of the user's frinds
+	*/
+	void showFriendPosts() const;
+
+	/*
+	* const Function that shows all #NUM_OF_RECENT recents posts of fanpage he connected with
+	*/
+	void showFanPagePosts() const;
+
+	/*
+	* const Function that shows all the friends of the user
+	*/
+	void showFriends() const;
+
+	//Ctors and Dtor
 	User(const char* name, Date birthday);
 	User(const User& user);
-	void showUser() const;
-	const char* getName() const;
-	void addPost(Status* post);
-	void showPosts(int iterations = -1) const;
-	void addFriend(User* other);
-	void unFriend(User* other);
-	void addFanpage(FanPage* fanpage);
-	void removeFanPage(FanPage* fanpage);
-	void showFriendPosts() const;
-	void showFanPagePosts() const;
-	void showFriends() const;
-	~User(); //need to delete memory at the end
+	~User();
 
 private:
 	char* name;
@@ -34,6 +79,11 @@ private:
 	FanPage** pages;
 	int pagesLogicSize = 0, pagePhisSize = 2;
 
+	const int UNFOUND = -1;
+	const int NUM_OF_RECENTS_POST_FRIEND = 10;
+
+
+	//Helpers
 	int indexOfFriend(User* other);
 	int indexOfFanpage(FanPage*	fanpage); 
 	void deleteFromFriends(User* other);

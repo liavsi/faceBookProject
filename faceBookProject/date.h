@@ -6,11 +6,15 @@
 class Date
 {
 public:
-	Date();
-	Date(const Date& date); 
-	Date(char* birthdayStr);
-	int compare(const Date& date);
+	/*
+	* const Function that shows the date in DD/MM/YYYY format 
+	*/
 	void showDate() const;
+
+	//Ctors
+	Date();
+	Date(const Date& date);
+	Date(char* birthdayStr);
 private:
 	int year;
 	int month;

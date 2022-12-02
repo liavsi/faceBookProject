@@ -1,8 +1,5 @@
 #include "facebook.h"	
-#define MAX_NAME_LEN 100
-#define MAX_DATE_LEN 13
-#define EXIT 12
-#define MAX_POST_LEN 151
+
 
 Facebook::Facebook()
 {
@@ -126,7 +123,7 @@ void Facebook::startMenu()
 			cout <<"Thank you for using facebook\nGoodbye";
 			break;
 		}
-	} while (choice!=EXIT);
+	} while (choice != EXIT_MENU);
 
 }
 
