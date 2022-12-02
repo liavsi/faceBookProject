@@ -8,9 +8,13 @@ using namespace std;
 class Time				
 {
 public:
-	Time();
+	/*
+	* Function that show the time in HH:mm:ss Format
+	*/
 	void showTime() const;
 
+	//Ctor
+	Time();
 private:
 	int seconds;
 	int minutes;
