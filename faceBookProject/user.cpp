@@ -141,7 +141,7 @@ void User::deleteFromPages(FanPage* fanpage)//similar to above
 
 void User::addFriend(User* other)
 {
-	if (other == this) 
+	if (indexOfFriend(other) == UNFOUND)
 	{
 		friends.push_back(other);
 		other->addFriend(this);//add "this" to other with the same method
