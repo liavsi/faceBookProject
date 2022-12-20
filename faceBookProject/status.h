@@ -15,13 +15,13 @@ public:
 	void showPost() const;
 
 	//Ctors and Dtor
-	Status(const char* text);
+	Status(const string text);
 	Status(const Status& other);
 	~Status();
 	
 
 private:
-	char* textContent;
+	string textContent;
 	Date date;
 	Time time;
 

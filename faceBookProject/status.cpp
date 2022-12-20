@@ -4,17 +4,15 @@
 using namespace std;
 
 
-Status::Status(const char * text): time(),date()
+Status::Status(const string text): time(),date()
 {
-	textContent = new char[strlen(text) + 1];
-	strcpy(textContent, text);
+	textContent = text;
 
 }
 
 Status::Status(const Status& other)
 {
-	textContent = new char[strlen(other.textContent) + 1];
-	strcpy(textContent, other.textContent);
+	textContent = other.textContent;
 	date = other.date;
 	time = other.time;
 }
@@ -22,7 +20,6 @@ Status::Status(const Status& other)
 
 Status::~Status()
 {
-	delete textContent;
 }
 
 void Status::showPost() const
