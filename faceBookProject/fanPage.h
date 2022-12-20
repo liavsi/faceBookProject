@@ -1,7 +1,8 @@
 #ifndef FANPAGE
 #define FANPAGE
 #include "user.h"
-
+#include <vector>
+#include <string>
 
 class FanPage
 {
@@ -14,7 +15,7 @@ public:
 	/*
 	* const Function that returns name of the fanpage
 	*/
-	const char* getName() const;
+	const string getName() const;
 
 	/*
 	* Function that adds a post to fanpage
@@ -40,19 +41,19 @@ public:
 	*/
 	void removeFromFans(User* user);
 
+
 	//Ctor and Dtor
 	FanPage(const FanPage& fanpage);
-	FanPage(const char* name);
+	FanPage(const string name);
 	~FanPage();
 
 private:
-	char* name;
-	User** fans;
-	int fansLogicalSize = 0, fansphisSize = 2;
-	Status** posts;
-	int postsLogicalSize = 0, postsPhisSize = 2;
+	string name;
+	vector<User*> fans;
+	vector<Status*> posts;
 
 	const int UNFOUND = -1;
+	const int CAPACITY_INIT = 5;
 
 	//Helper Functions
 	int indexOfUser(User* user) const;

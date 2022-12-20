@@ -6,7 +6,6 @@
 
 
 
-
 /*
 * Facebook Object is the control class of all the other objects
 */
@@ -107,10 +106,9 @@ public:
 	void addFriendToFanPage(User* user, FanPage* fanpage);
 	
 private:
-	User** users;
-	int usersLogicSize=0, usersPhisSize=2;
-	FanPage** fanPages;
-	int fanPageLogicalSize=0, fanPagePhisSize = 2;
+	vector<User*> users;
+	vector<FanPage*> fanPages;
+	const int CAPACITY_INIT = 5;
 	const int EXIT_MENU = 12;
 	static const int  MAX_NAME_LEN = 101;
 	static const int MAX_POST_LEN = 151;
@@ -126,16 +124,16 @@ private:
 	void addStatusToFanPage();
 	void showAllUsers() const;
 	void showAllFanPages() const;
-	FanPage* findFanPageByName(char* name);
-	const FanPage* findFanPageByName(char* name) const;
-	User* findUserByName(char* name);
-	const User* findUserByName(char* name) const;
+	FanPage* findFanPageByName(string name);
+	const FanPage* findFanPageByName(string name) const;
+	User* findUserByName(string name);
+	const User* findUserByName(string name) const;
 	void showAllFriendFansOFUser() const;
-	User* getUserNameFromUser(const char* text);
-	const User* getUserNameFromUser(const char* text) const;
-	FanPage* getFanpageFromUser(const char* text) ;
-	const FanPage* getFanpageFromUser(const char* text) const;
-
+	User* getUserNameFromUser(const string text);
+	const User* getUserNameFromUser(const string text) const;
+	FanPage* getFanpageFromUser(const string text) ;
+	const FanPage* getFanpageFromUser(const string text) const;
+	
 };
 
 

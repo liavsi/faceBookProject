@@ -3,8 +3,8 @@
 
 Facebook::Facebook()
 {
-	users = new User * [usersPhisSize];
-	fanPages = new FanPage * [fanPagePhisSize];
+	users.reserve(CAPACITY_INIT);
+	fanPages.reserve(CAPACITY_INIT);
 }
 
 
@@ -57,11 +57,12 @@ void Facebook::addUser(User user)
 
 void Facebook::addFanPage()
 {
-	char pageName[MAX_NAME_LEN];
+	string pageName;
 
 	cout << "Enter fan page name: ";
-	do//to avoid empty words becuase of getline
-		cin.getline(pageName, MAX_NAME_LEN);
+	do {//to avoid empty words becuase of getline
+		
+	}
 	while (pageName[0] == 0);
 	FanPage* newFanPage= new FanPage(pageName);
 	addFanPageToFanPages(newFanPage);
@@ -234,37 +235,13 @@ void Facebook::initializeFacebook()
 
 void Facebook::addUserToUsers(User* newUser)
 {
-	if (usersLogicSize == usersPhisSize)
-	{
-		usersPhisSize *= 2;
-		User** newUsers = new User * [usersPhisSize];
-		for (int i = 0; i < usersLogicSize; i++)
-		{
-			newUsers[i] = users[i];
-		}
-		delete[]users;
-		users = newUsers;
-	}
-	users[usersLogicSize] = newUser;
-	usersLogicSize++;
+	users.push_back(newUser);
 }
 
 
 void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 {
-	if (fanPageLogicalSize == fanPagePhisSize)
-	{
-		fanPagePhisSize *= 2;
-		FanPage** newFanPages = new FanPage * [fanPagePhisSize];
-		for (int i = 0; i < fanPageLogicalSize; i++) 
-		{
-			newFanPages[i] = fanPages[i];
-		}
-		delete[]fanPages;
-		fanPages = newFanPages;
-	}
-	fanPages[fanPageLogicalSize] = newFanPage;
-	fanPageLogicalSize++;
+	fanPages.push_back(newFanPage);
 }
 
 
@@ -293,10 +270,10 @@ void Facebook::addStatus()
 void Facebook::addStatusToUser()
 {
 	User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
-	char text[MAX_POST_LEN];
+	string text;
 	cout << "Enter text for your post (max 150 letters):";
 	do//to avoid empty words becuase of getline
-		cin.getline(text, MAX_NAME_LEN);
+		getline(cin, text);
 	while (text[0] == 0);
 	user->addPost(new Status(text)); //c'tor build status from input text
 
@@ -352,7 +329,7 @@ void Facebook::showPostOfFanPage()  const
 
 void Facebook::showAllUsers()  const
 {
-	for (int i = 0; i < usersLogicSize; i++)
+	for (int i = 0; i < users.size(); i++)
 	{
 		cout << "User #" << i+1 << endl;
 		users[i]->showUser();
@@ -361,7 +338,7 @@ void Facebook::showAllUsers()  const
 
 void Facebook::showAllFanPages()  const
 {
-	for (int i = 0; i < fanPageLogicalSize; i++)
+	for (int i = 0; i < fanPages.size(); i++)
 	{
 		cout << "Fan Page #" << i+1 << endl;
 		fanPages[i]->showFanPage();
@@ -373,11 +350,11 @@ void Facebook::showAllFanPages()  const
 
 //helpers
 
-FanPage* Facebook::findFanPageByName(char* name) 
+FanPage* Facebook::findFanPageByName(string name) 
 {
-	for (int i = 0; i < fanPageLogicalSize; i++)
+	for (int i = 0; i < fanPages.size(); i++)
 	{
-		if (strcmp(fanPages[i]->getName(),name) == 0)
+		if (fanPages[i]->getName() == name)
 		{
 			return fanPages[i];
 		}
@@ -386,11 +363,11 @@ FanPage* Facebook::findFanPageByName(char* name)
 	return nullptr;
 }
 
-const FanPage* Facebook::findFanPageByName(char* name) const
+const FanPage* Facebook::findFanPageByName(string name) const
 {
-	for (int i = 0; i < fanPageLogicalSize; i++)
+	for (int i = 0; i < fanPages.size(); i++)
 	{
-		if (strcmp(fanPages[i]->getName(), name) == 0)
+		if (fanPages[i]->getName() == name)
 		{
 			return fanPages[i];
 		}
@@ -399,11 +376,11 @@ const FanPage* Facebook::findFanPageByName(char* name) const
 	return nullptr;
 }
 
-User* Facebook::findUserByName(char* name) 
+User* Facebook::findUserByName(string name) 
 {
-	for (int i = 0; i < usersLogicSize; i++)
+	for (int i = 0; i < users.size(); i++)
 	{
-		if (strcmp(users[i]->getName(), name) == 0)
+		if (users[i]->getName() == name)
 		{
 			return users[i];
 		}
@@ -411,11 +388,11 @@ User* Facebook::findUserByName(char* name)
 	return nullptr;
 }
 
-const User* Facebook::findUserByName(char* name) const
+const User* Facebook::findUserByName(string name) const
 {
-	for (int i = 0; i < usersLogicSize; i++)
+	for (int i = 0; i < users.size(); i++)
 	{
-		if (strcmp(users[i]->getName(), name) == 0)
+		if (users[i]->getName() == name)
 		{
 			return users[i];
 		}
@@ -441,15 +418,15 @@ void Facebook::showAllFriendFansOFUser()  const
 	} while (choice != 1 && choice != 2);
 }
 
-User* Facebook::getUserNameFromUser(const char* text) 
+User* Facebook::getUserNameFromUser(const string text) 
 {
-	char name[MAX_NAME_LEN];
+	string name;
 	User* user;
 	do
 	{
 		cout << text;
 		do//to avoid empty words becuase of getline
-			cin.getline(name, MAX_NAME_LEN);
+			getline(cin, name);
 		while (name[0] == 0);
 		user = findUserByName(name);
 		if (user == nullptr)
@@ -459,15 +436,15 @@ User* Facebook::getUserNameFromUser(const char* text)
 	return user;
 }
 
-const User* Facebook::getUserNameFromUser(const char* text) const
+const User* Facebook::getUserNameFromUser(const string text) const
 {
-	char name[MAX_NAME_LEN];
+	string name;
 	const User* user;
 	do
 	{
 		cout << text;
 		do//to avoid empty words becuase of getline
-			cin.getline(name, MAX_NAME_LEN);
+			getline(cin, name);
 		while (name[0] == 0);
 		user = findUserByName(name);
 		if (user == nullptr)
@@ -477,34 +454,35 @@ const User* Facebook::getUserNameFromUser(const char* text) const
 	return user;
 }
 
-FanPage* Facebook::getFanpageFromUser(const char* text) 
+FanPage* Facebook::getFanpageFromUser(const string text) 
 {
-	char name[MAX_NAME_LEN];
+	string name;
 	FanPage* fanPage;
 	do
 	{
 		cout << text;
 		do//to avoid empty words becuase of getline
-			cin.getline(name, MAX_NAME_LEN);
+			getline(cin, name);
 		while (name[0] == 0);	
+
 		fanPage = findFanPageByName(name);
 		if (fanPage == nullptr)
 			cout << "This fan page does not exist in our system..";
-
 	} while (fanPage == nullptr);
 	return fanPage;
 }
 
-const FanPage* Facebook::getFanpageFromUser(const char* text) const
+const FanPage* Facebook::getFanpageFromUser(string text) const
 {
-	char name[MAX_NAME_LEN];
+	string name;
 	const FanPage* fanPage;
 	do
 	{
 		cout << text;
 		do//to avoid empty words becuase of getline
-			cin.getline(name, MAX_NAME_LEN);
+			getline(cin, name);
 		while (name[0] == 0);
+
 		fanPage = findFanPageByName(name);
 		if (fanPage == nullptr)
 			cout << "This fan page does not exist in our system..";
@@ -517,12 +495,12 @@ const FanPage* Facebook::getFanpageFromUser(const char* text) const
 
 Facebook::~Facebook()
 {
-	for (int i = 0; i < usersLogicSize; i++) {
+	for (int i = 0; i < users.size(); i++) 
+	{
 		delete users[i];
 	}
-	delete[]users;
-	for (int i = 0; i < fanPageLogicalSize; i++) {
+	for (int i = 0; i < fanPages.size(); i++)
+	{
 		delete fanPages[i];
 	}
-	delete[]fanPages;
 }

@@ -1,14 +1,23 @@
 #ifndef USER
 #define USER
-#include <iostream>
-using namespace std;
 #include "date.h"
 #include "status.h"
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+
 class FanPage;
 
 class User
 {
 public:
+
+	/*
+	* operator overload to add friend to friend
+	*/
+
+
 	/*
 	* const Function that shows the user info
 	*/
@@ -17,7 +26,7 @@ public:
 	/*
 	* const Function that returns username
 	*/
-	const char* getName() const;
+	const string getName() const;
 
 	/*
 	* Function that adds a post the user
@@ -65,23 +74,20 @@ public:
 	void showFriends() const;
 
 	//Ctors and Dtor
-	User(const char* name, Date birthday);
+	User(const string name, Date birthday);
 	User(const User& user);
 	~User();
 
 private:
-	char* name;
+	string name;
 	Date birthday;
-	Status** posts;
-	int postsLogicSize =0 , postPhisSize = 2;//all sizes needs to be initialized to some number we choose
-	User** friends;
-	int friendsLogicSize = 0, friendPhisSize = 2;
-	FanPage** pages;
-	int pagesLogicSize = 0, pagePhisSize = 2;
+	vector<Status*> posts;
+	vector<User*> friends;
+	vector<FanPage*> pages;
 
 	const int UNFOUND = -1;
 	const int NUM_OF_RECENTS_POST_FRIEND = 10;
-
+	const int CAPACITY_INIT = 4;
 
 	//Helpers
 	int indexOfFriend(User* other);

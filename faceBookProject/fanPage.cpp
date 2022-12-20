@@ -7,33 +7,22 @@ void FanPage::showFanPage() const
 	cout << "Fan Page name: " << name << endl;
 }
 
-const char* FanPage::getName() const
+const string FanPage::getName() const
 {
 	return name;
 }
 
 void FanPage::addPost(Status* post)
 {
-	if (postsPhisSize == postsLogicalSize)
-	{
-		postsPhisSize *= 2;
-		Status** newPosts = new Status * [postsPhisSize];
-		for (int i = 0; i < postsLogicalSize; i++) {
-			posts[i] = newPosts[i];
-		}
-		delete[]posts;
-		posts = newPosts;
-	}
-	posts[postsLogicalSize] = post;
-	postsLogicalSize++;
+	posts.push_back(post);
 }
 
 
 void FanPage::showPosts(int numOfPosts) const
 {
 	int sizeToShow;
-	if (numOfPosts > postsLogicalSize || numOfPosts == -1)//default is -1 for all posts
-		sizeToShow = postsLogicalSize;
+	if (numOfPosts > posts.size() || numOfPosts == -1)//default is -1 for all posts
+		sizeToShow = posts.size();
 	else
 		sizeToShow = numOfPosts;
 
@@ -45,14 +34,14 @@ void FanPage::showPosts(int numOfPosts) const
 
 void FanPage::showFans() const
 {
-	if (fansLogicalSize == 0)
+	if (fans.size() == 0)
 	{
 		cout << name << " has no fans for now.."<<endl;
 	}
 	else
 	{
 		cout << name << " fans are: " << endl;
-		for (int i = 0; i < fansLogicalSize; i++)
+		for (int i = 0; i < fans.size(); i++)
 		{
 			cout << "fan #" << i + 1 << " name is " << fans[i]->getName() << endl;
 		}
@@ -82,26 +71,24 @@ void FanPage::removeFromFans(User* user)
 void FanPage::deleteFromFans(User* user)//deleting from fans array and taking all the others to fill the void
 {
 	int index = indexOfUser(user);
-	fans[index] = nullptr;
-	--fansLogicalSize;
-	for (int i = index; i < fansLogicalSize; i++)
+	for (int i = index; i < fans.size(); i++)
 	{
 		fans[i] = fans[i + 1];
 	}
+	fans.pop_back();
 }
 
 
-FanPage::FanPage(const char* name)
+FanPage::FanPage(const string name)
 {
-	this->name = new char[strlen(name) + 1];
-	strcpy(this->name, name);
-	posts = new Status * [postsPhisSize];
-	fans = new User * [fansphisSize];
+	this->name = name;
+	posts.reserve(CAPACITY_INIT);
+	fans.reserve(CAPACITY_INIT);
 }
 
 int FanPage::indexOfUser(User* user) const
 {
-	for (int i = 0; i < fansLogicalSize; i++) {
+	for (int i = 0; i < fans.size(); i++) {
 		if (fans[i] == user) {
 			return i;
 		}
@@ -111,47 +98,29 @@ int FanPage::indexOfUser(User* user) const
 
 void FanPage::addUserToFans(User* user)
 {
-	if (fansLogicalSize == fansphisSize) 
-	{
-		fansphisSize *= 2;
-		User** newUsers = new User * [fansphisSize];
-		for (int i = 0; i < fansLogicalSize; i++) 
-		{
-			newUsers[i] = fans[i];
-		}
-		delete []fans;
-		fans = newUsers;
-	}
-	fans[fansLogicalSize++] = user;
+	fans.push_back(user);
 }
+
 
 
 
 FanPage::FanPage(const FanPage& fanpage)
 {
-	name = new char[strlen(fanpage.name) + 1];
-	strcpy(name, fanpage.name);
-	fansLogicalSize = fanpage.fansLogicalSize;
-	fansphisSize = fanpage.fansphisSize;
-	postsLogicalSize = fanpage.postsLogicalSize;
-	postsPhisSize = fanpage.postsPhisSize;
-	fans = new User * [fansphisSize];
-	for (int i = 0; i < fansLogicalSize; i++) {
-		fans[i] = fanpage.fans[i];
+	name = fanpage.name;
+	for (int i = 0; i < fanpage.fans.size(); i++) 
+	{
+		fans.push_back(fanpage.fans[i]);
 	}
-	posts = new Status * [postsPhisSize];
-	for (int i = 0; i < postsLogicalSize; i++) {
-		posts[i] = new Status(*fanpage.posts[i]);
+	for (int i = 0; i < fanpage.posts.size(); i++)
+	{
+		posts.push_back(fanpage.posts[i]);
 	}
 	
 }
 
 FanPage::~FanPage()
 {
-	delete[]name;
-	for (int i = 0; i < postsLogicalSize; i++) {
+	for (int i = 0; i < posts.size(); i++) {
 		delete posts[i];
 	}
-	delete[]posts;
-	delete[]fans;
 }
