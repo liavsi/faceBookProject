@@ -41,22 +41,22 @@ public:
 	/*
 	* Function that adds friend to user
 	*/
-	void addFriend(User* other);
+	void addFriend(User& other);
 
 	/*
 	* Function that unfriend the user from our user
 	*/
-	void unFriend(User* other);
+	void unFriend(User& other);
 
 	/*
 	* Function that adds a fanpage to the user
 	*/
-	void addFanpage(FanPage* fanpage);
+	void addFanpage(FanPage& fanpage);
 
 	/*
 	* Function that removes a fanpage from the user
 	*/
-	void removeFanPage(FanPage* fanpage);
+	void removeFanPage(FanPage& fanpage);
 
 	/*
 	* const Function that shows all #NUM_OF_RECENTS recents posts of the user's frinds
@@ -72,6 +72,10 @@ public:
 	* const Function that shows all the friends of the user
 	*/
 	void showFriends() const;
+
+	//Operator overload
+	User& operator +=(User& other);
+	User& operator +=(FanPage& fanpage);
 
 	//Ctors and Dtor
 	User(const string name, Date birthday);
@@ -90,11 +94,11 @@ private:
 	const int CAPACITY_INIT = 4;
 
 	//Helpers
-	int indexOfFriend(User* other);
-	int indexOfFanpage(FanPage*	fanpage); 
-	void deleteFromFriends(User* other);
-	void deleteFromPages(FanPage* fanpage);
-	void addFanPageToUser1(FanPage* fanpage);
+	int indexOfFriend(User& other);
+	int indexOfFanpage(FanPage&	fanpage); 
+	void deleteFromFriends(User& other);
+	void deleteFromPages(FanPage& fanpage);
+	void addFanPageToUser1(FanPage& fanpage);
 
 };
 

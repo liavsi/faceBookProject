@@ -54,7 +54,7 @@ void FanPage::addUserToFanPage(User* user)//same as with User..
 	if (indexOfUser(user) == UNFOUND) 
 	{
 		this->addUserToFans(user);
-		user->addFanpage(this);
+		user->addFanpage(*this);
 	}
 }
 
@@ -64,7 +64,7 @@ void FanPage::removeFromFans(User* user)
 	if (indexOfUser(user) != UNFOUND)
 	{
 		this->deleteFromFans(user);
-		user->removeFanPage(this);
+		user->removeFanPage(*this);
 	}
 }
 
