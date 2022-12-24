@@ -68,6 +68,11 @@ void FanPage::removeFromFans(User* user)
 	}
 }
 
+const bool FanPage::operator>(const FanPage& fanpage)
+{
+	return this->fans.size() > fanpage.fans.size();
+}
+
 void FanPage::deleteFromFans(User* user)//deleting from fans array and taking all the others to fill the void
 {
 	int index = indexOfUser(user);

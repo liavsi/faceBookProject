@@ -211,3 +211,8 @@ User& User::operator+=(FanPage& fanpage)
 	this->addFanpage(fanpage);
 	return *this;
 }
+
+const bool User::operator>(const User& other)
+{
+	return this->friends.size() > other.friends.size();
+}

@@ -76,6 +76,7 @@ public:
 	//Operator overload
 	User& operator +=(User& other);
 	User& operator +=(FanPage& fanpage);
+	const bool operator >(const User& other);
 
 	//Ctors and Dtor
 	User(const string name, Date birthday);
