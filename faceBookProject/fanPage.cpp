@@ -76,7 +76,7 @@ const bool FanPage::operator>(const FanPage& fanpage)
 void FanPage::deleteFromFans(User* user)//deleting from fans array and taking all the others to fill the void
 {
 	int index = indexOfUser(user);
-	for (int i = index; i < fans.size(); i++)
+	for (int i = index; i < fans.size()-1; i++)
 	{
 		fans[i] = fans[i + 1];
 	}
