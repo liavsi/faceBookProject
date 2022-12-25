@@ -1,13 +1,10 @@
 #include "facebook.h"	
 
-
 Facebook::Facebook()
 {
 	users.reserve(CAPACITY_INIT);
 	fanPages.reserve(CAPACITY_INIT);
 }
-
-
 
 void Facebook::printMenu() const
 {
@@ -143,12 +140,12 @@ void Facebook::makeConnection()
 	User* user1, *user2;
 	user1 = getUserNameFromUser("please enter first user's name: ");
 	user2 = getUserNameFromUser("please enter second user's name: ");
-	user1->addFriend(user2);
+	user1->addFriend(*user2);
 }
 
-void Facebook::makeConnection(User* user1, User* user2)//manually added
+void Facebook::makeConnection(User& user1, User& user2)//manually added
 {
-	user1->addFriend(user2);
+	user1.addFriend(user2);
 }
 
 void Facebook::disConnect()
@@ -156,7 +153,7 @@ void Facebook::disConnect()
 	User* user1, * user2;
 	user1 = getUserNameFromUser("please enter first user's name: ");
 	user2 = getUserNameFromUser("please enter second user's name: ");
-	user1->unFriend(user2);
+	user1->unFriend(*user2);
 }
 
 
@@ -164,14 +161,14 @@ void Facebook::disConnectFriendAndFanPage()
 {
 	User* user = getUserNameFromUser("please enter user's name: ");
 	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
-	user->removeFanPage(fanpage);
+	user->removeFanPage(*fanpage);
 }
 
 void Facebook::addFriendToFanPage()
 {
 	User* user = getUserNameFromUser("please enter user's name: ");
 	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
-	user->addFanpage(fanpage);
+	user->addFanpage(*fanpage);
 }
 
 
@@ -179,7 +176,7 @@ void Facebook::removeUserFromFanPage()
 {
 	User* user = getUserNameFromUser("please enter user's name: ");
 	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
-	user->removeFanPage(fanpage);
+	user->removeFanPage(*fanpage);
 }
 
 void Facebook::showFriendsOfUser() const
@@ -194,9 +191,9 @@ void Facebook::showFansOfFanPage() const
 	fanpage->showFans();
 }
 
-void Facebook::addFriendToFanPage(User* user, FanPage* fanpage)
+void Facebook::addFriendToFanPage(User& user, FanPage& fanpage)
 {
-	user->addFanpage(fanpage);
+	user.addFanpage(fanpage);
 }
 
 
@@ -220,11 +217,11 @@ void Facebook::initializeFacebook()
 	this->users[1]->addPost(new Status("sharon is my name "));
 	this->users[2]->addPost(new Status("dont trust _s functions"));
 	this->users[2]->addPost(new Status("give me cake please!"));
-	makeConnection(users[1], users[0]);
-	makeConnection(users[0], users[2]);
-	addFriendToFanPage(users[2], fanPages[1]);
-	addFriendToFanPage(users[1], fanPages[1]);
-	addFriendToFanPage(users[0], fanPages[1]);
+	makeConnection(*users[1], *users[0]);
+	makeConnection(*users[0], *users[2]);
+	addFriendToFanPage(*(users[2]), *(fanPages[1]));
+	addFriendToFanPage(*(users[1]), *(fanPages[1]));
+	addFriendToFanPage(*(users[0]), *(fanPages[1]));
 
 
 

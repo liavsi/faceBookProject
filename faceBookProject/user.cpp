@@ -64,54 +64,54 @@ void User::showPosts(int numOfPosts) const
 	}
 }
 
-void User::unFriend(User* other)
+void User::unFriend(User& other)
 {
 	if (indexOfFriend(other) !=UNFOUND)//if "other" is found he needs to be deleted
 	{
 		deleteFromFriends(other);
-		other->unFriend(this);
+		other.unFriend(*this);
 	}
 }
 
 
 
-void User::addFanpage(FanPage* fanpage)//similar to add friend
+void User::addFanpage(FanPage& fanpage)//similar to add friend
 {
 	
 	if (indexOfFanpage(fanpage) == UNFOUND)
 	{
 		this->addFanPageToUser1(fanpage);
-		fanpage->addUserToFanPage(this);
+		fanpage.addUserToFanPage(this);
 	}
 }
 
-void User::removeFanPage(FanPage* fanpage)//similar to unFriend
+void User::removeFanPage(FanPage& fanpage)//similar to unFriend
 {
 	if (indexOfFanpage(fanpage) != UNFOUND)
 	{
 		deleteFromPages(fanpage);
-		fanpage->removeFromFans(this);
+		fanpage.removeFromFans(this);
 	}
 
 }
 
 
 
-int User::indexOfFriend(User* other)//checks if "other" is friend and signals UNFOUND for no or index in array otherwise
+int User::indexOfFriend(User& other)//checks if "other" is friend and signals UNFOUND for no or index in array otherwise
 {
 	for (int i = 0; i < friends.size(); i++)
 	{
-		if (friends[i] == other)
+		if (friends[i] == &other)
 			return i;
 	}
 	return UNFOUND;
 }
 
-int User::indexOfFanpage(FanPage* fanpage)//same as indexOfFriend just with FanPage
+int User::indexOfFanpage(FanPage& fanpage)//same as indexOfFriend just with FanPage
 {
 	for (int i = 0; i < pages.size(); i++)
 	{
-		if (pages[i]->getName() == fanpage->getName()) 
+		if (pages[i]->getName() == fanpage.getName()) 
 		{
 			return i;
 		}
@@ -119,7 +119,7 @@ int User::indexOfFanpage(FanPage* fanpage)//same as indexOfFriend just with FanP
 	return UNFOUND;
 }
 
-void User::deleteFromFriends(User* other)//remove "other" from array and takes all the others back to fill the void 
+void User::deleteFromFriends(User& other)//remove "other" from array and takes all the others back to fill the void 
 {
 	int index = indexOfFriend(other);
 	for (int i = index; i < friends.size(); i++)
@@ -129,7 +129,7 @@ void User::deleteFromFriends(User* other)//remove "other" from array and takes a
 	friends.pop_back();
 }
 
-void User::deleteFromPages(FanPage* fanpage)//similar to above
+void User::deleteFromPages(FanPage& fanpage)//similar to above
 {
 	int index = indexOfFanpage(fanpage);
 	pages[index] = nullptr;
@@ -139,18 +139,18 @@ void User::deleteFromPages(FanPage* fanpage)//similar to above
 	}
 }
 
-void User::addFriend(User* other)
+void User::addFriend(User& other)
 {
 	if (indexOfFriend(other) == UNFOUND)
 	{
-		friends.push_back(other);
-		other->addFriend(this);//add "this" to other with the same method
+		friends.push_back(&other);
+		other.addFriend(*this);//add "this" to other with the same method
 	}
 }
 
-void User::addFanPageToUser1(FanPage* fanpage)
+void User::addFanPageToUser1(FanPage& fanpage)
 {
-	pages.push_back(fanpage);
+	pages.push_back(&fanpage);
 }
 
 
@@ -199,5 +199,20 @@ void User::showFriends() const
 			cout << "friend #" << i + 1 << " name is " << friends[i]->getName() << endl;
 		}
 	}
+}
 
+User& User::operator+=(User& other) {
+	this->addFriend(other);
+	return *this;
+}
+
+User& User::operator+=(FanPage& fanpage)
+{
+	this->addFanpage(fanpage);
+	return *this;
+}
+
+const bool User::operator>(const User& other)
+{
+	return this->friends.size() > other.friends.size();
 }

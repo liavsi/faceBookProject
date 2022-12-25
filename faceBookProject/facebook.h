@@ -67,7 +67,7 @@ public:
 	/*
 	* Function that adds user1 and user2 be friends
 	*/
-	void makeConnection(User* user1, User* user2);
+	void makeConnection(User& user1, User& user2);
 	/*
 	* Function that disconnent 2 users (unfriend)
 	*/
@@ -103,7 +103,7 @@ public:
 	/*
 	* Function that adds a user to a fanpage
 	*/
-	void addFriendToFanPage(User* user, FanPage* fanpage);
+	void addFriendToFanPage(User& user, FanPage& fanpage);
 	
 private:
 	vector<User*> users;

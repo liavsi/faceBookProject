@@ -41,6 +41,9 @@ public:
 	*/
 	void removeFromFans(User* user);
 
+	//operator overload
+	const bool operator >(const FanPage& fanpage);
+
 
 	//Ctor and Dtor
 	FanPage(const FanPage& fanpage);

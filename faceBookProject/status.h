@@ -18,7 +18,10 @@ public:
 	Status(const string text);
 	Status(const Status& other);
 	~Status();
-	
+
+	//operator overloads
+	const bool operator ==(const Status& other);
+	const bool operator !=(const Status& other);
 
 private:
 	string textContent;

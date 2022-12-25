@@ -54,7 +54,7 @@ void FanPage::addUserToFanPage(User* user)//same as with User..
 	if (indexOfUser(user) == UNFOUND) 
 	{
 		this->addUserToFans(user);
-		user->addFanpage(this);
+		user->addFanpage(*this);
 	}
 }
 
@@ -64,8 +64,13 @@ void FanPage::removeFromFans(User* user)
 	if (indexOfUser(user) != UNFOUND)
 	{
 		this->deleteFromFans(user);
-		user->removeFanPage(this);
+		user->removeFanPage(*this);
 	}
+}
+
+const bool FanPage::operator>(const FanPage& fanpage)
+{
+	return this->fans.size() > fanpage.fans.size();
 }
 
 void FanPage::deleteFromFans(User* user)//deleting from fans array and taking all the others to fill the void

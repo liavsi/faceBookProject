@@ -18,9 +18,22 @@ Status::Status(const Status& other)
 }
 
 
+
+
 Status::~Status()
 {
 }
+
+const bool Status::operator==(const Status& other)
+{
+	return this->textContent == other.textContent;
+}
+
+const bool Status::operator!=(const Status& other)
+{
+	return !(*this == other);
+}
+
 
 void Status::showPost() const
 {
