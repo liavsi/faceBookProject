@@ -127,7 +127,7 @@ void Facebook::startMenu()
 			addFanPage();//exep done
 			break;
 		case 3:
-			addStatus();
+			addStatus();//exep done
 			break;
 		case 4:
 			ShowPosts();
@@ -216,43 +216,43 @@ void Facebook::makeConnection(User& user1, User& user2)//manually added
 void Facebook::disConnect()
 {
 	User* user1, * user2;
-	user1 = getUserNameFromUser("please enter first user's name: ");
-	user2 = getUserNameFromUser("please enter second user's name: ");
+	user1 = getUserNameFromUser("Please enter first user's name: ");
+	user2 = getUserNameFromUser("Please enter second user's name: ");
 	user1->unFriend(*user2);
 }
 
 
 void Facebook::disConnectFriendAndFanPage()
 {
-	User* user = getUserNameFromUser("please enter user's name: ");
-	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	User* user = getUserNameFromUser("Please enter user's name: ");
+	FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
 	user->removeFanPage(*fanpage);
 }
 
 void Facebook::addFriendToFanPage()
 {
-	User* user = getUserNameFromUser("please enter user's name: ");
-	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	User* user = getUserNameFromUser("Please enter user's name: ");
+	FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
 	user->addFanpage(*fanpage);
 }
 
 
 void Facebook::removeUserFromFanPage()
 {
-	User* user = getUserNameFromUser("please enter user's name: ");
-	FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	User* user = getUserNameFromUser("Please enter user's name: ");
+	FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
 	user->removeFanPage(*fanpage);
 }
 
 void Facebook::showFriendsOfUser() const
 {
-	const User* user = getUserNameFromUser("please enter user's name: ");
+	const User* user = getUserNameFromUser("Please enter user's name: ");
 	user->showFriends();
 }
 
 void Facebook::showFansOfFanPage() const
 {
-	const FanPage* fanpage = getFanpageFromUser("please enter fanpage's name: ");
+	const FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
 	fanpage->showFans();
 }
 
@@ -312,20 +312,43 @@ void Facebook::addFanPageToFanPages(FanPage* newFanPage)
 
 void Facebook::addStatus()
 {
+	bool isValidData = false;
 	int choice;
-	cout << "1. User. \n2.Fan Page\n(Choose number): ";
 	do
 	{
-		cin >> choice;
-		if (choice == 1)
+		cout << "1. User. \n2.Fan Page\n(Choose number): ";
+		try
 		{
-			addStatusToUser();
+			cin >> choice;
+			if (choice == 1)
+			{
+				addStatusToUser();
+			}
+			else if (choice == 2)
+			{
+				addStatusToFanPage();
+			}
+			else
+				throw IndexOutOfRange();
+			isValidData = true;
 		}
-		else if (choice == 2)
+		catch (findingFanPageExeption&	e)
 		{
-			addStatusToFanPage();
+			cout << e.what();
 		}
-	} while (choice != 1 && choice!=2);
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (IndexOutOfRange& e)
+		{
+			cout << e.what();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again!\n";
+		}
+	} while (!isValidData);
 	
 }
 
