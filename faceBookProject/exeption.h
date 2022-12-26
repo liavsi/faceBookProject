@@ -48,7 +48,7 @@ public:
 class IndexOutOfRange : public FaceBookExeption
 {
 public:
-	virtual const char* what() const override { return "This number is out of range!\n"; }
+	virtual const char* what() const override { return "This input is out of range or not even a number!\n"; }
 };
 
 

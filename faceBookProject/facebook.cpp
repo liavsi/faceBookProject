@@ -130,29 +130,29 @@ void Facebook::startMenu()
 			addStatus();//exep done
 			break;
 		case 4:
-			ShowPosts();
+			ShowPosts();//exep done
 			break;
 		case 5:
-			ShowMostRecentPosts();
+			ShowMostRecentPosts();//exep done
 			break;
 		case 6:
-			makeConnection();
+			makeConnection();//exep done
 			break;
 		case 7:
-			disConnect();
+			disConnect();//exep done
 			break;
 		case 8:
-			addFriendToFanPage();
+			addFriendToFanPage();//exep done
 			break;
 		case 9:
-			disConnectFriendAndFanPage();
+			disConnectFriendAndFanPage();//exep done
 			break;
 		case 10:
 			showAllUsers();
 			showAllFanPages();
 			break;
 		case 11:
-			showAllFriendFansOFUser();
+			showAllFriendFansOFUser();//exep done
 			break;
 		case 12:
 			cout << "Thank you for using facebook\nGoodbye";
@@ -166,20 +166,52 @@ void Facebook::startMenu()
 
 void Facebook::ShowMostRecentPosts() const
 {
-	char name[MAX_NAME_LEN];
+	string name;
 	const User* user;
-	user = getUserNameFromUser("for which user do you want to see friend's recent posts: ");
-	user->showFriendPosts();
-	user->showFanPagePosts();
-
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			user = getUserNameFromUser("for which user do you want to see friend's recent posts: ");
+			user->showFriendPosts();
+			user->showFanPagePosts();
+			isValidData = true;
+		}
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again!\n";
+		}
+	}
 }
 
 void Facebook::makeConnection()
 {
 	User* user1, *user2;
-	user1 = getUserNameFromUser("please enter first user's name: ");
-	user2 = getUserNameFromUser("please enter second user's name: ");
-	user1->addFriend(*user2);
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			user1 = getUserNameFromUser("please enter first user's name: ");
+			user2 = getUserNameFromUser("please enter second user's name: ");
+			user1->addFriend(*user2);
+			isValidData = true;
+		}
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again from the first user!\n";
+		}
+	}
+	
 }
 
 const string Facebook::newUserNameFromInput() const  noexcept(false)
@@ -214,43 +246,107 @@ void Facebook::makeConnection(User& user1, User& user2)//manually added
 }
 
 void Facebook::disConnect()
-{
+{	
 	User* user1, * user2;
-	user1 = getUserNameFromUser("Please enter first user's name: ");
-	user2 = getUserNameFromUser("Please enter second user's name: ");
-	user1->unFriend(*user2);
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			user1 = getUserNameFromUser("Please enter first user's name: ");
+			user2 = getUserNameFromUser("Please enter second user's name: ");
+			user1->unFriend(*user2);
+			isValidData = true;
+		}
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again from the first user!\n";
+		}
+	}
+
+	
 }
 
 
 void Facebook::disConnectFriendAndFanPage()
 {
-	User* user = getUserNameFromUser("Please enter user's name: ");
-	FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
-	user->removeFanPage(*fanpage);
+	User* user;
+	FanPage* fanpage;
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			user = getUserNameFromUser("Please enter user's name: ");
+			fanpage = getFanpageFromUser("Please enter fanpage's name: ");
+			user->removeFanPage(*fanpage);
+			isValidData = true;
+		}
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (findingFanPageExeption& e)
+		{
+			cout << e.what();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again from the first user!\n";
+		}
+	}
 }
+	
+
 
 void Facebook::addFriendToFanPage()
 {
-	User* user = getUserNameFromUser("Please enter user's name: ");
-	FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
-	user->addFanpage(*fanpage);
+	User* user;
+	FanPage* fanpage;
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			user = getUserNameFromUser("Please enter user's name: ");
+			fanpage = getFanpageFromUser("Please enter fanpage's name: ");
+			user->addFanpage(*fanpage);
+			isValidData = true;
+		}
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (findingFanPageExeption& e)
+		{
+			cout << e.what();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again from the first user!\n";
+		}
+	}
 }
 
 
-void Facebook::removeUserFromFanPage()
+void Facebook::removeUserFromFanPage() noexcept(false)
 {
 	User* user = getUserNameFromUser("Please enter user's name: ");
 	FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
 	user->removeFanPage(*fanpage);
 }
 
-void Facebook::showFriendsOfUser() const
+void Facebook::showFriendsOfUser() const noexcept(false)
 {
 	const User* user = getUserNameFromUser("Please enter user's name: ");
 	user->showFriends();
 }
 
-void Facebook::showFansOfFanPage() const
+void Facebook::showFansOfFanPage() const noexcept(false)
 {
 	const FanPage* fanpage = getFanpageFromUser("Please enter fanpage's name: ");
 	fanpage->showFans();
@@ -343,6 +439,8 @@ void Facebook::addStatus()
 		catch (IndexOutOfRange& e)
 		{
 			cout << e.what();
+			cin.clear();
+			cin.ignore();
 		}
 		if (!isValidData)
 		{
@@ -383,30 +481,55 @@ void Facebook::addStatusToFanPage()
 
 void Facebook::ShowPosts() const
 {
+	bool isValidData = false;
 	int choice;
-	cout << "1. User. \n2.Fan Page\n(Choose number): ";
 	do
 	{
-		cin >> choice;
-		if (choice == 1)
+		cout << "1. User. \n2.Fan Page\n(Choose number): ";
+		try
 		{
-			showPostsOfUser();
+			cin >> choice;
+			if (choice == 1)
+			{
+				showPostsOfUser();
+			}
+			else if (choice == 2)
+			{
+				showPostOfFanPage();
+			}
+			else
+				throw IndexOutOfRange();
+			isValidData = true;
 		}
-		else if (choice == 2)
+		catch (findingFanPageExeption& e)
 		{
-			showPostOfFanPage();
+			cout << e.what();
 		}
-	} while (choice != 1 && choice != 2);
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (IndexOutOfRange& e)
+		{
+			cout << e.what();
+			cin.clear();
+			cin.ignore();
+		}
+		if (!isValidData)
+		{
+			cout << "Try again!\n";
+		}
+	} while (!isValidData);
 }
 
 
-void Facebook::showPostsOfUser() const
+void Facebook::showPostsOfUser() const noexcept(false)
 {
 	const User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
 	user->showPosts();
 }
 
-void Facebook::showPostOfFanPage()  const
+void Facebook::showPostOfFanPage()  const noexcept(false)
 {
 	const FanPage* fanpage = getFanpageFromUser("Which fan Page's post would you like to show: ");
 	fanpage->showPosts();
@@ -487,14 +610,14 @@ const User* Facebook::findUserByName(string name) const
 
 void Facebook::showAllFriendFansOFUser()  const
 {
+	bool isValidData = false;
 	int choice;
-	cout << "1. User. \n2.Fan Page\n(Choose number): ";
 	do
 	{
-		cin >> choice;
+		cout << "1. User. \n2.Fan Page\n(Choose number): ";
 		try
 		{
-
+			cin >> choice;
 			if (choice == 1)
 			{
 				showFriendsOfUser();
@@ -505,12 +628,27 @@ void Facebook::showAllFriendFansOFUser()  const
 			}
 			else
 				throw IndexOutOfRange();
+			isValidData = true;
+		}
+		catch (findingFanPageExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (findingUserExeption& e)
+		{
+			cout << e.what();
 		}
 		catch (IndexOutOfRange& e)
 		{
-
+			cout << e.what();
+			cin.clear();
+			cin.ignore();
 		}
-	} while (choice != 1 && choice != 2);
+		if (!isValidData)
+		{
+			cout << "Try again!\n";
+		}
+	} while (!isValidData);
 }
 
 User* Facebook::getUserNameFromUser(const string text) noexcept(false)
@@ -528,7 +666,7 @@ User* Facebook::getUserNameFromUser(const string text) noexcept(false)
 	return user;
 }
 
-const User* Facebook::getUserNameFromUser(const string text) const
+const User* Facebook::getUserNameFromUser(const string text) const noexcept(false)
 {
 	string name;
 	const User* user;
@@ -536,55 +674,40 @@ const User* Facebook::getUserNameFromUser(const string text) const
 	do//to avoid empty words becuase of getline
 		getline(cin, name);
 	while (name[0] == 0);
-
-	try
-	{
-		user = findUserByName(name);
-		if (user == nullptr)
-			throw findingUserExeption();
-		return user;
-	}
-	catch (findingUserExeption& e)
-	{
-		cout << e.what() << "Try again\n";
-	}
-
+	user = findUserByName(name);
+	if (user == nullptr)
+		throw findingUserExeption();
+	return user;
 }
 
-FanPage* Facebook::getFanpageFromUser(const string text) 
+FanPage* Facebook::getFanpageFromUser(const string text) noexcept(false)
 {
 	string name;
 	FanPage* fanPage;
-	do
-	{
-		cout << text;
-		do//to avoid empty words becuase of getline
-			getline(cin, name);
-		while (name[0] == 0);	
+	cout << text;
+	do//to avoid empty words becuase of getline
+		getline(cin, name);
+	while (name[0] == 0);
+	fanPage = findFanPageByName(name);
+	if (fanPage == nullptr)
+		throw findingFanPageExeption();
 
-		fanPage = findFanPageByName(name);
-		if (fanPage == nullptr)
-			cout << "This fan page does not exist in our system..";
-	} while (fanPage == nullptr);
 	return fanPage;
 }
 
-const FanPage* Facebook::getFanpageFromUser(string text) const
+const FanPage* Facebook::getFanpageFromUser(string text) const noexcept(false)
 {
 	string name;
 	const FanPage* fanPage;
-	do
-	{
-		cout << text;
-		do//to avoid empty words becuase of getline
-			getline(cin, name);
-		while (name[0] == 0);
+	cout << text;
+	do//to avoid empty words becuase of getline
+		getline(cin, name);
+	while (name[0] == 0);
 
-		fanPage = findFanPageByName(name);
-		if (fanPage == nullptr)
-			cout << "This fan page does not exist in our system..";
+	fanPage = findFanPageByName(name);
+	if (fanPage == nullptr)
+		throw findingFanPageExeption();
 
-	} while (fanPage == nullptr);
 	return fanPage;
 }
 

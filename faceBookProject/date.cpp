@@ -33,7 +33,11 @@ Date::Date(const char* birthdayStr) noexcept(false)
 		throw DateFormatExeption();
 	if (day > 30 || day < 1 || month > 12 || month < 1)
 		throw DateUnvalidExeption();
-	if (day > currDay && month > currMonth && year > currYear)
+	if (year > currYear)
+		throw DateYetToComeExeption();
+	else if (year == currYear && month > currMonth)
+		throw DateYetToComeExeption();
+	else if (year == currYear && month == currMonth && day > currDay)
 		throw DateYetToComeExeption();
 }
 

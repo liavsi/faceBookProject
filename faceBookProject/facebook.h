@@ -42,12 +42,12 @@ public:
 	/*
 	* const Function that asks the user name of fanpage and shows fanpage's posts
 	*/
-	void showPostOfFanPage() const;
+	void showPostOfFanPage() const noexcept(false);
 
 	/*
 	* const Function that asks for username and shows user's posts
 	*/
-	void showPostsOfUser() const;
+	void showPostsOfUser() const noexcept(false);
 
 	/*
 	*Function that start the facebook Menu loop
@@ -91,16 +91,16 @@ public:
 	/*
 	* Function that remove user from fanpage by asking the user which user and fanpage
 	*/
-	void removeUserFromFanPage();
+	void removeUserFromFanPage() noexcept(false);
 	/*
 	*const Function that shows all friends of user by asking the user which username
 	*/
-	void showFriendsOfUser() const;
+	void showFriendsOfUser() const noexcept(false);
 
 	/*
 	* const Function that shows all fans of fanpage by asking the user which fanpage
 	*/
-	void showFansOfFanPage()const;
+	void showFansOfFanPage()const noexcept(false);
 	/*
 	* Function that adds a user to a fanpage
 	*/
@@ -125,8 +125,8 @@ private:
 	void addFanPageToFanPages(FanPage* newFanPage);
 	void printMenu() const;
 	void addStatus();
-	void addStatusToUser();
-	void addStatusToFanPage();
+	void addStatusToUser() noexcept(false);
+	void addStatusToFanPage() noexcept(false);
 	void showAllUsers() const;
 	void showAllFanPages() const;
 	FanPage* findFanPageByName(string name);
@@ -134,10 +134,10 @@ private:
 	User* findUserByName(string name);
 	const User* findUserByName(string name) const;
 	void showAllFriendFansOFUser() const;
-	User* getUserNameFromUser(const string text);
-	const User* getUserNameFromUser(const string text) const;
-	FanPage* getFanpageFromUser(const string text) ;
-	const FanPage* getFanpageFromUser(const string text) const;
+	User* getUserNameFromUser(const string text) noexcept(false);
+	const User* getUserNameFromUser(const string text) const noexcept(false);
+	FanPage* getFanpageFromUser(const string text) noexcept(false);
+	const FanPage* getFanpageFromUser(const string text) const noexcept(false);
 	
 };
 
