@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 #include <stdio.h>
+#include "exeption.h"
 
 class Date
 {
@@ -15,7 +16,7 @@ public:
 	//Ctors
 	Date();
 	Date(const Date& date);
-	Date(char* birthdayStr);
+	Date(const char* birthdayStr) noexcept(false);
 private:
 	int year;
 	int month;

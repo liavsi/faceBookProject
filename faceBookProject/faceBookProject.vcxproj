@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="date.h" />
+    <ClInclude Include="exeption.h" />
     <ClInclude Include="facebook.h" />
     <ClInclude Include="fanPage.h" />
     <ClInclude Include="status.h" />

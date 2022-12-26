@@ -6,7 +6,6 @@ User::User(const string name, Date birthday) : birthday(birthday)
 {
 	//builds User with name and birthday date (other attributes set to zero but memory allocated)
 	this->name = name;
-	this->birthday = birthday;
 	posts.reserve(CAPACITY_INIT);
 	friends.reserve(CAPACITY_INIT);
 	pages.reserve(CAPACITY_INIT);
@@ -122,7 +121,7 @@ int User::indexOfFanpage(FanPage& fanpage)//same as indexOfFriend just with FanP
 void User::deleteFromFriends(User& other)//remove "other" from array and takes all the others back to fill the void 
 {
 	int index = indexOfFriend(other);
-	for (int i = index; i < friends.size(); i++)
+	for (int i = index; i < friends.size()-1; i++)
 	{
 		friends[i] = friends[i + 1];
 	}
@@ -133,10 +132,11 @@ void User::deleteFromPages(FanPage& fanpage)//similar to above
 {
 	int index = indexOfFanpage(fanpage);
 	pages[index] = nullptr;
-	for (int i = index; i < pages.size(); i++)
+	for (int i = index; i < pages.size()-1; i++)
 	{
 		pages[i] = pages[i + 1];
 	}
+	pages.pop_back();
 }
 
 void User::addFriend(User& other)
