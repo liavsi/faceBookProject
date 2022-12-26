@@ -48,28 +48,12 @@ void Facebook::addUser()
 			addUserToUsers(newUser);
 			isValidData = true;
 		}
-		catch (DateFormatExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (DateUnvalidExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (DateYetToComeExeption& e)
-		{
-			cout << e.what();
-		}
 		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
-		catch (notUniqueExeption& e)
-		{
-			cout << e.what();
-		}
 		if(!isValidData)
-			cout << "--- You need to enter the data again ---\n";
+			cout << " You need to enter the data again\n";
 	}
 	
 }
@@ -92,7 +76,7 @@ void Facebook::addFanPage()
 			addFanPageToFanPages(newFanPage);
 			isValidData = true;
 		}
-		catch (notUniqueExeption& e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
@@ -178,7 +162,7 @@ void Facebook::ShowMostRecentPosts() const
 			user->showFanPagePosts();
 			isValidData = true;
 		}
-		catch (findingUserExeption& e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
@@ -199,10 +183,10 @@ void Facebook::makeConnection()
 		{
 			user1 = getUserNameFromUser("please enter first user's name: ");
 			user2 = getUserNameFromUser("please enter second user's name: ");
-			user1->addFriend(*user2);
+			*user1 += *user2;
 			isValidData = true;
 		}
-		catch (findingUserExeption& e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
@@ -258,7 +242,7 @@ void Facebook::disConnect()
 			user1->unFriend(*user2);
 			isValidData = true;
 		}
-		catch (findingUserExeption& e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
@@ -286,11 +270,7 @@ void Facebook::disConnectFriendAndFanPage()
 			user->removeFanPage(*fanpage);
 			isValidData = true;
 		}
-		catch (findingUserExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (findingFanPageExeption& e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
@@ -314,14 +294,10 @@ void Facebook::addFriendToFanPage()
 		{
 			user = getUserNameFromUser("Please enter user's name: ");
 			fanpage = getFanpageFromUser("Please enter fanpage's name: ");
-			user->addFanpage(*fanpage);
+			*user += *fanpage;
 			isValidData = true;
 		}
-		catch (findingUserExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (findingFanPageExeption& e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
 		}
@@ -428,19 +404,9 @@ void Facebook::addStatus()
 				throw IndexOutOfRange();
 			isValidData = true;
 		}
-		catch (findingFanPageExeption&	e)
+		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
-		}
-		catch (findingUserExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (IndexOutOfRange& e)
-		{
-			cout << e.what();
-			cin.clear();
-			cin.ignore();
 		}
 		if (!isValidData)
 		{
@@ -501,19 +467,15 @@ void Facebook::ShowPosts() const
 				throw IndexOutOfRange();
 			isValidData = true;
 		}
-		catch (findingFanPageExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (findingUserExeption& e)
-		{
-			cout << e.what();
-		}
 		catch (IndexOutOfRange& e)
 		{
 			cout << e.what();
 			cin.clear();
 			cin.ignore();
+		}
+		catch (FaceBookExeption& e)
+		{
+			cout << e.what();
 		}
 		if (!isValidData)
 		{
@@ -630,19 +592,15 @@ void Facebook::showAllFriendFansOFUser()  const
 				throw IndexOutOfRange();
 			isValidData = true;
 		}
-		catch (findingFanPageExeption& e)
-		{
-			cout << e.what();
-		}
-		catch (findingUserExeption& e)
-		{
-			cout << e.what();
-		}
 		catch (IndexOutOfRange& e)
 		{
 			cout << e.what();
 			cin.clear();
 			cin.ignore();
+		}
+		catch (FaceBookExeption& e)
+		{
+			cout << e.what();
 		}
 		if (!isValidData)
 		{

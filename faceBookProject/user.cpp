@@ -136,6 +136,7 @@ void User::deleteFromPages(FanPage& fanpage)//similar to above
 	{
 		pages[i] = pages[i + 1];
 	}
+	pages.pop_back();
 }
 
 void User::addFriend(User& other)
