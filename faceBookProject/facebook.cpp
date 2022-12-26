@@ -27,23 +27,51 @@ void Facebook::printMenu() const
 }
 
 
+
 void Facebook::addUser()
 {
-	char username[MAX_NAME_LEN];
+
+	string username;
 	char birthday[MAX_DATE_LEN];
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			username = newUserNameFromInput();
+			cout << "Enter birthday: (format DD.MM.YYYY)" << endl;
+			do
+			{
+				cin.getline(birthday, MAX_NAME_LEN);
+			} while (birthday[0] == 0);
+			User* newUser = new User(username, Date(birthday));
+			addUserToUsers(newUser);
+			isValidData = true;
+		}
+		catch (DateFormatExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (DateUnvalidExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (DateYetToComeExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (FaceBookExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (notUniqueExeption& e)
+		{
+			cout << e.what();
+		}
+		if(!isValidData)
+			cout << "--- You need to enter the data again ---\n";
+	}
 	
-	cout << "Enter username:" << endl;
-	do
-	{
-		cin.getline(username, MAX_NAME_LEN);
-	} while (username[0] == 0);
-	cout << "Enter birthday: (format DD.MM.YYYY)" << endl;
-	do
-	{
-		cin.getline(birthday, MAX_NAME_LEN);
-	} while (birthday[0] == 0);
-	User* newUser = new User(username, Date(birthday));
-	addUserToUsers(newUser);
 }
 
 void Facebook::addUser(User user)
@@ -54,15 +82,24 @@ void Facebook::addUser(User user)
 
 void Facebook::addFanPage()
 {
-	string pageName;
-
-	cout << "Enter fan page name: ";
-	do {//to avoid empty words becuase of getline
-		
+	bool isValidData = false;
+	while (!isValidData)
+	{
+		try
+		{
+			string pageName = newPageNameFromInput();
+			FanPage* newFanPage = new FanPage(pageName);
+			addFanPageToFanPages(newFanPage);
+			isValidData = true;
+		}
+		catch (notUniqueExeption& e)
+		{
+			cout << e.what();
+		}
+		if(!isValidData)
+			cout << "--- You need to enter the data again ---\n";
 	}
-	while (pageName[0] == 0);
-	FanPage* newFanPage= new FanPage(pageName);
-	addFanPageToFanPages(newFanPage);
+	
 }
 
 void Facebook::addFanPage(FanPage fanpage)
@@ -84,10 +121,10 @@ void Facebook::startMenu()
 		switch (choice)
 		{
 		case 1:
-			addUser();
+			addUser();//exep done
 			break;
 		case 2:
-			addFanPage();
+			addFanPage();//exep done
 			break;
 		case 3:
 			addStatus();
@@ -105,7 +142,7 @@ void Facebook::startMenu()
 			disConnect();
 			break;
 		case 8:
-			addFriendToFanPage(); 
+			addFriendToFanPage();
 			break;
 		case 9:
 			disConnectFriendAndFanPage();
@@ -117,9 +154,11 @@ void Facebook::startMenu()
 		case 11:
 			showAllFriendFansOFUser();
 			break;
-		default:
-			cout <<"Thank you for using facebook\nGoodbye";
+		case 12:
+			cout << "Thank you for using facebook\nGoodbye";
 			break;
+		default:
+			cout << "This number is out of range!\n";
 		}
 	} while (choice != EXIT_MENU);
 
@@ -141,6 +180,32 @@ void Facebook::makeConnection()
 	user1 = getUserNameFromUser("please enter first user's name: ");
 	user2 = getUserNameFromUser("please enter second user's name: ");
 	user1->addFriend(*user2);
+}
+
+const string Facebook::newUserNameFromInput() const  noexcept(false)
+{
+	string username;
+	cout << "Enter username:" << endl;
+	do//to avoid empty words becuase of getline
+	{
+		getline(cin, username);
+	} while (username[0] == 0);
+	if (findUserByName(username) != nullptr)
+		throw notUniqueExeption();
+	return username;
+}
+
+const string Facebook::newPageNameFromInput() const noexcept(false)
+{
+	string pageName;
+	cout << "Enter username:" << endl;
+	do//to avoid empty words becuase of getline
+	{
+		getline(cin, pageName);
+	} while (pageName[0] == 0);
+	if (findFanPageByName(pageName) != nullptr)
+		throw notUniqueExeption();
+	return pageName;
 }
 
 void Facebook::makeConnection(User& user1, User& user2)//manually added
@@ -404,32 +469,39 @@ void Facebook::showAllFriendFansOFUser()  const
 	do
 	{
 		cin >> choice;
-		if (choice == 1)
+		try
 		{
-			showFriendsOfUser();
+
+			if (choice == 1)
+			{
+				showFriendsOfUser();
+			}
+			else if (choice == 2)
+			{
+				showFansOfFanPage();
+			}
+			else
+				throw IndexOutOfRange();
 		}
-		else if (choice == 2)
+		catch (IndexOutOfRange& e)
 		{
-			showFansOfFanPage();
+
 		}
 	} while (choice != 1 && choice != 2);
 }
 
-User* Facebook::getUserNameFromUser(const string text) 
+User* Facebook::getUserNameFromUser(const string text) noexcept(false)
 {
 	string name;
 	User* user;
-	do
-	{
-		cout << text;
-		do//to avoid empty words becuase of getline
-			getline(cin, name);
-		while (name[0] == 0);
-		user = findUserByName(name);
-		if (user == nullptr)
-			cout << "This user does not exist in our system.." << endl;
+	cout << text;
+	do//to avoid empty words becuase of getline
+		getline(cin, name);
+	while (name[0] == 0);
 
-	} while (user == nullptr);
+	user = findUserByName(name);
+	if (user == nullptr)
+		throw findingUserExeption();
 	return user;
 }
 
@@ -437,18 +509,23 @@ const User* Facebook::getUserNameFromUser(const string text) const
 {
 	string name;
 	const User* user;
-	do
+	cout << text;
+	do//to avoid empty words becuase of getline
+		getline(cin, name);
+	while (name[0] == 0);
+
+	try
 	{
-		cout << text;
-		do//to avoid empty words becuase of getline
-			getline(cin, name);
-		while (name[0] == 0);
 		user = findUserByName(name);
 		if (user == nullptr)
-			cout << "This user does not exist in our system.." << endl;
+			throw findingUserExeption();
+		return user;
+	}
+	catch (findingUserExeption& e)
+	{
+		cout << e.what() << "Try again\n";
+	}
 
-	} while (user == nullptr);
-	return user;
 }
 
 FanPage* Facebook::getFanpageFromUser(const string text) 

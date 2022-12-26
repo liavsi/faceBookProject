@@ -6,7 +6,6 @@ User::User(const string name, Date birthday) : birthday(birthday)
 {
 	//builds User with name and birthday date (other attributes set to zero but memory allocated)
 	this->name = name;
-	this->birthday = birthday;
 	posts.reserve(CAPACITY_INIT);
 	friends.reserve(CAPACITY_INIT);
 	pages.reserve(CAPACITY_INIT);

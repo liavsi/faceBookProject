@@ -12,7 +12,7 @@ Date::Date()
 	day = ltm->tm_mday;
 }
 
-Date::Date(const Date& date)
+Date::Date(const Date& date)//manually happens
 {
 	//copy by value
 	this->day = date.day;
@@ -20,10 +20,21 @@ Date::Date(const Date& date)
 	this->year = date.year;
 }
 
-Date::Date(char* birthdayStr)
+Date::Date(const char* birthdayStr) noexcept(false)
 {
+	time_t curr_time;
+	curr_time = time(NULL);
+	tm* ltm = localtime(&curr_time);
+	int currMonth = ltm->tm_mon + 1;
+	int currYear = ltm->tm_year + 1900;
+	int currDay = ltm->tm_mday;
 	//gets dd.mm.yyyy format date
-	sscanf(birthdayStr, "%d.%d.%d", &day, &month, &year);
+	if (sscanf(birthdayStr, "%d.%d.%d", &day, &month, &year) < 3)
+		throw DateFormatExeption();
+	if (day > 30 || day < 1 || month > 12 || month < 1)
+		throw DateUnvalidExeption();
+	if (day > currDay && month > currMonth && year > currYear)
+		throw DateYetToComeExeption();
 }
 
 

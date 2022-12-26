@@ -1,6 +1,7 @@
 #ifndef FANPAGE
 #define FANPAGE
 #include "user.h"
+#include "exeption.h"
 #include <vector>
 #include <string>
 

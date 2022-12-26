@@ -56,5 +56,8 @@
     <ClInclude Include="facebook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="exeption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

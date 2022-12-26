@@ -64,6 +64,7 @@ public:
 	*/
 	void makeConnection();
 
+	
 	/*
 	* Function that adds user1 and user2 be friends
 	*/
@@ -116,6 +117,10 @@ private:
 	/*
 	* Helper Functions
 	*/
+
+
+	const string newUserNameFromInput() const  noexcept(false);
+	const string newPageNameFromInput() const  noexcept(false);
 	void addUserToUsers(User* newUser);
 	void addFanPageToFanPages(FanPage* newFanPage);
 	void printMenu() const;
