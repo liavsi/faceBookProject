@@ -23,7 +23,7 @@ Status::~Status()
 
 ostream& operator<<(ostream& os, const Status& p) 
 {
-	os << typeid(p).name() + 6 << p.date << " " << p.time;
+	os << typeid(p).name() + 6 <<" , " << p.date << " , " << p.time;
 	p.toOs(os);
 	return os;
 }

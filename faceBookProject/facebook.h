@@ -24,7 +24,11 @@ public:
 	*/
 	void addUser();
 
+	void writeConnectionsToFile(ofstream& file)const;
+
 	void writeUsersToFile(ofstream& file)const;
+
+	void writeFanPagesToFile(ofstream& file)const;
 
 	void saveData(string filename) const;
 	/*

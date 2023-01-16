@@ -58,22 +58,45 @@ void Facebook::addUser()
 	
 }
 
+void Facebook::writeConnectionsToFile(ofstream& file) const
+{
+
+	int size = users.size();
+	for (int i = 0; i < size; i++)
+	{
+		users[i]->writeConnections(file);
+	}
+
+}
+
+
 void Facebook::writeUsersToFile(ofstream& file) const
 {
+	int size = users.size();
+	file << size << endl;
 	for (int i = 0; i < users.size(); i++)
 	{
-		file << users[i] << endl;
-		file << users[i]->getName() << ", " << users[i]->getDate()<<endl;
+		file << *users[i] << endl;
 	}
+}
+
+void Facebook::writeFanPagesToFile(ofstream& file) const
+{
+	int size = fanPages.size();
+	file << size << endl;
+	for (int i = 0; i < size; i++)
+	{
+		file << *fanPages[i] << endl;
+	}
+
 }
 
 void Facebook::saveData(string filename) const
 {
 	ofstream file(filename, ios::trunc);
-	int sizeUsers = users.size();
-	file << sizeUsers << endl;
 	writeUsersToFile(file);
-
+	writeFanPagesToFile(file);
+	writeConnectionsToFile(file);
 }
 
 void Facebook::addUser(User user)

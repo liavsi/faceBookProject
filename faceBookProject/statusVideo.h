@@ -36,7 +36,7 @@ public:
 
 	virtual void toOs(ostream& os) const override
 	{
-		os << textContent << " " << video;
+		os <<"\n" << textContent << "\n" << video;
 	}
 private:
 	std::string video; //video address

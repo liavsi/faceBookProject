@@ -75,7 +75,7 @@ public:
 	*/
 	void showFriends() const;
 
-
+	void writeConnections(ofstream& file) const;
 
 	Date getDate();
 

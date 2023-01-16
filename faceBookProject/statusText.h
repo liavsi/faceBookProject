@@ -29,7 +29,7 @@ public:
 
 	virtual void toOs(ostream& os) const override
 	{
-		os << " " << textContent;
+		os << "\n" << textContent;
 	}
 
 	const bool operator !=(const Status& other)const override

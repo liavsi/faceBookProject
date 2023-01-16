@@ -35,7 +35,7 @@ public:
 
 	virtual void toOs(ostream& os) const override
 	{
-		os << textContent<< " " << picture;
+		os <<"\n"<< textContent << "\n" << picture;
 	}
 
 private:

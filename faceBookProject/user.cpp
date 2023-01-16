@@ -201,6 +201,23 @@ void User::showFriends() const
 	}
 }
 
+void User::writeConnections(ofstream& file) const
+{
+	int friendSize = friends.size();
+	int fanPageSize = pages.size();
+	file << friendSize << endl;
+	for (int i = 0; i < friendSize; i++)
+	{
+		file<< friends[i]->getName()<<endl;
+	}
+	file << fanPageSize << endl;
+	for (int i = 0; i < fanPageSize; i++)
+	{
+		file << pages[i]->getName() << endl;
+	}
+	
+}
+
 Date User::getDate()
 {
 	return birthday;
@@ -224,13 +241,13 @@ const bool User::operator>(const User& other)
 
 std::ostream& operator<<(std::ostream& os, const User& user)
 {
-	os << user.name << ", " << user.birthday << endl;
+	os << user.name << "\n" << user.birthday << endl;
 	int numOfPosts = user.posts.size();
 	os << numOfPosts << endl;
 
 	for (int i = 0; i < numOfPosts; i++) 
 	{
-		os << user.posts[i] << endl;
+		os << *user.posts[i] << endl;
 	}
 	return os;
 }

@@ -45,6 +45,7 @@ public:
 
 	//operator overload
 	const bool operator >(const FanPage& fanpage);
+	friend std::ostream& operator<<(std::ostream& os, const FanPage& fanpage);
 
 
 	//Ctor and Dtor
