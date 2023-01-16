@@ -97,6 +97,7 @@ void Facebook::saveData(string filename) const
 	writeUsersToFile(file);
 	writeFanPagesToFile(file);
 	writeConnectionsToFile(file);
+	file.close();
 }
 
 void Facebook::addUser(User user)
@@ -241,21 +242,24 @@ void Facebook::makeConnection()
 
 void Facebook::makeUsersConnection(ifstream& file, int numOfUser)
 {
-	char tempName[MAX_NAME_LEN];
+	string tempName, line;
 	int numOfFriends, numOfFanPages;
+	getline(file, line);
 	for (int i = 0; i < numOfUser; i++)
 	{
 		file >> numOfFriends;
+		getline(file, line);
 		for (int j = 0; j < numOfFriends; j++)
 		{
-			file.getline(tempName, MAX_NAME_LEN);
+			getline(file, tempName);
 			User* temp = findUserByName(tempName);
 			makeConnection(*users[i], *temp);
 		}
 		file >> numOfFanPages;
+		getline(file, line);
 		for (int j = 0; j < numOfFanPages; j++)
 		{
-			file.getline(tempName, MAX_NAME_LEN);
+			getline(file,tempName);
 			FanPage* temp = findFanPageByName(tempName);
 			users[i]->addFanpage(*temp);
 		}
@@ -455,6 +459,7 @@ void Facebook::initializeFacebook(std::string filename)
 	numOfUsers = initializeUsers(file);
 	numOfFanPages = initializeFanPages(file);
 	makeUsersConnection(file, numOfUsers);
+	file.close();
 }
 
 void Facebook::initializeFacebook()
