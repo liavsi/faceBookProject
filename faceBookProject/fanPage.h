@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-class FanPage
+class FanPage 
 {
 public:
 	/*
@@ -53,8 +53,8 @@ public:
 
 private:
 	string name;
-	vector<User*> fans;
 	vector<Status*> posts;
+	vector<User*> fans;
 
 	const int UNFOUND = -1;
 	const int CAPACITY_INIT = 5;

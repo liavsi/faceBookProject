@@ -2,8 +2,7 @@
 #define STATUS
 #include "date.h"
 #include "time.h"
-using namespace std;
-
+#include <string>
 
 class Status
 {
@@ -12,21 +11,25 @@ public:
 	/*
 	* const Function that shows the post
 	*/
-	void showPost() const;
+
+	virtual void showPost() const = 0;
 
 	//Ctors and Dtor
-	Status(const string text);
-	Status(const Status& other);
-	~Status();
+
+	virtual ~Status();
 
 	//operator overloads
-	const bool operator ==(const Status& other);
-	const bool operator !=(const Status& other);
+	virtual const bool operator ==(const Status& other) const = 0;
+	virtual const bool operator !=(const Status& other) const = 0;
+
+protected:
+	Status();
+	Status(const Status& other);
 
 private:
-	string textContent;
 	Date date;
 	Time time;
+
 
 
 };

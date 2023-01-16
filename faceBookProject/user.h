@@ -86,10 +86,10 @@ public:
 
 private:
 	string name;
-	Date birthday;
 	vector<Status*> posts;
 	vector<User*> friends;
 	vector<FanPage*> pages;
+	Date birthday;
 
 	const int UNFOUND = -1;
 	const int NUM_OF_RECENTS_POST_FRIEND = 10;
