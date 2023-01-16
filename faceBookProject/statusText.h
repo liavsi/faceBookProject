@@ -7,7 +7,7 @@
 class StatusText: virtual public Status
 {
 public:
-	StatusText(std::string& text) :Status()
+	StatusText(const std::string& text) :Status()
 	{
 		textContent = text;
 	}

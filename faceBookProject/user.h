@@ -1,11 +1,13 @@
 #ifndef USER
 #define USER
 #include "date.h"
-#include "status.h"
+#include "statusText.h"
+#include "statusPicture.h"
+#include "statusVideo.h"
 #include <vector>
 #include <string>
 #include <iostream>
-
+#include <fstream>
 using namespace std;
 
 class FanPage;
@@ -78,6 +80,7 @@ public:
 	User& operator +=(User& other);
 	User& operator +=(FanPage& fanpage);
 	const bool operator >(const User& other);
+
 
 	//Ctors and Dtor
 	User(const string name, Date birthday);

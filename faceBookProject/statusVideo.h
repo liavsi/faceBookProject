@@ -7,7 +7,7 @@
 class StatusVideo : virtual public Status
 {
 public:
-	StatusVideo(std::string& video) :Status()
+	StatusVideo(const std::string& video) :Status()
 	{
 		this->video = video;
 	}

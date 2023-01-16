@@ -7,6 +7,6 @@ int main()
 	//all of them are friends and "fans" of one direction
 	facebook.startMenu();
 
-
+	facebook.saveData();
 	return 0;
 }

@@ -7,7 +7,7 @@
 class StatusPicture : virtual public Status
 {
 public:
-	StatusPicture(std::string& picture) :Status()
+	StatusPicture(const std::string& picture) :Status()
 	{
 		this->picture = picture;
 	}
