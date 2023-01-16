@@ -555,7 +555,7 @@ void Facebook::addStatusToUser()
 	int choice;
 	do
 	{
-		cout << "Choose type of status:\n1- Text\n2- Picture\n3-Video";
+		cout << "Choose type of status:\n1 - Text\n2 - Picture\n3 - Video\n(Choose number):";
 		try
 		{
 			cin >> choice;
@@ -602,7 +602,7 @@ void Facebook::addStatusToFanPage()
 	bool isValidData = false;
 	do
 	{
-		cout << "Choose type of status:\n1- Text\n2- Picture\n3-Video";
+		cout << "Choose type of status:\n1 - Text\n2 - Picture\n3 - Video\n(Choose number):";
 		try
 		{
 			cin >> choice;
@@ -689,13 +689,13 @@ void Facebook::ShowPosts() const
 
 void Facebook::showPostsOfUser() const noexcept(false)
 {
-	const User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
+	const User* user = getUserNameFromUser("Enter User name to watch his Posts: ");
 	user->showPosts();
 }
 
 void Facebook::showPostOfFanPage()  const noexcept(false)
 {
-	const FanPage* fanpage = getFanpageFromUser("Which fan Page's post would you like to show: ");
+	const FanPage* fanpage = getFanpageFromUser("Enter Fan's Page name to watch his Posts: ");
 	fanpage->showPosts();
 }
 
@@ -877,7 +877,8 @@ const FanPage* Facebook::getFanpageFromUser(string text) const noexcept(false)
 
 Status* Facebook::buildStatus(eTypeStatus typeStatus)
 {
-	cout << "Enter video location file post :";
+	
+	cout << "Enter Text for your post (150 letters max):";
 	string fileLocation;
 	string textForStatus;
 	do//to avoid empty words becuase of getline
