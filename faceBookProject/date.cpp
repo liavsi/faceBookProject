@@ -22,7 +22,7 @@ Date::Date(const Date& date)//manually happens
 
 
 
-Date::Date(const char* birthdayStr) noexcept(false)
+Date::Date(std::string birthdayStr) noexcept(false)
 {
 	time_t curr_time;
 	curr_time = time(NULL);
@@ -31,7 +31,7 @@ Date::Date(const char* birthdayStr) noexcept(false)
 	int currYear = ltm->tm_year + 1900;
 	int currDay = ltm->tm_mday;
 	//gets dd.mm.yyyy format date
-	if (sscanf(birthdayStr, "%d.%d.%d", &day, &month, &year) < 3)
+	if (sscanf(birthdayStr.c_str(), "%d/%d/%d", &day, &month, &year) < 3)
 		throw DateFormatExeption();
 	if (day > 30 || day < 1 || month > 12 || month < 1)
 		throw DateUnvalidExeption();

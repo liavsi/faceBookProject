@@ -9,6 +9,10 @@ Status::Status(): time(),date()
 
 }
 
+Status::Status(const Date& date, const Time& time):date(date),time(time)
+{
+}
+
 Status::Status(const Status& other)
 {
 	date = other.date;
@@ -23,7 +27,7 @@ Status::~Status()
 
 ostream& operator<<(ostream& os, const Status& p) 
 {
-	os << typeid(p).name() + 6 <<" , " << p.date << " , " << p.time;
+	os << typeid(p).name() + 12 <<" , " << p.date << " , " << p.time;
 	p.toOs(os);
 	return os;
 }

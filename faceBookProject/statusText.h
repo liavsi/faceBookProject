@@ -7,6 +7,11 @@
 class StatusText: virtual public Status
 {
 public:
+	StatusText(const std::string& text, const Date& d, const Time& t) :Status(d, t)
+	{
+		textContent = text;
+	}
+
 	StatusText(const std::string& text) :Status()
 	{
 		textContent = text;

@@ -262,29 +262,6 @@ void Facebook::makeUsersConnection(ifstream& file, int numOfUser)
 		
 	}
 }
-/*
-users
-3
-liav 32423432
-2
-1 skdfjksdljfk
-2 sdkfajdskjf
-sdf 3242
-0
-dsfj 324
-0
-FANPAGE
-1
-sfajd
-0
-connections
-users
-1
-sharon
-1
-sharon fans club
-
-*/
 
 
 const string Facebook::newUserNameFromInput() const  noexcept(false)
@@ -424,39 +401,23 @@ void Facebook::addFriendToFanPage(User& user, FanPage& fanpage)
 
 int Facebook::initializeUsers(ifstream& file)
 {
-	int numOfUsers, numOfPosts, type;
+	int numOfUsers, numOfPosts;
+	string type, birthDay, timeStr,name, line;
 	file >> numOfUsers;
 	users.reserve(numOfUsers);
-
 	for (int i = 0; i < numOfUsers; i++)
 	{
-		std::string name;
-		std::string birthDay;
-		file >> name >> birthDay;
+		char delimeter;
+		getline(file, line);
+		getline(file, name);
+		getline(file, birthDay);
 		Date date(birthDay.c_str());
 		User user(name, date);
 		users.push_back(new User(user));
 		file >> numOfPosts;
 		for (int j = 0; j < numOfPosts; j++)
 		{
-			Status* post;
-			file >> type;
-			char tempText[MAX_POST_LEN];
-			string fileLocation;
-			file.getline(tempText,MAX_POST_LEN);
-			if (type == Text)
-				post = new StatusText(tempText);
-			else if (type == Picture)
-			{
-				file >> fileLocation;
-				post = new StatusPicture(tempText,fileLocation);
-			}
-			else
-			{
-				file >> fileLocation;
-				post = new StatusVideo(tempText, fileLocation);
-
-			}
+			Status* post = buildStatus(file);
 			users[i]->addPost(post);
 		}
 	}
@@ -467,33 +428,19 @@ int Facebook::initializeFanPages(ifstream& file)
 {
 	int numOfFanPages, numOfPosts;
 	int type;
-	string name;
+	string name, line;
 	file >> numOfFanPages;
 	for (int i = 0; i < numOfFanPages; i++)
 	{
-		file >> name;
+		getline(file, line);
+		getline(file,name);
 		FanPage page(name);
 		fanPages.push_back(new FanPage(page));
-		file >> numOfFanPages;
-		for (int j = 0; j < numOfFanPages; j++)
+		file >> numOfPosts;
+		for (int j = 0; j < numOfPosts; j++)
 		{
-			Status* post;
-			file >> type;
-			char tempText[MAX_POST_LEN];
-			string fileLocation;
-			file.getline(tempText, MAX_POST_LEN);
-			if (type == Text)
-				post = new StatusText(tempText);
-			else if (type == Picture)
-			{
-				file >> fileLocation;
-				post = new StatusPicture(tempText, fileLocation);
-			}
-			else
-			{
-				file >> fileLocation;
-				post = new StatusVideo(tempText, fileLocation);
-			}
+			Status* post = buildStatus(file);
+			fanPages[i]->addPost(post);
 		}
 	}
 	return numOfFanPages;
@@ -948,6 +895,38 @@ Status* Facebook::buildStatus(eTypeStatus typeStatus)
 		return new StatusPicture(textForStatus, fileLocation);
 	}
 }
+
+Status* Facebook::buildStatus(ifstream& file)
+{
+	Status* post;
+	string type, birthDay, timeStr, line, tempText;
+	char delimeter;
+	file >> type;
+	file >> delimeter;
+	file >> birthDay;
+	file >> delimeter;
+	file >> timeStr;
+	getline(file, line);
+	Date date(birthDay);
+	Time time(timeStr);
+	string fileLocation;
+	getline(file, tempText);
+	if (type == "Text")
+		post = new StatusText(tempText,date,time);
+	else if (type == "Picture")
+	{
+		file >> fileLocation;
+		post = new StatusPicture(tempText, fileLocation,date,time);
+	}
+	else
+	{
+		file >> fileLocation;
+		post = new StatusVideo(tempText, fileLocation,date,time);
+
+	}
+	return post;
+}
+
 
 
 

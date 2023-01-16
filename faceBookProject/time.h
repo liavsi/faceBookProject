@@ -19,6 +19,8 @@ public:
 	}
 	//Ctor
 	Time();
+	Time(std::string timeStr);
+
 private:
 	int seconds;
 	int minutes;

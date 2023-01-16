@@ -7,11 +7,15 @@
 class StatusVideo : virtual public StatusText
 {
 public:
-	StatusVideo(const std::string& textContent, const std::string& video) :StatusText(textContent)
+	StatusVideo(const std::string& textContent, const std::string& video,const Date& d, const Time& t) :StatusText(textContent,d, t)
 	{
 		this->video = video;
 	}
 
+	StatusVideo(const std::string& textContent, const std::string& video) :StatusText(textContent)
+	{
+		this->video = video;
+	}
 	//operator overloads
 	const bool operator ==(const Status& other) const override
 	{

@@ -157,6 +157,8 @@ private:
 	FanPage* getFanpageFromUser(const string text) noexcept(false);
 	const FanPage* getFanpageFromUser(const string text) const noexcept(false);
 	Status* buildStatus(eTypeStatus typeStatus);
+	Status* buildStatus(ifstream& file);
+
 };
 
 

@@ -25,9 +25,8 @@ public:
 
 protected:
 	Status();
+	Status(const Date& date,const Time& time);
 	Status(const Status& other);
-
-private:
 	Date date;
 	Time time;
 

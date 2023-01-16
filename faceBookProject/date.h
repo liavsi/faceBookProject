@@ -20,7 +20,7 @@ public:
 	//Ctors
 	Date();
 	Date(const Date& date);
-	Date(const char* birthdayStr) noexcept(false);
+	Date(std::string birthdayStr) noexcept(false);
 private:
 	int year;
 	int month;

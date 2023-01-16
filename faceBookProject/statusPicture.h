@@ -7,7 +7,12 @@
 class StatusPicture : virtual public StatusText
 {
 public:
-	StatusPicture(const std::string& textContent,const std::string& picture) :StatusText(textContent)
+	StatusPicture(const std::string& textContent,const std::string& picture, const Date& d, const Time& t) :StatusText(textContent,d,t)
+	{
+		this->picture = picture;
+	}
+
+	StatusPicture(const std::string& textContent, const std::string& picture) :StatusText(textContent)
 	{
 		this->picture = picture;
 	}
