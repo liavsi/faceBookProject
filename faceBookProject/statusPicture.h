@@ -4,10 +4,10 @@
 #include "status.h"
 
 
-class StatusPicture : virtual public Status
+class StatusPicture : virtual public StatusText
 {
 public:
-	StatusPicture(const std::string& picture) :Status()
+	StatusPicture(const std::string& textContent,const std::string& picture) :StatusText(textContent)
 	{
 		this->picture = picture;
 	}
@@ -18,7 +18,8 @@ public:
 		const StatusPicture* temp = dynamic_cast<const StatusPicture*>(&other);
 		if (temp == NULL)
 			return false;
-		return this->picture == temp->picture;
+		else if (temp == this)
+			return this->picture == temp->picture;
 
 	}
 
@@ -28,8 +29,13 @@ public:
 	}
 	void showPost() const override
 	{
-		cout <<"Status picture is at: "<< picture << "| posted at: ";
+		cout <<"Status picture is at: "<< picture;
 		this->Status::showPost();
+	}
+
+	virtual void toOs(ostream& os) const override
+	{
+		os << textContent<< " " << picture;
 	}
 
 private:

@@ -13,7 +13,7 @@ public:
 	*/
 
 	virtual void showPost() const = 0;
-
+	virtual void toOs(ostream& os) const {}
 	//Ctors and Dtor
 
 	virtual ~Status();
@@ -21,6 +21,7 @@ public:
 	//operator overloads
 	virtual const bool operator ==(const Status& other) const = 0;
 	virtual const bool operator !=(const Status& other) const = 0;
+	friend ostream& operator<<(ostream& os, const Status& p);
 
 protected:
 	Status();

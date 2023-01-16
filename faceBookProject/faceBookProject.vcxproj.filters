@@ -59,9 +59,6 @@
     <ClInclude Include="exeption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="facebookBaseUser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="statusText.h">
       <Filter>Header Files</Filter>
     </ClInclude>

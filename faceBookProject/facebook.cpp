@@ -160,7 +160,7 @@ void Facebook::startMenu()
 			cout << "Thank you for using facebook\nGoodbye";
 			break;
 		default:
-			cout << "This number is out of range!\n";
+			throw IndexOutOfRange();
 		}
 	} while (choice != EXIT_MENU);
 
@@ -418,14 +418,22 @@ int Facebook::initializeUsers(ifstream& file)
 		{
 			Status* post;
 			file >> type;
-			char temp[MAX_POST_LEN];
-			file.getline(temp,MAX_POST_LEN);
+			char tempText[MAX_POST_LEN];
+			string fileLocation;
+			file.getline(tempText,MAX_POST_LEN);
 			if (type == Text)
-				post = new StatusText(temp);
+				post = new StatusText(tempText);
 			else if (type == Picture)
-				post = new StatusPicture(temp);
+			{
+				file >> fileLocation;
+				post = new StatusPicture(tempText,fileLocation);
+			}
 			else
-				post = new StatusVideo(temp);
+			{
+				file >> fileLocation;
+				post = new StatusVideo(tempText, fileLocation);
+
+			}
 			users[i]->addPost(post);
 		}
 	}
@@ -448,15 +456,21 @@ int Facebook::initializeFanPages(ifstream& file)
 		{
 			Status* post;
 			file >> type;
-			char temp[MAX_POST_LEN];
-			file.getline(temp, MAX_POST_LEN);
+			char tempText[MAX_POST_LEN];
+			string fileLocation;
+			file.getline(tempText, MAX_POST_LEN);
 			if (type == Text)
-				post = new StatusText(temp);
+				post = new StatusText(tempText);
 			else if (type == Picture)
-				post = new StatusPicture(temp);
+			{
+				file >> fileLocation;
+				post = new StatusPicture(tempText, fileLocation);
+			}
 			else
-				post = new StatusVideo(temp);
-			fanPages[i]->addPost(post);
+			{
+				file >> fileLocation;
+				post = new StatusVideo(tempText, fileLocation);
+			}
 		}
 	}
 	return numOfFanPages;
@@ -547,6 +561,10 @@ void Facebook::addStatus()
 		{
 			cout << e.what();
 		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
 		if (!isValidData)
 		{
 			cout << "Try again!\n";
@@ -568,15 +586,15 @@ void Facebook::addStatusToUser()
 			cin >> choice;
 			if (choice == 1)
 			{
-				user->addPost(buildStatus("Enter text for your post (max 150 letters):", Text));
+				user->addPost(buildStatus(Text));
 			}
 			else if (choice == 2)
 			{
-				user->addPost(buildStatus("Enter Picture location file post :", Picture));
+				user->addPost(buildStatus(Picture));
 			}
 			else if (choice == 3)
 			{
-				user->addPost(buildStatus("Enter video location file post :", Video));
+				user->addPost(buildStatus(Video));
 			}
 			else
 				throw IndexOutOfRange();
@@ -585,6 +603,10 @@ void Facebook::addStatusToUser()
 		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
+		}
+		catch (...)
+		{
+			cout << "Something happened";
 		}
 		if (!isValidData)
 		{
@@ -611,15 +633,15 @@ void Facebook::addStatusToFanPage()
 			cin >> choice;
 			if (choice == 1)
 			{
-				fanPage->addPost(buildStatus("Enter text for your post (max 150 letters):", Text));
+				fanPage->addPost(buildStatus(Text));
 			}
 			else if (choice == 2)
 			{
-				fanPage->addPost(buildStatus("Enter Picture location file post :", Picture));
+				fanPage->addPost(buildStatus(Picture));
 			}
 			else if (choice == 3) 
 			{
-				fanPage->addPost(buildStatus("Enter video location file post :", Video));
+				fanPage->addPost(buildStatus(Video));
 			}
 			else
 				throw IndexOutOfRange();
@@ -628,6 +650,10 @@ void Facebook::addStatusToFanPage()
 		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
+		}
+		catch (...)
+		{
+			cout << "Something happened";
 		}
 		if (!isValidData)
 		{
@@ -673,6 +699,10 @@ void Facebook::ShowPosts() const
 		catch (FaceBookExeption& e)
 		{
 			cout << e.what();
+		}
+		catch (...)
+		{
+			cout << "Something happened";
 		}
 		if (!isValidData)
 		{
@@ -799,6 +829,10 @@ void Facebook::showAllFriendFansOFUser()  const
 		{
 			cout << e.what();
 		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
 		if (!isValidData)
 		{
 			cout << "Try again!\n";
@@ -866,21 +900,29 @@ const FanPage* Facebook::getFanpageFromUser(string text) const noexcept(false)
 	return fanPage;
 }
 
-Status* Facebook::buildStatus(const string text, eTypeStatus typeStatus)
+Status* Facebook::buildStatus(eTypeStatus typeStatus)
 {
-	cout << text;
+	cout << "Enter video location file post :";
+	string fileLocation;
 	string textForStatus;
 	do//to avoid empty words becuase of getline
 		getline(cin, textForStatus);
 	while (textForStatus[0] == 0);
-	if (typeStatus == Text) {
+	if (typeStatus == Text) 
+	{
 		return new StatusText(textForStatus);
 	}
-	else if (typeStatus == Video) {
-		return new StatusVideo(textForStatus);
+	else if (typeStatus == Video)
+	{
+		cout << "Enter video location file post :";
+		cin >> fileLocation;
+		return new StatusVideo(textForStatus, fileLocation);
 	}
-	else {
-		return new StatusPicture(textForStatus);
+	else 
+	{
+		cout <<"Enter Picture location file post :";
+		cin >> fileLocation;
+		return new StatusPicture(textForStatus, fileLocation);
 	}
 }
 

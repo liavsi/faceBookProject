@@ -27,6 +27,11 @@ public:
 
 	}
 
+	virtual void toOs(ostream& os) const override
+	{
+		os << " " << textContent;
+	}
+
 	const bool operator !=(const Status& other)const override
 	{
 		return !(*this == other);
@@ -34,14 +39,14 @@ public:
 
 	void showPost() const override
 	{
-		cout << textContent << "| posted at: ";
+		cout <<"Text Content: " << textContent;
 		this->Status::showPost();
 	}
 
 	
 	
 
-private:
+protected:
 	std::string textContent;
 
 };

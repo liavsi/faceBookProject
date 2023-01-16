@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+
 class FanPage 
 {
 public:
@@ -16,7 +17,7 @@ public:
 	/*
 	* const Function that returns name of the fanpage
 	*/
-	const string getName() const;
+	const std::string getName() const;
 
 	/*
 	* Function that adds a post to fanpage
@@ -48,11 +49,11 @@ public:
 
 	//Ctor and Dtor
 	FanPage(const FanPage& fanpage);
-	FanPage(const string name);
+	FanPage(const std::string name);
 	~FanPage();
 
 private:
-	string name;
+	std::string name;
 	vector<Status*> posts;
 	vector<User*> fans;
 

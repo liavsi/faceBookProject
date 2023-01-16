@@ -20,15 +20,7 @@ Date::Date(const Date& date)//manually happens
 	this->year = date.year;
 }
 
-int Date::getDay()
-{
-	return day;
-}
 
-int Date::getMonth()
-{
-	return month;
-}
 
 Date::Date(const char* birthdayStr) noexcept(false)
 {
@@ -51,10 +43,6 @@ Date::Date(const char* birthdayStr) noexcept(false)
 		throw DateYetToComeExeption();
 }
 
-int Date::getYear()
-{
-	return year;
-}
 
 
 

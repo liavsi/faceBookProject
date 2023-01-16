@@ -4,10 +4,10 @@
 #include "status.h"
 
 
-class StatusVideo : virtual public Status
+class StatusVideo : virtual public StatusText
 {
 public:
-	StatusVideo(const std::string& video) :Status()
+	StatusVideo(const std::string& textContent, const std::string& video) :StatusText(textContent)
 	{
 		this->video = video;
 	}
@@ -18,7 +18,8 @@ public:
 		const StatusVideo* temp = dynamic_cast<const StatusVideo*>(&other);
 		if (temp == NULL)
 			return false;
-		return this->video == temp->video;
+		if (temp == this)
+			return this->video == temp->video;
 
 	}
 
@@ -29,10 +30,14 @@ public:
 
 	void showPost() const override
 	{
-		cout << "Status video is at: " << video << "| posted at: ";
+		cout << "Status video is at: " << video ;
 		this->Status::showPost();
 	}
 
+	virtual void toOs(ostream& os) const override
+	{
+		os << textContent << " " << video;
+	}
 private:
 	std::string video; //video address
 

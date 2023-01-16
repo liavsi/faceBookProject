@@ -8,7 +8,6 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-using namespace std;
 
 class FanPage;
 
@@ -76,7 +75,6 @@ public:
 	*/
 	void showFriends() const;
 
-	friend std::ostream& operator<<(std::ostream& os, const User& user);
 
 
 	Date getDate();
@@ -85,15 +83,16 @@ public:
 	User& operator +=(User& other);
 	User& operator +=(FanPage& fanpage);
 	const bool operator >(const User& other);
+	friend std::ostream& operator<<(std::ostream& os, const User& user);
 
 
 	//Ctors and Dtor
-	User(const string name, Date birthday);
+	User(const std::string name, Date birthday);
 	User(const User& user);
 	~User();
 
 private:
-	string name;
+	std::string name;
 	vector<Status*> posts;
 	vector<User*> friends;
 	vector<FanPage*> pages;

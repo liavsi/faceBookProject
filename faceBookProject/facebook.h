@@ -24,7 +24,7 @@ public:
 	*/
 	void addUser();
 
-	void writeUsersToFile(ofstream& file) const;
+	void writeUsersToFile(ofstream& file)const;
 
 	void saveData(string filename) const;
 	/*
@@ -152,7 +152,7 @@ private:
 	const User* getUserNameFromUser(const string text) const noexcept(false);
 	FanPage* getFanpageFromUser(const string text) noexcept(false);
 	const FanPage* getFanpageFromUser(const string text) const noexcept(false);
-	Status* buildStatus(const string text, eTypeStatus typeStatus);
+	Status* buildStatus(eTypeStatus typeStatus);
 };
 
 
