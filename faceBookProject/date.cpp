@@ -20,6 +20,16 @@ Date::Date(const Date& date)//manually happens
 	this->year = date.year;
 }
 
+int Date::getDay()
+{
+	return day;
+}
+
+int Date::getMonth()
+{
+	return month;
+}
+
 Date::Date(const char* birthdayStr) noexcept(false)
 {
 	time_t curr_time;
@@ -41,6 +51,11 @@ Date::Date(const char* birthdayStr) noexcept(false)
 		throw DateYetToComeExeption();
 }
 
+int Date::getYear()
+{
+	return year;
+}
+
 
 
 
@@ -51,3 +66,8 @@ void Date::showDate() const
 
 }
 
+std::ostream& operator<<(std::ostream& os, const Date& date)
+{
+	 os << date.day << "/" << date.month << "/" << date.year;
+	 return os;
+}

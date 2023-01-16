@@ -24,7 +24,9 @@ public:
 	*/
 	void addUser();
 
-	void saveData() const;
+	void writeUsersToFile(ofstream& file) const;
+
+	void saveData(string filename) const;
 	/*
 	* manually add user to facebook
 	*/

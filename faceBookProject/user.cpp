@@ -201,6 +201,11 @@ void User::showFriends() const
 	}
 }
 
+Date User::getDate()
+{
+	return birthday;
+}
+
 User& User::operator+=(User& other) {
 	this->addFriend(other);
 	return *this;
@@ -215,4 +220,17 @@ User& User::operator+=(FanPage& fanpage)
 const bool User::operator>(const User& other)
 {
 	return this->friends.size() > other.friends.size();
+}
+
+std::ostream& operator<<(std::ostream& os, const User& user)
+{
+	os << user.name << ", " << user.birthday << endl;
+	int numOfPosts = user.posts.size();
+	os << numOfPosts << endl;
+
+	for (int i = 0; i < numOfPosts; i++) 
+	{
+		os << user.posts[i] << endl;
+	}
+	return os;
 }

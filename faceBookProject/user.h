@@ -76,6 +76,11 @@ public:
 	*/
 	void showFriends() const;
 
+	friend std::ostream& operator<<(std::ostream& os, const User& user);
+
+
+	Date getDate();
+
 	//Operator overload
 	User& operator +=(User& other);
 	User& operator +=(FanPage& fanpage);

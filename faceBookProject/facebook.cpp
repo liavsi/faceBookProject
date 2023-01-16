@@ -58,8 +58,21 @@ void Facebook::addUser()
 	
 }
 
-void Facebook::saveData() const
+void Facebook::writeUsersToFile(ofstream& file) const
 {
+	for (int i = 0; i < users.size(); i++)
+	{
+		file << users[i] << endl;
+		file << users[i]->getName() << ", " << users[i]->getDate()<<endl;
+	}
+}
+
+void Facebook::saveData(string filename) const
+{
+	ofstream file(filename, ios::trunc);
+	int sizeUsers = users.size();
+	file << sizeUsers << endl;
+	writeUsersToFile(file);
 
 }
 

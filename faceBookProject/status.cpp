@@ -15,16 +15,14 @@ Status::Status(const Status& other)
 	time = other.time;
 }
 
-
-
-
 Status::~Status()
 {
 }
 
+ostream& operator<<(ostream& os, const Status& p) 
+{
 
-
-
+}
 
 void Status::showPost() const
 {

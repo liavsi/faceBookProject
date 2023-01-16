@@ -13,6 +13,10 @@ public:
 	*/
 	void showDate() const;
 
+	friend std::ostream& operator<<(std::ostream& os, const Date& date);
+
+
+
 	//Ctors
 	Date();
 	Date(const Date& date);
