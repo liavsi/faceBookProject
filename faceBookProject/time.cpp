@@ -13,6 +13,13 @@ Time::Time()
 	
 }
 
+Time::Time(std::string timeStr)
+{
+	sscanf(timeStr.c_str(), "%d:%d:%d", &hours, &minutes, &seconds);
+}
+
+
+
 
 void Time::showTime() const
 {

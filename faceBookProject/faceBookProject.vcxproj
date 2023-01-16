@@ -153,6 +153,9 @@
     <ClInclude Include="facebook.h" />
     <ClInclude Include="fanPage.h" />
     <ClInclude Include="status.h" />
+    <ClInclude Include="statusPicture.h" />
+    <ClInclude Include="statusText.h" />
+    <ClInclude Include="statusVideo.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>

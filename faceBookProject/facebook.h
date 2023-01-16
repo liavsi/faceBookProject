@@ -9,9 +9,14 @@
 /*
 * Facebook Object is the control class of all the other objects
 */
+
+enum eTypeStatus { Text, Picture, Video };
+
+
 class Facebook
 {
 public:
+
 	Facebook();
 	~Facebook();
 	/*
@@ -19,6 +24,13 @@ public:
 	*/
 	void addUser();
 
+	void writeConnectionsToFile(ofstream& file)const;
+
+	void writeUsersToFile(ofstream& file)const;
+
+	void writeFanPagesToFile(ofstream& file)const;
+
+	void saveData(string filename) const;
 	/*
 	* manually add user to facebook
 	*/
@@ -64,7 +76,10 @@ public:
 	*/
 	void makeConnection();
 
-	
+	void makeUsersConnection(ifstream& file, int numOfUsers);
+
+	void makeFanPagesConnection(ifstream& file, int numOfFanPages);
+
 	/*
 	* Function that adds user1 and user2 be friends
 	*/
@@ -105,7 +120,10 @@ public:
 	* Function that adds a user to a fanpage
 	*/
 	void addFriendToFanPage(User& user, FanPage& fanpage);
-	
+
+	int initializeUsers(ifstream& file);
+	int initializeFanPages(ifstream& file);
+	void initializeFacebook(std::string filename);
 private:
 	vector<User*> users;
 	vector<FanPage*> fanPages;
@@ -138,7 +156,9 @@ private:
 	const User* getUserNameFromUser(const string text) const noexcept(false);
 	FanPage* getFanpageFromUser(const string text) noexcept(false);
 	const FanPage* getFanpageFromUser(const string text) const noexcept(false);
-	
+	Status* buildStatus(eTypeStatus typeStatus);
+	Status* buildStatus(ifstream& file);
+
 };
 
 

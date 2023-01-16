@@ -1,12 +1,13 @@
 #ifndef USER
 #define USER
 #include "date.h"
-#include "status.h"
+#include "statusText.h"
+#include "statusPicture.h"
+#include "statusVideo.h"
 #include <vector>
 #include <string>
 #include <iostream>
-
-using namespace std;
+#include <fstream>
 
 class FanPage;
 
@@ -74,22 +75,28 @@ public:
 	*/
 	void showFriends() const;
 
+	void writeConnections(ofstream& file) const;
+
+	Date getDate();
+
 	//Operator overload
 	User& operator +=(User& other);
 	User& operator +=(FanPage& fanpage);
 	const bool operator >(const User& other);
+	friend std::ostream& operator<<(std::ostream& os, const User& user);
+
 
 	//Ctors and Dtor
-	User(const string name, Date birthday);
+	User(const std::string name, Date birthday);
 	User(const User& user);
 	~User();
 
 private:
-	string name;
-	Date birthday;
+	std::string name;
 	vector<Status*> posts;
 	vector<User*> friends;
 	vector<FanPage*> pages;
+	Date birthday;
 
 	const int UNFOUND = -1;
 	const int NUM_OF_RECENTS_POST_FRIEND = 10;

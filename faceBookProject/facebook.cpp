@@ -58,6 +58,48 @@ void Facebook::addUser()
 	
 }
 
+void Facebook::writeConnectionsToFile(ofstream& file) const
+{
+
+	int size = users.size();
+	for (int i = 0; i < size; i++)
+	{
+		users[i]->writeConnections(file);
+	}
+
+}
+
+
+void Facebook::writeUsersToFile(ofstream& file) const
+{
+	int size = users.size();
+	file << size << endl;
+	for (int i = 0; i < users.size(); i++)
+	{
+		file << *users[i] << endl;
+	}
+}
+
+void Facebook::writeFanPagesToFile(ofstream& file) const
+{
+	int size = fanPages.size();
+	file << size << endl;
+	for (int i = 0; i < size; i++)
+	{
+		file << *fanPages[i] << endl;
+	}
+
+}
+
+void Facebook::saveData(string filename) const
+{
+	ofstream file(filename, ios::trunc);
+	writeUsersToFile(file);
+	writeFanPagesToFile(file);
+	writeConnectionsToFile(file);
+	file.close();
+}
+
 void Facebook::addUser(User user)
 {
 	User* newUser = new User(user);
@@ -142,7 +184,7 @@ void Facebook::startMenu()
 			cout << "Thank you for using facebook\nGoodbye";
 			break;
 		default:
-			cout << "This number is out of range!\n";
+			throw IndexOutOfRange();
 		}
 	} while (choice != EXIT_MENU);
 
@@ -197,6 +239,34 @@ void Facebook::makeConnection()
 	}
 	
 }
+
+void Facebook::makeUsersConnection(ifstream& file, int numOfUser)
+{
+	string tempName, line;
+	int numOfFriends, numOfFanPages;
+	getline(file, line);
+	for (int i = 0; i < numOfUser; i++)
+	{
+		file >> numOfFriends;
+		getline(file, line);
+		for (int j = 0; j < numOfFriends; j++)
+		{
+			getline(file, tempName);
+			User* temp = findUserByName(tempName);
+			makeConnection(*users[i], *temp);
+		}
+		file >> numOfFanPages;
+		getline(file, line);
+		for (int j = 0; j < numOfFanPages; j++)
+		{
+			getline(file,tempName);
+			FanPage* temp = findFanPageByName(tempName);
+			users[i]->addFanpage(*temp);
+		}
+		
+	}
+}
+
 
 const string Facebook::newUserNameFromInput() const  noexcept(false)
 {
@@ -333,6 +403,64 @@ void Facebook::addFriendToFanPage(User& user, FanPage& fanpage)
 	user.addFanpage(fanpage);
 }
 
+int Facebook::initializeUsers(ifstream& file)
+{
+	int numOfUsers, numOfPosts;
+	string type, birthDay, timeStr,name, line;
+	file >> numOfUsers;
+	users.reserve(numOfUsers);
+	for (int i = 0; i < numOfUsers; i++)
+	{
+		char delimeter;
+		getline(file, line);
+		getline(file, name);
+		getline(file, birthDay);
+		Date date(birthDay.c_str());
+		User user(name, date);
+		users.push_back(new User(user));
+		file >> numOfPosts;
+		for (int j = 0; j < numOfPosts; j++)
+		{
+			Status* post = buildStatus(file);
+			users[i]->addPost(post);
+		}
+	}
+	return numOfUsers;
+}
+
+int Facebook::initializeFanPages(ifstream& file)
+{
+	int numOfFanPages, numOfPosts;
+	int type;
+	string name, line;
+	file >> numOfFanPages;
+	for (int i = 0; i < numOfFanPages; i++)
+	{
+		getline(file, line);
+		getline(file,name);
+		FanPage page(name);
+		fanPages.push_back(new FanPage(page));
+		file >> numOfPosts;
+		for (int j = 0; j < numOfPosts; j++)
+		{
+			Status* post = buildStatus(file);
+			fanPages[i]->addPost(post);
+		}
+	}
+	return numOfFanPages;
+}
+
+
+void Facebook::initializeFacebook(std::string filename)
+{
+	int numOfUsers, numOfFanPages;
+	ifstream file(filename);
+
+	numOfUsers = initializeUsers(file);
+	numOfFanPages = initializeFanPages(file);
+	makeUsersConnection(file, numOfUsers);
+	file.close();
+}
 
 void Facebook::initializeFacebook()
 {
@@ -342,18 +470,18 @@ void Facebook::initializeFacebook()
 	this->addFanPage(FanPage("hapoeel beer sheva fans"));
 	this->addFanPage(FanPage("one direction fan page"));
 	this->addFanPage(FanPage("sharon pais fans club"));
-	this->fanPages[0]->addPost(new Status("we are the best"));
-	this->fanPages[0]->addPost(new Status("we won the game"));
-	this->fanPages[1]->addPost(new Status("thats what makes you beutiful"));
-	this->fanPages[1]->addPost(new Status("la la la"));
-	this->fanPages[2]->addPost(new Status("he lives in Tel aviv "));
-	this->fanPages[2]->addPost(new Status("he is developer.."));
-	this->users[0]->addPost(new Status("hi guys im liav"));
-	this->users[0]->addPost(new Status("C++ is nice and I'm a nerd"));
-	this->users[1]->addPost(new Status("hi guys im sharon"));
-	this->users[1]->addPost(new Status("sharon is my name "));
-	this->users[2]->addPost(new Status("dont trust _s functions"));
-	this->users[2]->addPost(new Status("give me cake please!"));
+	this->fanPages[0]->addPost(new StatusText("we are the best"));
+	this->fanPages[0]->addPost(new StatusText("we won the game"));
+	this->fanPages[1]->addPost(new StatusText("thats what makes you beutiful"));
+	this->fanPages[1]->addPost(new StatusText("la la la"));
+	this->fanPages[2]->addPost(new StatusText("he lives in Tel aviv "));
+	this->fanPages[2]->addPost(new StatusText("he is developer.."));
+	this->users[0]->addPost(new StatusText("hi guys im liav"));
+	this->users[0]->addPost(new StatusText("C++ is nice"));
+	this->users[1]->addPost(new StatusText("hi guys im sharon"));
+	this->users[1]->addPost(new StatusText("sharon is my name "));
+	this->users[2]->addPost(new StatusText("#cakeislife"));
+	this->users[2]->addPost(new StatusText("give me cake please"));
 	makeConnection(*users[1], *users[0]);
 	makeConnection(*users[0], *users[2]);
 	addFriendToFanPage(*(users[2]), *(fanPages[1]));
@@ -408,6 +536,10 @@ void Facebook::addStatus()
 		{
 			cout << e.what();
 		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
 		if (!isValidData)
 		{
 			cout << "Try again!\n";
@@ -419,25 +551,91 @@ void Facebook::addStatus()
 void Facebook::addStatusToUser()
 {
 	User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
-	string text;
-	cout << "Enter text for your post (max 150 letters):";
-	do//to avoid empty words becuase of getline
-		getline(cin, text);
-	while (text[0] == 0);
-	user->addPost(new Status(text)); //c'tor build status from input text
+	bool isValidData = false;
+	int choice;
+	do
+	{
+		cout << "Choose type of status:\n1 - Text\n2 - Picture\n3 - Video\n(Choose number):";
+		try
+		{
+			cin >> choice;
+			if (choice == 1)
+			{
+				user->addPost(buildStatus(Text));
+			}
+			else if (choice == 2)
+			{
+				user->addPost(buildStatus(Picture));
+			}
+			else if (choice == 3)
+			{
+				user->addPost(buildStatus(Video));
+			}
+			else
+				throw IndexOutOfRange();
+			isValidData = true;
+		}
+		catch (FaceBookExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
+		if (!isValidData)
+		{
+			cout << "Try again!\n";
+		}
+	} while (!isValidData);
 
 }
 
+
+
 void Facebook::addStatusToFanPage()
 {
+	int choice;
 	FanPage* fanPage = getFanpageFromUser(
 		"Which Fan Page do you want to add a Post to : ");
 	char text[MAX_POST_LEN];
-	cout << "Enter text for your post (max 150 letters):";
-	do//to avoid empty words becuase of getline
-		cin.getline(text, MAX_NAME_LEN);
-	while (text[0] == 0);
-	fanPage->addPost(new Status(text)); //c'tor build status from input text
+	bool isValidData = false;
+	do
+	{
+		cout << "Choose type of status:\n1 - Text\n2 - Picture\n3 - Video\n(Choose number):";
+		try
+		{
+			cin >> choice;
+			if (choice == 1)
+			{
+				fanPage->addPost(buildStatus(Text));
+			}
+			else if (choice == 2)
+			{
+				fanPage->addPost(buildStatus(Picture));
+			}
+			else if (choice == 3) 
+			{
+				fanPage->addPost(buildStatus(Video));
+			}
+			else
+				throw IndexOutOfRange();
+			isValidData = true;
+		}
+		catch (FaceBookExeption& e)
+		{
+			cout << e.what();
+		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
+		if (!isValidData)
+		{
+			cout << "Try again!\n";
+		}
+	} while (!isValidData);
+
 
 
 
@@ -477,6 +675,10 @@ void Facebook::ShowPosts() const
 		{
 			cout << e.what();
 		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
 		if (!isValidData)
 		{
 			cout << "Try again!\n";
@@ -487,13 +689,13 @@ void Facebook::ShowPosts() const
 
 void Facebook::showPostsOfUser() const noexcept(false)
 {
-	const User* user = getUserNameFromUser("Which User do you want to add a Post to: ");
+	const User* user = getUserNameFromUser("Enter User name to watch his Posts: ");
 	user->showPosts();
 }
 
 void Facebook::showPostOfFanPage()  const noexcept(false)
 {
-	const FanPage* fanpage = getFanpageFromUser("Which fan Page's post would you like to show: ");
+	const FanPage* fanpage = getFanpageFromUser("Enter Fan's Page name to watch his Posts: ");
 	fanpage->showPosts();
 }
 
@@ -602,6 +804,10 @@ void Facebook::showAllFriendFansOFUser()  const
 		{
 			cout << e.what();
 		}
+		catch (...)
+		{
+			cout << "Something happened";
+		}
 		if (!isValidData)
 		{
 			cout << "Try again!\n";
@@ -668,6 +874,65 @@ const FanPage* Facebook::getFanpageFromUser(string text) const noexcept(false)
 
 	return fanPage;
 }
+
+Status* Facebook::buildStatus(eTypeStatus typeStatus)
+{
+	
+	cout << "Enter Text for your post (150 letters max):";
+	string fileLocation;
+	string textForStatus;
+	do//to avoid empty words becuase of getline
+		getline(cin, textForStatus);
+	while (textForStatus[0] == 0);
+	if (typeStatus == Text) 
+	{
+		return new StatusText(textForStatus);
+	}
+	else if (typeStatus == Video)
+	{
+		cout << "Enter video location file post :";
+		cin >> fileLocation;
+		return new StatusVideo(textForStatus, fileLocation);
+	}
+	else 
+	{
+		cout <<"Enter Picture location file post :";
+		cin >> fileLocation;
+		return new StatusPicture(textForStatus, fileLocation);
+	}
+}
+
+Status* Facebook::buildStatus(ifstream& file)
+{
+	Status* post;
+	string type, birthDay, timeStr, line, tempText;
+	char delimeter;
+	file >> type;
+	file >> delimeter;
+	file >> birthDay;
+	file >> delimeter;
+	file >> timeStr;
+	getline(file, line);
+	Date date(birthDay);
+	Time time(timeStr);
+	string fileLocation;
+	getline(file, tempText);
+	if (type == "Text")
+		post = new StatusText(tempText,date,time);
+	else if (type == "Picture")
+	{
+		file >> fileLocation;
+		post = new StatusPicture(tempText, fileLocation,date,time);
+	}
+	else
+	{
+		file >> fileLocation;
+		post = new StatusVideo(tempText, fileLocation,date,time);
+
+	}
+	return post;
+}
+
 
 
 

@@ -4,19 +4,20 @@
 using namespace std;
 
 
-Status::Status(const string text): time(),date()
+Status::Status(): time(),date()
 {
-	textContent = text;
 
+}
+
+Status::Status(const Date& date, const Time& time):date(date),time(time)
+{
 }
 
 Status::Status(const Status& other)
 {
-	textContent = other.textContent;
 	date = other.date;
 	time = other.time;
 }
-
 
 
 
@@ -24,20 +25,16 @@ Status::~Status()
 {
 }
 
-const bool Status::operator==(const Status& other)
+ostream& operator<<(ostream& os, const Status& p) 
 {
-	return this->textContent == other.textContent;
+	os << typeid(p).name() + 12 <<" , " << p.date << " , " << p.time;
+	p.toOs(os);
+	return os;
 }
-
-const bool Status::operator!=(const Status& other)
-{
-	return !(*this == other);
-}
-
 
 void Status::showPost() const
 {
-	cout << textContent << "| posted at: ";
+	cout << "| posted at: ";
 	date.showDate();
 	cout << " - ";
 	time.showTime();

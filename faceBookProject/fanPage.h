@@ -4,8 +4,9 @@
 #include "exeption.h"
 #include <vector>
 #include <string>
+#include <fstream>
 
-class FanPage
+class FanPage 
 {
 public:
 	/*
@@ -16,7 +17,7 @@ public:
 	/*
 	* const Function that returns name of the fanpage
 	*/
-	const string getName() const;
+	const std::string getName() const;
 
 	/*
 	* Function that adds a post to fanpage
@@ -44,17 +45,18 @@ public:
 
 	//operator overload
 	const bool operator >(const FanPage& fanpage);
+	friend std::ostream& operator<<(std::ostream& os, const FanPage& fanpage);
 
 
 	//Ctor and Dtor
 	FanPage(const FanPage& fanpage);
-	FanPage(const string name);
+	FanPage(const std::string name);
 	~FanPage();
 
 private:
-	string name;
-	vector<User*> fans;
+	std::string name;
 	vector<Status*> posts;
+	vector<User*> fans;
 
 	const int UNFOUND = -1;
 	const int CAPACITY_INIT = 5;

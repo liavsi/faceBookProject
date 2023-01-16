@@ -129,3 +129,15 @@ FanPage::~FanPage()
 		delete posts[i];
 	}
 }
+
+std::ostream& operator<<(std::ostream& os, const FanPage& fanpage)
+{
+	os << fanpage.name << endl;
+	int numOfPosts = fanpage.posts.size();
+	os << numOfPosts << endl;
+	for (int i = 0; i < numOfPosts; i++)
+	{
+		os << *fanpage.posts[i] << endl;
+	}
+	return os;
+}

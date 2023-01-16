@@ -59,5 +59,14 @@
     <ClInclude Include="exeption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="statusText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="statusPicture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="statusVideo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
